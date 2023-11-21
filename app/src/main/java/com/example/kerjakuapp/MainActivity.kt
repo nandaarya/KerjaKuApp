@@ -22,7 +22,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.kerjakuapp.databinding.ActivityMainBinding
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -34,7 +33,6 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
-import kotlinx.coroutines.launch
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
@@ -65,32 +63,30 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val requestNotificationPermissionLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted: Boolean ->
-            if (isGranted) {
-                requestBackgroundLocationPermissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
-                Toast.makeText(this, "Notifications permission granted", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Notifications permission rejected", Toast.LENGTH_SHORT).show()
-            }
+    private val requestNotificationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            requestBackgroundLocationPermissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+            Toast.makeText(this, "Notifications permission granted", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Notifications permission rejected", Toast.LENGTH_SHORT).show()
         }
+    }
 
     private val requestBackgroundLocationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
                 Toast.makeText(this, "Background permission granted", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Background Location Permission Denied", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Background Location Permission Denied", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true &&
-                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
-            ) {
+            if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true && permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true) {
                 // All permissions are granted, proceed with location updates.
                 requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
 
@@ -104,7 +100,11 @@ class MainActivity : AppCompatActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent?.action == GeofenceBroadcastReceiver.ACTION_GEOFENCE_EVENT) {
                 // Geofence event received, update the button or perform any action
-                binding.btnClockIn.isEnabled = true
+                val geofenceTransition =
+                    intent.getStringExtra(GeofenceBroadcastReceiver.EXTRA_GEOFENCE_TRANSITION)
+                Log.i("Geofence Transition", geofenceTransition.toString())
+                binding.btnClockIn.isEnabled =
+                    geofenceTransition == GeofenceBroadcastReceiver.GEOFENCE_TRANSITION_ENTER || geofenceTransition == GeofenceBroadcastReceiver.GEOFENCE_TRANSITION_DWELL
             }
         }
     }
@@ -116,11 +116,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Register the broadcast receiver
-        LocalBroadcastManager.getInstance(this)
-            .registerReceiver(
-                geofenceEventReceiver,
-                IntentFilter(GeofenceBroadcastReceiver.ACTION_GEOFENCE_EVENT)
-            )
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            geofenceEventReceiver, IntentFilter(GeofenceBroadcastReceiver.ACTION_GEOFENCE_EVENT)
+        )
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         mLocationRequest = LocationRequest.create()
@@ -183,9 +181,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
         fusedLocationProviderClient!!.requestLocationUpdates(
-            mLocationRequest,
-            mLocationCallback,
-            Looper.myLooper()!!
+            mLocationRequest, mLocationCallback, Looper.myLooper()!!
         )
     }
 
@@ -196,10 +192,9 @@ class MainActivity : AppCompatActivity() {
             Manifest.permission.ACCESS_COARSE_LOCATION,
         )
 
-        if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) ==
-            PackageManager.PERMISSION_GRANTED &&
-            context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) ==
-            PackageManager.PERMISSION_GRANTED
+        if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && context.checkSelfPermission(
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
         ) {
             // Permissions are already granted, proceed with location updates.
             startLocationUpdates()
@@ -214,13 +209,11 @@ class MainActivity : AppCompatActivity() {
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             val builder = AlertDialog.Builder(this)
             builder.setMessage("The location permission is disabled. Do you want to enable it?")
-                .setCancelable(false)
-                .setPositiveButton("Yes") { _, _ ->
+                .setCancelable(false).setPositiveButton("Yes") { _, _ ->
                     startActivityForResult(
                         Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 10
                     )
-                }
-                .setNegativeButton("No") { dialog, _ ->
+                }.setNegativeButton("No") { dialog, _ ->
                     dialog.cancel()
                     finish()
                 }
@@ -239,9 +232,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == requestPermissionCode) {
@@ -258,22 +249,15 @@ class MainActivity : AppCompatActivity() {
     private fun addGeofence() {
         geofencingClient = LocationServices.getGeofencingClient(this)
 
-        val geofence = Geofence.Builder()
-            .setRequestId("kampus")
-            .setCircularRegion(
-                centerLat,
-                centerLng,
-                geofenceRadius.toFloat()
-            )
-            .setExpirationDuration(Geofence.NEVER_EXPIRE)
+        val geofence = Geofence.Builder().setRequestId("kampus").setCircularRegion(
+            centerLat, centerLng, geofenceRadius.toFloat()
+        ).setExpirationDuration(Geofence.NEVER_EXPIRE)
             .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL or Geofence.GEOFENCE_TRANSITION_ENTER)
-            .setLoiteringDelay(5000)
-            .build()
+            .setLoiteringDelay(5000).build()
 
-        val geofencingRequest = GeofencingRequest.Builder()
-            .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
-            .addGeofence(geofence)
-            .build()
+        val geofencingRequest =
+            GeofencingRequest.Builder().setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+                .addGeofence(geofence).build()
 
         geofencingClient.removeGeofences(geofencePendingIntent).run {
             addOnCompleteListener {

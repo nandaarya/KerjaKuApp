@@ -27,26 +27,18 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                 return
             }
 
-            val geofenceTransition = geofencingEvent.geofenceTransition
-
-            if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER || geofenceTransition == Geofence.GEOFENCE_TRANSITION_DWELL) {
-                val geofenceTransitionString =
-                    when (geofenceTransition) {
-                        Geofence.GEOFENCE_TRANSITION_ENTER -> "Anda telah memasuki area"
-                        Geofence.GEOFENCE_TRANSITION_DWELL -> "Anda telah di dalam area"
-                        else -> "Invalid transition type"
-                    }
-
-                val triggeringGeofences = geofencingEvent.triggeringGeofences
-                triggeringGeofences?.forEach { geofence ->
-                    val geofenceTransitionDetails = "$geofenceTransitionString ${geofence.requestId}"
-                    Log.i(TAG, geofenceTransitionDetails)
-                    sendNotification(context, geofenceTransitionDetails)
+            val geofenceTransitionString =
+                when (geofencingEvent.geofenceTransition) {
+                    Geofence.GEOFENCE_TRANSITION_ENTER -> GEOFENCE_TRANSITION_ENTER
+                    Geofence.GEOFENCE_TRANSITION_DWELL -> GEOFENCE_TRANSITION_DWELL
+                    Geofence.GEOFENCE_TRANSITION_EXIT -> GEOFENCE_TRANSITION_EXIT
+                    else -> "Invalid transition type"
                 }
-            } else {
-                val errorMessage = "Invalid transition type : $geofenceTransition"
-                Log.e(TAG, errorMessage)
-                sendNotification(context, errorMessage)
+
+            val triggeringGeofences = geofencingEvent.triggeringGeofences
+            triggeringGeofences?.forEach { _ ->
+                Log.i(TAG, geofenceTransitionString)
+                sendNotification(context, geofenceTransitionString)
             }
         }
     }
@@ -68,15 +60,19 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
         mNotificationManager.notify(NOTIFICATION_ID, notification)
 
         val intent = Intent(ACTION_GEOFENCE_EVENT)
-        intent.putExtra("EXTRA_GEOFENCE_DETAILS", geofenceTransitionDetails)
+        intent.putExtra(EXTRA_GEOFENCE_TRANSITION, geofenceTransitionDetails)
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
     }
 
     companion object {
         private const val TAG = "GeofenceBroadcast"
         const val ACTION_GEOFENCE_EVENT = "GeofenceEvent"
+        const val EXTRA_GEOFENCE_TRANSITION = "GeofenceTransition"
         private const val CHANNEL_ID = "1"
         private const val CHANNEL_NAME = "Geofence Channel"
         private const val NOTIFICATION_ID = 1
+        const val GEOFENCE_TRANSITION_ENTER = "Anda telah memasuki area"
+        const val GEOFENCE_TRANSITION_DWELL = "Anda telah di dalam area"
+        const val GEOFENCE_TRANSITION_EXIT = "Anda telah keluar area"
     }
 }
