@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">KerjaKuApp</string>
+    <string name="error_no_location">Lokasi tidak tersedia</string>
+    <string name="gps_dialog_message">Hidupkan GPS Perangkat Anda untuk membagikan lokasi!</string>
+    <string name="gps_dialog_tittle">Maaf, GPS perangkat anda belum aktif.</string>
+    <string name="dialog_positive_button">Next</string>
+</resources>
