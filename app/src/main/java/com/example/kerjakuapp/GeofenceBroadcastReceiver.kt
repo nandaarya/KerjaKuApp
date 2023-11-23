@@ -71,8 +71,8 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
         private const val CHANNEL_ID = "1"
         private const val CHANNEL_NAME = "Geofence Channel"
         private const val NOTIFICATION_ID = 1
-        const val GEOFENCE_TRANSITION_ENTER = "Anda telah memasuki area"
-        const val GEOFENCE_TRANSITION_DWELL = "Anda telah di dalam area"
-        const val GEOFENCE_TRANSITION_EXIT = "Anda telah keluar area"
+        const val GEOFENCE_TRANSITION_ENTER = "Anda telah memasuki area kantor"
+        const val GEOFENCE_TRANSITION_DWELL = "Anda telah di dalam area kantor"
+        const val GEOFENCE_TRANSITION_EXIT = "Anda telah keluar area kantor"
     }
 }

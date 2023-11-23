@@ -249,7 +249,7 @@ class MainActivity : AppCompatActivity() {
     private fun addGeofence() {
         geofencingClient = LocationServices.getGeofencingClient(this)
 
-        val geofence = Geofence.Builder().setRequestId("kampus").setCircularRegion(
+        val geofence = Geofence.Builder().setRequestId("kantor").setCircularRegion(
             centerLat, centerLng, geofenceRadius.toFloat()
         ).setExpirationDuration(Geofence.NEVER_EXPIRE)
             .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL or Geofence.GEOFENCE_TRANSITION_ENTER)
@@ -263,11 +263,10 @@ class MainActivity : AppCompatActivity() {
             addOnCompleteListener {
                 geofencingClient.addGeofences(geofencingRequest, geofencePendingIntent).run {
                     addOnSuccessListener {
-                        showToast("Geofencing added")
+                        showToast("Area Telah Terpasang")
                     }
                     addOnFailureListener {
-                        showToast("Geofencing not added : ${it.message}")
-                        Log.e("Geofence", "Geofencing not added", it)
+                        showToast("Area Belum Terpasang. Tunggu Sebentar.")
                         Handler().postDelayed({
                             addGeofence()
                         }, 10000)
