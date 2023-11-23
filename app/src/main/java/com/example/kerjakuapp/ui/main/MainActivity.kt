@@ -1,4 +1,4 @@
-package com.example.kerjakuapp
+package com.example.kerjakuapp.ui.main
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -23,7 +23,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.example.kerjakuapp.GeofenceBroadcastReceiver
 import com.example.kerjakuapp.databinding.ActivityMainBinding
+import com.example.kerjakuapp.ui.clockin.ClockInActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
@@ -128,6 +130,11 @@ class MainActivity : AppCompatActivity() {
         checkForPermission(this)
         addGeofence()
         startLocationUpdates()
+
+        binding.btnClockIn.setOnClickListener {
+            val intent = Intent(this, ClockInActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onPause() {
