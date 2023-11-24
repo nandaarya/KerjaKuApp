@@ -6,14 +6,76 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.MainActivity">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_identity_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_profile_photo"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/foto"
+                tools:ignore="ImageContrastCheck"
+                tools:src="@tools:sample/avatars"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="24dp"
+                android:text="Nanda Arya Putra"
+                app:layout_constraintStart_toEndOf="@+id/iv_profile_photo"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="24dp"
+                android:text="21106050048"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_profile_photo"
+                app:layout_constraintTop_toBottomOf="@id/tv_name" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tv_day_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/day_date_format"
+        android:textSize="20sp"
+        android:layout_margin="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cv_identity_layout" />
+
     <ImageView
         android:id="@+id/iv_clock"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:layout_margin="8dp"
+        android:contentDescription="@string/Clock_Image"
         android:src="@drawable/ic_baseline_access_time_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tv_clock" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_day_date" />
 
     <TextView
         android:id="@+id/tv_clock"
@@ -21,9 +83,10 @@
         android:layout_height="wrap_content"
         android:text="@string/default_time"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_ClockIn"
+        android:layout_margin="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_clock" />
 
     <!--    <TextView-->
     <!--        android:id="@+id/latitudeText"-->
@@ -55,9 +118,10 @@
         android:gravity="center"
         android:text="Clock In Time: \n --:--"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/btn_ClockIn"
+        android:layout_margin="24dp"
         app:layout_constraintEnd_toEndOf="@+id/btn_ClockIn"
-        app:layout_constraintStart_toStartOf="@+id/btn_ClockIn" />
+        app:layout_constraintStart_toStartOf="@+id/btn_ClockIn"
+        app:layout_constraintTop_toBottomOf="@+id/tv_clock" />
 
     <TextView
         android:id="@+id/tv_ClockOut"
@@ -66,30 +130,31 @@
         android:gravity="center"
         android:text="Clock out Time: \n --:--"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/btn_ClockOut"
+        android:layout_margin="24dp"
         app:layout_constraintEnd_toEndOf="@+id/btn_ClockOut"
-        app:layout_constraintStart_toStartOf="@+id/btn_ClockOut" />
+        app:layout_constraintStart_toStartOf="@+id/btn_ClockOut"
+        app:layout_constraintTop_toBottomOf="@+id/tv_clock" />
 
     <Button
         android:id="@+id/btn_ClockIn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="24dp"
         android:enabled="false"
         android:text="@string/clock_in"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btn_ClockOut"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_ClockIn" />
 
     <Button
         android:id="@+id/btn_ClockOut"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="24dp"
         android:enabled="false"
         android:text="@string/clock_out"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btn_ClockIn" />
+        app:layout_constraintStart_toEndOf="@id/btn_ClockIn"
+        app:layout_constraintTop_toBottomOf="@+id/tv_ClockOut" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

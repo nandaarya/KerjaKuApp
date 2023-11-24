@@ -28,4 +28,7 @@
     <string name="default_time">--:--</string>
     <string name="clock_in">Clock In</string>
     <string name="clock_out">Clock Out</string>
+    <string name="id">Nomor Id</string>
+    <string name="Clock_Image">Gambar Jam</string>
+    <string name="day_date_format">%1$s, %2$s</string>
 </resources>

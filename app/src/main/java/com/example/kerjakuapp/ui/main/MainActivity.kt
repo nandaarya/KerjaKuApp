@@ -13,6 +13,7 @@ import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
@@ -23,18 +24,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.kerjakuapp.GeofenceBroadcastReceiver
+import com.example.kerjakuapp.R
 import com.example.kerjakuapp.databinding.ActivityMainBinding
 import com.example.kerjakuapp.ui.clockin.ClockInActivity
+import com.example.kerjakuapp.utils.getCurrentDate
+import com.example.kerjakuapp.utils.getCurrentDayOfWeek
+import com.example.kerjakuapp.utils.getCurrentTime
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
 import com.google.android.gms.location.GeofencingRequest
+import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 import java.util.Timer
 import java.util.TimerTask
 
@@ -133,17 +137,22 @@ class MainActivity : AppCompatActivity() {
         addGeofence()
         startLocationUpdates()
 
+
         binding.btnClockIn.setOnClickListener {
             val intent = Intent(this, ClockInActivity::class.java)
             startActivity(intent)
         }
 
+        val dayOfWeek = getCurrentDayOfWeek()
+        val date = getCurrentDate()
+
+        val formattedText = getString(R.string.day_date_format, dayOfWeek, date)
+        binding.tvDayDate.text = formattedText
+
         val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
-                val calendar = Calendar.getInstance()
-                val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-                val currentTime = dateFormat.format(calendar.time)
+                val currentTime = getCurrentTime()
 
                 runOnUiThread {
                     // Update UI on the main thread
@@ -155,7 +164,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-//        fusedLocationProviderClient?.removeLocationUpdates(mLocationCallback)
+        fusedLocationProviderClient?.removeLocationUpdates(mLocationCallback)
     }
 
     override fun onResume() {
@@ -170,17 +179,17 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-//    private val mLocationCallback = object : LocationCallback() {
-//        override fun onLocationResult(locationResult: LocationResult) {
-//            locationResult.lastLocation
-//            Log.d("MainActivity", "callback: $latitude $longitude")
-//            locationResult.lastLocation?.let { locationChanged(it) }
+    private val mLocationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult) {
+            locationResult.lastLocation
+            Log.d("MainActivity", "callback: $latitude $longitude")
+            locationResult.lastLocation?.let { locationChanged(it) }
 //            latitude = locationResult.lastLocation?.latitude ?: 0.0
 //            longitude = locationResult.lastLocation?.longitude ?: 0.0
 //            binding.longitudeText.text = "Longitude: $longitude"
 //            binding.latitudeText.text = "Latitude: $latitude"
-//        }
-//    }
+        }
+    }
 
     private fun startLocationUpdates() {
         mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
@@ -203,9 +212,9 @@ class MainActivity : AppCompatActivity() {
         ) {
             return
         }
-//        fusedLocationProviderClient!!.requestLocationUpdates(
-//            mLocationRequest, mLocationCallback, Looper.myLooper()!!
-//        )
+        fusedLocationProviderClient!!.requestLocationUpdates(
+            mLocationRequest, mLocationCallback, Looper.myLooper()!!
+        )
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -232,27 +241,27 @@ class MainActivity : AppCompatActivity() {
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             val builder = AlertDialog.Builder(this)
             builder.setMessage("The location permission is disabled. Do you want to enable it?")
-                .setCancelable(false).setPositiveButton("Yes") { _, _ ->
+                .setCancelable(true)
+                .setPositiveButton("Yes") { _, _ ->
                     startActivityForResult(
                         Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 10
                     )
                 }.setNegativeButton("No") { dialog, _ ->
                     dialog.cancel()
-                    finish()
                 }
             val alert: AlertDialog = builder.create()
             alert.show()
         }
     }
 
-//    fun locationChanged(location: Location) {
-//        mLastLocation = location
+    fun locationChanged(location: Location) {
+        mLastLocation = location
 //        longitude = mLastLocation.longitude
 //        latitude = mLastLocation.latitude
 //        binding.longitudeText.text = "Longitude: $longitude"
 //        binding.latitudeText.text = "Latitude: $latitude"
 //        Log.d("MainActivity", "function: $latitude $longitude")
-//    }
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
