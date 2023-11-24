@@ -58,7 +58,7 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val mBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setContentTitle(geofenceTransitionDetails)
-            .setContentText("Anda sudah bisa absen sekarang :)")
+            .setContentText("Anda sudah bisa absen sekarang")
             .setSmallIcon(R.drawable.ic_baseline_notifications_active_24)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)

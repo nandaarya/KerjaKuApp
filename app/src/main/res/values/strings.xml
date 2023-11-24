@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KerjaKuApp</string>
+    <string name="app_name">KerjaKu</string>
     <string name="error_no_location">Lokasi tidak tersedia</string>
     <string name="gps_dialog_message">Hidupkan GPS Perangkat Anda untuk membagikan lokasi!</string>
     <string name="gps_dialog_tittle">Maaf, GPS perangkat anda belum aktif.</string>
@@ -25,4 +25,7 @@
     <string name="login_failed_dialog">Login gagal! Masukkan data email dan password dengan benar.</string>
     <string name="login_failed_dialog_title">Maaf!</string>
     <string name="register_dialog_message">Akun berhasil dibuat.</string>
+    <string name="default_time">--:--</string>
+    <string name="clock_in">Clock In</string>
+    <string name="clock_out">Clock Out</string>
 </resources>

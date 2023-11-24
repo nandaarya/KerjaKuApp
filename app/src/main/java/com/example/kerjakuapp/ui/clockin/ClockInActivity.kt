@@ -27,6 +27,12 @@ class ClockInActivity : AppCompatActivity() {
 //        binding.btnUpload.setOnClickListener { uploadImage() }
     }
 
+    @Suppress("DEPRECATION")
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
     private fun startCamera() {
         currentImageUri = getImageUri(this)
         launcherIntentCamera.launch(currentImageUri)

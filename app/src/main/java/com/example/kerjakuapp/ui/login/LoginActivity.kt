@@ -85,7 +85,9 @@ class LoginActivity : AppCompatActivity() {
             }
             // Login without Login API
             val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
+            finish()
         }
 
         binding.btnSignup.setOnClickListener {
@@ -110,9 +112,11 @@ class LoginActivity : AppCompatActivity() {
         val passwordEditTextLayout =
             ObjectAnimator.ofFloat(binding.tilPassword, View.ALPHA, 1f).setDuration(100)
         val login = ObjectAnimator.ofFloat(binding.btnLogin, View.ALPHA, 1f).setDuration(100)
-        val signupTextView = ObjectAnimator.ofFloat(binding.tvSignup, View.ALPHA, 1f).setDuration(100)
+        val signupTextView =
+            ObjectAnimator.ofFloat(binding.tvSignup, View.ALPHA, 1f).setDuration(100)
         val signup = ObjectAnimator.ofFloat(binding.btnSignup, View.ALPHA, 1f).setDuration(100)
-        val copyrightTextView = ObjectAnimator.ofFloat(binding.tvCopyright, View.ALPHA, 1f).setDuration(100)
+        val copyrightTextView =
+            ObjectAnimator.ofFloat(binding.tvCopyright, View.ALPHA, 1f).setDuration(100)
 
 
         AnimatorSet().apply {

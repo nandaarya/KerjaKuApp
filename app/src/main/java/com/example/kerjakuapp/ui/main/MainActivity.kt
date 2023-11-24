@@ -13,7 +13,6 @@ import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
@@ -30,11 +29,14 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
 import com.google.android.gms.location.GeofencingRequest
-import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+import java.util.Timer
+import java.util.TimerTask
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
@@ -135,11 +137,25 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ClockInActivity::class.java)
             startActivity(intent)
         }
+
+        val timer = Timer()
+        timer.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                val calendar = Calendar.getInstance()
+                val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+                val currentTime = dateFormat.format(calendar.time)
+
+                runOnUiThread {
+                    // Update UI on the main thread
+                    binding.tvClock.text = currentTime
+                }
+            }
+        }, 0, 60000)
     }
 
     override fun onPause() {
         super.onPause()
-        fusedLocationProviderClient?.removeLocationUpdates(mLocationCallback)
+//        fusedLocationProviderClient?.removeLocationUpdates(mLocationCallback)
     }
 
     override fun onResume() {
@@ -154,17 +170,17 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-    private val mLocationCallback = object : LocationCallback() {
-        override fun onLocationResult(locationResult: LocationResult) {
-            locationResult.lastLocation
-            Log.d("MainActivity", "callback: $latitude $longitude")
-            locationResult.lastLocation?.let { locationChanged(it) }
-            latitude = locationResult.lastLocation?.latitude ?: 0.0
-            longitude = locationResult.lastLocation?.longitude ?: 0.0
-            binding.longitudeText.text = "Longitude: $longitude"
-            binding.latitudeText.text = "Latitude: $latitude"
-        }
-    }
+//    private val mLocationCallback = object : LocationCallback() {
+//        override fun onLocationResult(locationResult: LocationResult) {
+//            locationResult.lastLocation
+//            Log.d("MainActivity", "callback: $latitude $longitude")
+//            locationResult.lastLocation?.let { locationChanged(it) }
+//            latitude = locationResult.lastLocation?.latitude ?: 0.0
+//            longitude = locationResult.lastLocation?.longitude ?: 0.0
+//            binding.longitudeText.text = "Longitude: $longitude"
+//            binding.latitudeText.text = "Latitude: $latitude"
+//        }
+//    }
 
     private fun startLocationUpdates() {
         mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
@@ -187,9 +203,9 @@ class MainActivity : AppCompatActivity() {
         ) {
             return
         }
-        fusedLocationProviderClient!!.requestLocationUpdates(
-            mLocationRequest, mLocationCallback, Looper.myLooper()!!
-        )
+//        fusedLocationProviderClient!!.requestLocationUpdates(
+//            mLocationRequest, mLocationCallback, Looper.myLooper()!!
+//        )
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -229,14 +245,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun locationChanged(location: Location) {
-        mLastLocation = location
-        longitude = mLastLocation.longitude
-        latitude = mLastLocation.latitude
-        binding.longitudeText.text = "Longitude: $longitude"
-        binding.latitudeText.text = "Latitude: $latitude"
-        Log.d("MainActivity", "function: $latitude $longitude")
-    }
+//    fun locationChanged(location: Location) {
+//        mLastLocation = location
+//        longitude = mLastLocation.longitude
+//        latitude = mLastLocation.latitude
+//        binding.longitudeText.text = "Longitude: $longitude"
+//        binding.latitudeText.text = "Latitude: $latitude"
+//        Log.d("MainActivity", "function: $latitude $longitude")
+//    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
