@@ -1,4 +1,4 @@
-package com.example.kerjakuapp.ui.login
+package com.example.kerjakuapp.ui.signup
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -9,47 +9,50 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.example.kerjakuapp.R
-import com.example.kerjakuapp.databinding.ActivityLoginBinding
-import com.example.kerjakuapp.ui.signup.SignupActivity
+import com.example.kerjakuapp.databinding.ActivitySignupBinding
 import com.example.kerjakuapp.utils.ViewModelFactory
 import com.example.kerjakuapp.data.Result
-import com.example.kerjakuapp.ui.main.MainActivity
+import com.example.kerjakuapp.ui.login.LoginActivity
 
-class LoginActivity : AppCompatActivity() {
+class SignupActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityLoginBinding
-    private lateinit var loginViewModel: LoginViewModel
+    private lateinit var binding: ActivitySignupBinding
+    private lateinit var signupViewModel: SignupViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
+        binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
-        loginViewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
+        signupViewModel = ViewModelProvider(this, factory)[SignupViewModel::class.java]
 
-        loginViewModel.loginResponse.observe(this) {
+        signupViewModel.registerResponse.observe(this) {
             when (it) {
                 is Result.Loading -> {
                     showLoading(true)
                 }
                 is Result.Success -> {
                     showLoading(false)
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(intent)
-                    finish()
-                }
-                is Result.Error -> {
                     AlertDialog.Builder(this).apply {
-                        setTitle(getString(R.string.login_failed_dialog_title))
-                        setMessage(getString(R.string.login_failed_dialog))
+                        setTitle("Yeah!")
+                        setMessage(getString(R.string.register_dialog_message))
+                        setCancelable(false)
+                        setPositiveButton(getString(R.string.dialog_positive_button)) { _, _ ->
+                            val intent = Intent(context, LoginActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
                         create()
                         show()
                     }
+                }
+                is Result.Error -> {
+                    registerFailedToast()
                     showLoading(false)
                 }
             }
@@ -74,19 +77,17 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
-        binding.btnLogin.setOnClickListener {
+        binding.btnSignup.setOnClickListener {
             binding.apply {
-                if (etEmail.error.isNullOrEmpty() && etPassword.error.isNullOrEmpty()) {
+                if (etName.error.isNullOrEmpty() && etEmail.error.isNullOrEmpty() && etPassword.error.isNullOrEmpty()) {
+                    val name = etName.text.toString().trim()
                     val email = etEmail.text.toString().trim()
                     val password = etPassword.text.toString().trim()
-                    loginViewModel.login(email, password)
+                    signupViewModel.register(name, email, password)
+                } else {
+                    registerFailedToast()
                 }
             }
-        }
-
-        binding.btnSignup.setOnClickListener {
-            val intent = Intent(this, SignupActivity::class.java)
-            startActivity(intent)
         }
     }
 
@@ -97,6 +98,11 @@ class LoginActivity : AppCompatActivity() {
             repeatMode = ObjectAnimator.REVERSE
         }.start()
 
+        val title = ObjectAnimator.ofFloat(binding.tvTitle, View.ALPHA, 1f).setDuration(100)
+        val nameTextView =
+            ObjectAnimator.ofFloat(binding.tvName, View.ALPHA, 1f).setDuration(100)
+        val nameEditTextLayout =
+            ObjectAnimator.ofFloat(binding.tilName, View.ALPHA, 1f).setDuration(100)
         val emailTextView =
             ObjectAnimator.ofFloat(binding.tvEmail, View.ALPHA, 1f).setDuration(100)
         val emailEditTextLayout =
@@ -105,22 +111,19 @@ class LoginActivity : AppCompatActivity() {
             ObjectAnimator.ofFloat(binding.tvPassword, View.ALPHA, 1f).setDuration(100)
         val passwordEditTextLayout =
             ObjectAnimator.ofFloat(binding.tilPassword, View.ALPHA, 1f).setDuration(100)
-        val login = ObjectAnimator.ofFloat(binding.btnLogin, View.ALPHA, 1f).setDuration(100)
-        val signupTextView = ObjectAnimator.ofFloat(binding.tvSignup, View.ALPHA, 1f).setDuration(100)
         val signup = ObjectAnimator.ofFloat(binding.btnSignup, View.ALPHA, 1f).setDuration(100)
-        val copyrightTextView = ObjectAnimator.ofFloat(binding.tvCopyright, View.ALPHA, 1f).setDuration(100)
 
 
         AnimatorSet().apply {
             playSequentially(
+                title,
+                nameTextView,
+                nameEditTextLayout,
                 emailTextView,
                 emailEditTextLayout,
                 passwordTextView,
                 passwordEditTextLayout,
-                login,
-                signupTextView,
-                signup,
-                copyrightTextView,
+                signup
             )
             startDelay = 100
         }.start()
@@ -128,5 +131,13 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun registerFailedToast() {
+        Toast.makeText(
+            this,
+            R.string.register_failed,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }
