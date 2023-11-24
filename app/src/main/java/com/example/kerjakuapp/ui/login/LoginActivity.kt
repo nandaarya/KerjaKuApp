@@ -31,29 +31,29 @@ class LoginActivity : AppCompatActivity() {
         val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
         loginViewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
 
-        loginViewModel.loginResponse.observe(this) {
-            when (it) {
-                is Result.Loading -> {
-                    showLoading(true)
-                }
-                is Result.Success -> {
-                    showLoading(false)
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(intent)
-                    finish()
-                }
-                is Result.Error -> {
-                    AlertDialog.Builder(this).apply {
-                        setTitle(getString(R.string.login_failed_dialog_title))
-                        setMessage(getString(R.string.login_failed_dialog))
-                        create()
-                        show()
-                    }
-                    showLoading(false)
-                }
-            }
-        }
+//        loginViewModel.loginResponse.observe(this) {
+//            when (it) {
+//                is Result.Loading -> {
+//                    showLoading(true)
+//                }
+//                is Result.Success -> {
+//                    showLoading(false)
+//                    val intent = Intent(this, MainActivity::class.java)
+//                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+//                    startActivity(intent)
+//                    finish()
+//                }
+//                is Result.Error -> {
+//                    AlertDialog.Builder(this).apply {
+//                        setTitle(getString(R.string.login_failed_dialog_title))
+//                        setMessage(getString(R.string.login_failed_dialog))
+//                        create()
+//                        show()
+//                    }
+//                    showLoading(false)
+//                }
+//            }
+//        }
 
         setupView()
         setupAction()
@@ -79,9 +79,13 @@ class LoginActivity : AppCompatActivity() {
                 if (etEmail.error.isNullOrEmpty() && etPassword.error.isNullOrEmpty()) {
                     val email = etEmail.text.toString().trim()
                     val password = etPassword.text.toString().trim()
-                    loginViewModel.login(email, password)
+//                    loginViewModel.login(email, password)
+
                 }
             }
+            // Login without Login API
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
 
         binding.btnSignup.setOnClickListener {
