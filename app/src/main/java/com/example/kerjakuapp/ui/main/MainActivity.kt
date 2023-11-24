@@ -61,6 +61,10 @@ class MainActivity : AppCompatActivity() {
     private val centerLng = 110.39436719326218
     private val geofenceRadius = 1000.0
 
+    private lateinit var currentDayOfWeek: String
+    private lateinit var currentDate: String
+    private lateinit var currentTime: String
+
     private val geofencePendingIntent: PendingIntent by lazy {
         val intent = Intent(this, GeofenceBroadcastReceiver::class.java)
         intent.action = GeofenceBroadcastReceiver.ACTION_GEOFENCE_EVENT
@@ -137,22 +141,16 @@ class MainActivity : AppCompatActivity() {
         addGeofence()
         startLocationUpdates()
 
+        currentDayOfWeek = getCurrentDayOfWeek()
+        currentDate = getCurrentDate()
 
-        binding.btnClockIn.setOnClickListener {
-            val intent = Intent(this, ClockInActivity::class.java)
-            startActivity(intent)
-        }
-
-        val dayOfWeek = getCurrentDayOfWeek()
-        val date = getCurrentDate()
-
-        val formattedText = getString(R.string.day_date_format, dayOfWeek, date)
-        binding.tvDayDate.text = formattedText
+        val currentDayDate = getString(R.string.day_date_format, currentDayOfWeek, currentDate)
+        binding.tvDayDate.text = currentDayDate
 
         val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
-                val currentTime = getCurrentTime()
+                currentTime = getCurrentTime()
 
                 runOnUiThread {
                     // Update UI on the main thread
@@ -160,6 +158,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }, 0, 60000)
+
+        binding.btnClockIn.setOnClickListener {
+            val intent = Intent(this, ClockInActivity::class.java)
+            intent.putExtra(EXTRA_NAME, "Nanda Arya Putra")
+            intent.putExtra(EXTRA_ID, "21106050048")
+            intent.putExtra(EXTRA_CURRENT_DAY_DATE, currentDayDate)
+            intent.putExtra(EXTRA_CURRENT_TIME, currentTime)
+            startActivity(intent)
+        }
     }
 
     override fun onPause() {
@@ -310,5 +317,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun showToast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        const val EXTRA_NAME = "extra_name"
+        const val EXTRA_ID = "extra_id"
+        const val EXTRA_CURRENT_DAY_DATE = "extra_current_day_date"
+        const val EXTRA_CURRENT_TIME = "extra_current_time"
     }
 }

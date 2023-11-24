@@ -31,4 +31,8 @@
     <string name="id">Nomor Id</string>
     <string name="Clock_Image">Gambar Jam</string>
     <string name="day_date_format">%1$s, %2$s</string>
+    <string name="name_placeholder">Nama: %s</string>
+    <string name="id_placeholder">Nomor ID: %s</string>
+    <string name="day_date_placeholder">Hari, Tanggal: %s</string>
+    <string name="time_placeholder">Waktu: %s</string>
 </resources>

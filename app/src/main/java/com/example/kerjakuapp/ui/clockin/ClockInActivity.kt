@@ -6,6 +6,10 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.kerjakuapp.R
 import com.example.kerjakuapp.databinding.ActivityClockInBinding
+import com.example.kerjakuapp.ui.main.MainActivity.Companion.EXTRA_CURRENT_DAY_DATE
+import com.example.kerjakuapp.ui.main.MainActivity.Companion.EXTRA_CURRENT_TIME
+import com.example.kerjakuapp.ui.main.MainActivity.Companion.EXTRA_ID
+import com.example.kerjakuapp.ui.main.MainActivity.Companion.EXTRA_NAME
 import com.example.kerjakuapp.utils.getImageUri
 import com.example.kerjakuapp.utils.reduceFileImage
 import com.example.kerjakuapp.utils.uriToFile
@@ -25,6 +29,16 @@ class ClockInActivity : AppCompatActivity() {
 
         binding.btnCamera.setOnClickListener { startCamera() }
 //        binding.btnUpload.setOnClickListener { uploadImage() }
+
+        val name = intent.getStringExtra(EXTRA_NAME)
+        val id = intent.getStringExtra(EXTRA_ID)
+        val currentDayDate = intent.getStringExtra(EXTRA_CURRENT_DAY_DATE)
+        val currentTime = intent.getStringExtra(EXTRA_CURRENT_TIME)
+
+        binding.tvName.text = getString(R.string.name_placeholder, name)
+        binding.tvId.text = getString(R.string.id_placeholder, id)
+        binding.tvDayDate.text = getString(R.string.day_date_placeholder, currentDayDate)
+        binding.tvTime.text = getString(R.string.time_placeholder, currentTime)
     }
 
     @Suppress("DEPRECATION")
