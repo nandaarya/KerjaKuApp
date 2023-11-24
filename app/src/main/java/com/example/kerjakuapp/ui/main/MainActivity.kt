@@ -57,9 +57,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var geofencingClient: GeofencingClient
 
-    private val centerLat = -7.784662642705408
-    private val centerLng = 110.39436719326218
-    private val geofenceRadius = 1000.0
+    // Koordinat Leha-leha
+//    -7.792712, 110.405168
+
+    private val centerLat = -7.792712
+    private val centerLng = 110.405168
+    private val geofenceRadius = 50 //meter
 
     private lateinit var currentDayOfWeek: String
     private lateinit var currentDate: String
