@@ -60,8 +60,11 @@ class MainActivity : AppCompatActivity() {
     // Koordinat Leha-leha
 //    -7.792712, 110.405168
 
-    private val centerLat = -7.792712
-    private val centerLng = 110.405168
+    //koordinat bento nologaten
+    //-7.778558, 110.399779
+
+    private val centerLat = -7.778558
+    private val centerLng = 110.399779
     private val geofenceRadius = 50 //meter
 
     private lateinit var currentDayOfWeek: String
