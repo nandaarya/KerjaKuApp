@@ -5,6 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.kerjakuapp.data.Repository
 import com.example.kerjakuapp.di.Injection
+import com.example.kerjakuapp.ui.home.ui.home.HomeViewModel
+import com.example.kerjakuapp.ui.home.ui.profile.ProfileViewModel
+import com.example.kerjakuapp.ui.home.ui.services.ServicesViewModel
 import com.example.kerjakuapp.ui.login.LoginViewModel
 import com.example.kerjakuapp.ui.main.MainViewModel
 import com.example.kerjakuapp.ui.signup.SignupViewModel
@@ -22,6 +25,15 @@ class ViewModelFactory(private val repository: Repository) : ViewModelProvider.N
             }
             modelClass.isAssignableFrom(SignupViewModel::class.java) -> {
                 SignupViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
+                HomeViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
+                ProfileViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(ServicesViewModel::class.java) -> {
+                ServicesViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

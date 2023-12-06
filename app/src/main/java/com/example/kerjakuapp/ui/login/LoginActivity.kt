@@ -16,6 +16,7 @@ import com.example.kerjakuapp.databinding.ActivityLoginBinding
 import com.example.kerjakuapp.ui.signup.SignupActivity
 import com.example.kerjakuapp.utils.ViewModelFactory
 import com.example.kerjakuapp.data.Result
+import com.example.kerjakuapp.ui.home.HomeActivity
 import com.example.kerjakuapp.ui.main.MainActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -84,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
             // Login without Login API
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, HomeActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
             finish()

@@ -35,4 +35,10 @@
     <string name="id_placeholder">Nomor ID: %s</string>
     <string name="day_date_placeholder">Hari, Tanggal: %s</string>
     <string name="time_placeholder">Waktu: %s</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_services">Services</string>
+    <string name="title_profile">Profile</string>
 </resources>
