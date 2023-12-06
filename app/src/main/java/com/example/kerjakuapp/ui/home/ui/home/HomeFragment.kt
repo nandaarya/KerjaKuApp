@@ -24,7 +24,6 @@ import com.example.kerjakuapp.GeofenceBroadcastReceiver
 import com.example.kerjakuapp.R
 import com.example.kerjakuapp.databinding.FragmentHomeBinding
 import com.example.kerjakuapp.ui.clockin.ClockInActivity
-import com.example.kerjakuapp.ui.home.ui.profile.ProfileViewModel
 import com.example.kerjakuapp.utils.ViewModelFactory
 import com.example.kerjakuapp.utils.getCurrentDate
 import com.example.kerjakuapp.utils.getCurrentDayOfWeek
@@ -68,8 +67,10 @@ class HomeFragment : Fragment() {
                 val geofenceTransition =
                     intent.getStringExtra(GeofenceBroadcastReceiver.EXTRA_GEOFENCE_TRANSITION)
                 Log.i("Geofence Transition", geofenceTransition.toString())
-                binding.btnClockIn.isEnabled =
-                    geofenceTransition == GeofenceBroadcastReceiver.GEOFENCE_TRANSITION_ENTER || geofenceTransition == GeofenceBroadcastReceiver.GEOFENCE_TRANSITION_DWELL
+                if (_binding != null) {
+                    binding.btnClockIn.isEnabled =
+                        geofenceTransition == GeofenceBroadcastReceiver.GEOFENCE_TRANSITION_ENTER || geofenceTransition == GeofenceBroadcastReceiver.GEOFENCE_TRANSITION_DWELL
+                }
             }
         }
     }
@@ -84,7 +85,8 @@ class HomeFragment : Fragment() {
         val factory: ViewModelFactory = ViewModelFactory.getInstance(requireContext())
         val homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireContext())
         mLocationRequest = LocationRequest.create()
 
         // Register the broadcast receiver
@@ -107,8 +109,10 @@ class HomeFragment : Fragment() {
             override fun run() {
                 currentTime = getCurrentTime()
 
-                requireActivity().runOnUiThread {
-                    binding.tvClock.text = currentTime
+                if (_binding != null) {
+                    requireActivity().runOnUiThread {
+                        binding.tvClock.text = currentTime
+                    }
                 }
             }
         }, 0, 60000)
@@ -127,7 +131,8 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         // Unregister the broadcast receiver to avoid memory leaks
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(geofenceEventReceiver)
+        LocalBroadcastManager.getInstance(requireContext())
+            .unregisterReceiver(geofenceEventReceiver)
         super.onDestroyView()
         _binding = null
     }
@@ -150,7 +155,8 @@ class HomeFragment : Fragment() {
         val settingsClient = LocationServices.getSettingsClient(requireContext())
         settingsClient.checkLocationSettings(locationSettingsRequest)
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireContext())
 
         if (ActivityCompat.checkSelfPermission(
                 requireContext(), Manifest.permission.ACCESS_FINE_LOCATION
@@ -167,7 +173,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun checkGPSIsEnabled() {
-        val locationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager =
+            requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             val builder = AlertDialog.Builder(requireContext())
             builder.setMessage("The location permission is disabled. Do you want to enable it?")

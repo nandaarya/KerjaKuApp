@@ -1,6 +1,7 @@
 package com.example.kerjakuapp.ui.home.ui.services
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,14 @@ class ServicesFragment : Fragment() {
 
         _binding = FragmentServicesBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        binding.btnIzinSakit.setOnClickListener{
+            Log.d("button", "Izin Sakit")
+        }
+
+        binding.btnPengajuanCuti.setOnClickListener{
+            Log.d("button", "Pengajuan Cuti")
+        }
 
         return root
     }
