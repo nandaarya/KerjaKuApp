@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.kerjakuapp.databinding.FragmentServicesBinding
+import com.example.kerjakuapp.ui.izinsakit.IzinSakitActivity
 import com.example.kerjakuapp.ui.pengajuancuti.PengajuanCutiActivity
 import com.example.kerjakuapp.ui.reimbursement.ReimbursementActivity
 import com.example.kerjakuapp.utils.ViewModelFactory
@@ -33,6 +34,8 @@ class ServicesFragment : Fragment() {
         val root: View = binding.root
 
         binding.btnIzinSakit.setOnClickListener{
+            val intent = Intent(requireContext(), IzinSakitActivity::class.java)
+            startActivity(intent)
             Log.d("button", "Izin Sakit")
         }
 
