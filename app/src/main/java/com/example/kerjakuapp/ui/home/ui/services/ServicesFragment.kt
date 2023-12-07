@@ -6,13 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.kerjakuapp.databinding.FragmentServicesBinding
-import com.example.kerjakuapp.ui.home.ui.profile.ProfileViewModel
+import com.example.kerjakuapp.ui.pengajuancuti.PengajuanCutiActivity
 import com.example.kerjakuapp.ui.reimbursement.ReimbursementActivity
-import com.example.kerjakuapp.ui.signup.SignupActivity
 import com.example.kerjakuapp.utils.ViewModelFactory
 
 class ServicesFragment : Fragment() {
@@ -39,6 +37,8 @@ class ServicesFragment : Fragment() {
         }
 
         binding.btnPengajuanCuti.setOnClickListener{
+            val intent = Intent(requireContext(), PengajuanCutiActivity::class.java)
+            startActivity(intent)
             Log.d("button", "Pengajuan Cuti")
         }
 

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import android.widget.Spinner
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kerjakuapp.R
@@ -29,9 +28,9 @@ class ReimbursementActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Set jenis pengeluaran
-        val jenisPengeluaranSpinner = findViewById<Spinner>(R.id.spinner_jenis_pengeluaran)
         val jenisPengeluaranList = listOf("Transportasi", "Makanan", "Akomodasi", "Lain-lain")
-        jenisPengeluaranSpinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, jenisPengeluaranList)
+        binding.spinnerJenisPengeluaran.adapter =
+            ArrayAdapter(this, android.R.layout.simple_spinner_item, jenisPengeluaranList)
 
         val edtNominalPengeluaran = findViewById<EditText>(R.id.edt_nominal_pengeluaran)
         val keteranganEditText = findViewById<EditText>(R.id.edt_keterangan)
@@ -59,16 +58,20 @@ class ReimbursementActivity : AppCompatActivity() {
         }
 
         binding.btnSimpan.setOnClickListener {
-            val jenisPengeluaran = jenisPengeluaranSpinner.selectedItem.toString()
+            val jenisPengeluaran = binding.spinnerJenisPengeluaran.selectedItem.toString()
             val nominalPengeluaran = edtNominalPengeluaran.text.toString().toInt()
             val keterangan = keteranganEditText.text.toString()
 
             // Simpan data reimbursement
-            Log.d("button", "Ajukan Reimbursement. Data: $jenisPengeluaran, $nominalPengeluaran, $keterangan, $selectedDate")
+            Log.d(
+                "button",
+                "Ajukan Reimbursement. Data: $jenisPengeluaran, $nominalPengeluaran, $keterangan, $selectedDate"
+            )
         }
 
         binding.btnUploadBukti.setOnClickListener { startCamera() }
     }
+
     @Suppress("DEPRECATION")
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()

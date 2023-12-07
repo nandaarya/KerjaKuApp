@@ -20,10 +20,14 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.kerjakuapp.GeofenceBroadcastReceiver
 import com.example.kerjakuapp.R
 import com.example.kerjakuapp.databinding.FragmentHomeBinding
 import com.example.kerjakuapp.ui.clockin.ClockInActivity
+import com.example.kerjakuapp.ui.home.ui.services.ServicesFragment
+import com.example.kerjakuapp.ui.reimbursement.ReimbursementActivity
 import com.example.kerjakuapp.utils.ViewModelFactory
 import com.example.kerjakuapp.utils.getCurrentDate
 import com.example.kerjakuapp.utils.getCurrentDayOfWeek
@@ -116,6 +120,10 @@ class HomeFragment : Fragment() {
                 }
             }
         }, 0, 60000)
+
+        binding.cvIdentityLayout.setOnClickListener {
+//            findNavController().navigate(R.id.navigation_profile)
+        }
 
         binding.btnClockIn.setOnClickListener {
             val intent = Intent(requireContext(), ClockInActivity::class.java)
