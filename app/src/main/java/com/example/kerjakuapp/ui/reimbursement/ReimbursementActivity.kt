@@ -1,20 +1,23 @@
 package com.example.kerjakuapp.ui.reimbursement
 
 import android.app.DatePickerDialog
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kerjakuapp.R
 import com.example.kerjakuapp.databinding.ActivityReimbursementBinding
+import com.example.kerjakuapp.utils.getImageUri
 import java.util.Calendar
 
 class ReimbursementActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityReimbursementBinding
+    private var currentImageUri: Uri? = null
     private var selectedDate: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +58,7 @@ class ReimbursementActivity : AppCompatActivity() {
             datePickerDialog.show()
         }
 
-        findViewById<Button>(R.id.btn_simpan).setOnClickListener {
+        binding.btnSimpan.setOnClickListener {
             val jenisPengeluaran = jenisPengeluaranSpinner.selectedItem.toString()
             val nominalPengeluaran = edtNominalPengeluaran.text.toString().toInt()
             val keterangan = keteranganEditText.text.toString()
@@ -63,10 +66,31 @@ class ReimbursementActivity : AppCompatActivity() {
             // Simpan data reimbursement
             Log.d("button", "Ajukan Reimbursement. Data: $jenisPengeluaran, $nominalPengeluaran, $keterangan, $selectedDate")
         }
+
+        binding.btnUploadBukti.setOnClickListener { startCamera() }
     }
     @Suppress("DEPRECATION")
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    private fun startCamera() {
+        currentImageUri = getImageUri(this)
+        launcherIntentCamera.launch(currentImageUri)
+    }
+
+    private val launcherIntentCamera = registerForActivityResult(
+        ActivityResultContracts.TakePicture()
+    ) { isSuccess ->
+        if (isSuccess) {
+            showImage()
+        }
+    }
+
+    private fun showImage() {
+        currentImageUri?.let {
+            binding.ivPreviewBukti.setImageURI(it)
+        }
     }
 }
