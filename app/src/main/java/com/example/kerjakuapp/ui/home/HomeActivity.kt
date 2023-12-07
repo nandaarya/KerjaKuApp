@@ -29,8 +29,8 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
 
-    private val centerLat = -7.778558
-    private val centerLng = 110.399779
+    private val centerLat = -7.779522
+    private val centerLng = 110.391010
     private val geofenceRadius = 50 // meter
 
     private lateinit var geofencingClient: GeofencingClient

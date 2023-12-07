@@ -41,4 +41,10 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_services">Services</string>
     <string name="title_profile">Profile</string>
+    <string name="jenis_pengeluaran">Jenis Pengeluaran</string>
+    <string name="nominal_pengeluaran">Pengeluaran</string>
+    <string name="keterangan">Keterangan</string>
+    <string name="simpan">Ajukan Reimbursement</string>
+    <string name="upload_foto">Upload Bukti</string>
+    <string name="tanggal_pengeluaran">Tanggal Pengeluaran</string>
 </resources>
