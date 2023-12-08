@@ -12,6 +12,7 @@ import com.example.kerjakuapp.databinding.FragmentServicesBinding
 import com.example.kerjakuapp.ui.izinsakit.IzinSakitActivity
 import com.example.kerjakuapp.ui.pengajuancuti.PengajuanCutiActivity
 import com.example.kerjakuapp.ui.reimbursement.ReimbursementActivity
+import com.example.kerjakuapp.ui.riwayatpengajuancuti.RiwayatPengajuanCutiActivity
 import com.example.kerjakuapp.utils.ViewModelFactory
 
 class ServicesFragment : Fragment() {
@@ -51,6 +52,11 @@ class ServicesFragment : Fragment() {
             Log.d("button", "Reimbursement")
         }
 
+        binding.btnRiwayatPengajuanCuti.setOnClickListener{
+            val intent = Intent(requireContext(), RiwayatPengajuanCutiActivity::class.java)
+            startActivity(intent)
+            Log.d("button", "Riwayat Pengajuan Cuti")
+        }
 
         return root
     }
