@@ -27,9 +27,8 @@ class PengajuanCutiActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val jenisCutiList = listOf(
-            "Cuti sakit",
+            "Cuti untuk ambil Hak Cuti",
             "Cuti karena alasan penting",
-            "Cuti menikah",
             "Cuti melahirkan",
             "Cuti menikah",
             "Cuti untuk keperluan dinas"

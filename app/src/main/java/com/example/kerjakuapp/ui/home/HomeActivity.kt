@@ -28,9 +28,9 @@ import com.google.android.gms.location.LocationServices
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
-
-    private val centerLat = -7.779522
-    private val centerLng = 110.391010
+    //koordinat kos (-7.778558, 110.399779)
+    private val centerLat = -7.773271
+    private val centerLng = 110.401591
     private val geofenceRadius = 50 // meter
 
     private lateinit var geofencingClient: GeofencingClient

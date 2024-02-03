@@ -54,8 +54,9 @@ class HomeFragment : Fragment() {
     private val fastestInterval: Long = 5000 // 5 seconds
     private val requestPermissionCode = 999
 
-    private val centerLat = -7.778558
-    private val centerLng = 110.399779
+    //koordinat kos (-7.778558, 110.399779)
+    private val centerLat = -7.773271
+    private val centerLng = 110.401591
     private val geofenceRadius = 50 // meter
 
     private lateinit var geofencingClient: GeofencingClient
