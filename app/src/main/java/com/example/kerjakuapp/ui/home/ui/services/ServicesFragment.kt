@@ -35,6 +35,16 @@ class ServicesFragment : Fragment() {
         val root: View = binding.root
 
         val servicesPegawai = binding.servicesPegawai
+        val servicesAdmin = binding.servicesAdmin
+
+        // Atur visibilitas berdasarkan kondisi
+        if ("admin" == "admin") {
+            servicesAdmin.root.visibility = View.VISIBLE
+            servicesPegawai.root.visibility = View.GONE
+        } else {
+            servicesAdmin.root.visibility = View.GONE
+            servicesPegawai.root.visibility = View.VISIBLE
+        }
 
         servicesPegawai.btnIzinSakit.setOnClickListener{
             val intent = Intent(requireContext(), IzinSakitActivity::class.java)
