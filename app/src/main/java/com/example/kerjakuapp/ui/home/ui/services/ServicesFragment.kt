@@ -34,25 +34,27 @@ class ServicesFragment : Fragment() {
         _binding = FragmentServicesBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.btnIzinSakit.setOnClickListener{
+        val servicesPegawai = binding.servicesPegawai
+
+        servicesPegawai.btnIzinSakit.setOnClickListener{
             val intent = Intent(requireContext(), IzinSakitActivity::class.java)
             startActivity(intent)
             Log.d("button", "Izin Sakit")
         }
 
-        binding.btnPengajuanCuti.setOnClickListener{
+        servicesPegawai.btnPengajuanCuti.setOnClickListener{
             val intent = Intent(requireContext(), PengajuanCutiActivity::class.java)
             startActivity(intent)
             Log.d("button", "Pengajuan Cuti")
         }
 
-        binding.btnReimbursement.setOnClickListener{
+        servicesPegawai.btnReimbursement.setOnClickListener{
             val intent = Intent(requireContext(), ReimbursementActivity::class.java)
             startActivity(intent)
             Log.d("button", "Reimbursement")
         }
 
-        binding.btnRiwayatPengajuanCuti.setOnClickListener{
+        servicesPegawai.btnRiwayatPengajuanCuti.setOnClickListener{
             val intent = Intent(requireContext(), RiwayatPengajuanCutiActivity::class.java)
             startActivity(intent)
             Log.d("button", "Riwayat Pengajuan Cuti")
