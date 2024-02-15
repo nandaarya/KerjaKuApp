@@ -10,9 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.kerjakuapp.databinding.FragmentServicesBinding
 import com.example.kerjakuapp.ui.izinsakit.IzinSakitActivity
+import com.example.kerjakuapp.ui.izinsakitpegawai.IzinSakitPegawaiActivity
 import com.example.kerjakuapp.ui.pengajuancuti.PengajuanCutiActivity
 import com.example.kerjakuapp.ui.reimbursement.ReimbursementActivity
+import com.example.kerjakuapp.ui.reviewpengajuancuti.ReviewPengajuanCutiActivity
+import com.example.kerjakuapp.ui.reviewreimbursement.ReviewReimbursementActivity
 import com.example.kerjakuapp.ui.riwayatpengajuancuti.RiwayatPengajuanCutiActivity
+import com.example.kerjakuapp.ui.tambahpegawai.TambahPegawaiActivity
 import com.example.kerjakuapp.utils.ViewModelFactory
 
 class ServicesFragment : Fragment() {
@@ -46,6 +50,7 @@ class ServicesFragment : Fragment() {
             servicesPegawai.root.visibility = View.VISIBLE
         }
 
+        // kode untuk menu user pegawai
         servicesPegawai.btnIzinSakit.setOnClickListener{
             val intent = Intent(requireContext(), IzinSakitActivity::class.java)
             startActivity(intent)
@@ -68,6 +73,31 @@ class ServicesFragment : Fragment() {
             val intent = Intent(requireContext(), RiwayatPengajuanCutiActivity::class.java)
             startActivity(intent)
             Log.d("button", "Riwayat Pengajuan Cuti")
+        }
+
+        // kode untuk menu user admin
+        servicesAdmin.btnTambahPegawai.setOnClickListener {
+            val intent = Intent(requireContext(), TambahPegawaiActivity::class.java)
+            startActivity(intent)
+            Log.d("button", "Tambah Pegawai")
+        }
+
+        servicesAdmin.btnReviewPengajuanCuti.setOnClickListener {
+            val intent = Intent(requireContext(), ReviewPengajuanCutiActivity::class.java)
+            startActivity(intent)
+            Log.d("button", "Review Pengajuan Cuti")
+        }
+
+        servicesAdmin.btnIzinSakitPegawai.setOnClickListener {
+            val intent = Intent(requireContext(), IzinSakitPegawaiActivity::class.java)
+            startActivity(intent)
+            Log.d("button", "Izin Sakit Pegawai")
+        }
+
+        servicesAdmin.btnReviewReimbursement.setOnClickListener {
+            val intent = Intent(requireContext(), ReviewReimbursementActivity::class.java)
+            startActivity(intent)
+            Log.d("button", "Review Reimbursement")
         }
 
         return root
