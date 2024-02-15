@@ -1,19 +1,19 @@
-package com.example.kerjakuapp.ui.tambahpegawai
+package com.example.kerjakuapp.ui.reviewreimbursement
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.kerjakuapp.databinding.ActivityTambahPegawaiBinding
+import com.example.kerjakuapp.databinding.ActivityReviewReimbursementBinding
 
-class TambahPegawaiActivity : AppCompatActivity() {
+class ReviewReimbursementActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityTambahPegawaiBinding
+    lateinit var binding: ActivityReviewReimbursementBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTambahPegawaiBinding.inflate(layoutInflater)
+        binding = ActivityReviewReimbursementBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportActionBar?.title = "Tambah Pegawai"
+        supportActionBar?.title = "Review Reimbursement"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
