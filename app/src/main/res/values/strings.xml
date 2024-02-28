@@ -47,4 +47,5 @@
     <string name="simpan">Ajukan Reimbursement</string>
     <string name="upload_foto">Upload Bukti</string>
     <string name="tanggal_pengeluaran">Tanggal Pengeluaran</string>
+    <string name="upload_foto_pegawai">Upload Foto Pegawai</string>
 </resources>
