@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.ActivityResult
-import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kerjakuapp.databinding.ActivityTambahPegawaiBinding
@@ -29,6 +28,7 @@ class TambahPegawaiActivity : AppCompatActivity() {
 
         binding.btnTanggalMulaiKerjaPicker.setOnClickListener { openDatePicker() }
         binding.btnUploadFotoPegawai.setOnClickListener { startGallery() }
+        binding.btnTambahPegawai.setOnClickListener { tambahPegawai() }
     }
 
     private fun openDatePicker() {
@@ -96,6 +96,10 @@ class TambahPegawaiActivity : AppCompatActivity() {
             Log.d("Image URI", "showImage: $it")
             binding.ivPreview.setImageURI(it)
         }
+    }
+
+    private fun tambahPegawai() {
+
     }
 
     @Suppress("DEPRECATION")
