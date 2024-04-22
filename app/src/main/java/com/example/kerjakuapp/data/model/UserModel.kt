@@ -1,4 +1,4 @@
-package com.example.kerjakuapp.data
+package com.example.kerjakuapp.data.model
 
 data class UserModel(
     val email: String,

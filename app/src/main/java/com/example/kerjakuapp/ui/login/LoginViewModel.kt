@@ -5,7 +5,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.example.kerjakuapp.data.Repository
-import com.example.kerjakuapp.data.UserModel
+import com.example.kerjakuapp.data.model.UserModel
 import com.example.kerjakuapp.data.response.LoginResponse
 import com.example.kerjakuapp.data.Result
 

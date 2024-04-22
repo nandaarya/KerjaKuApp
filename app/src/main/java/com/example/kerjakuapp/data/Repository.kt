@@ -3,6 +3,7 @@ package com.example.kerjakuapp.data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.example.kerjakuapp.data.datastore.UserPreference
+import com.example.kerjakuapp.data.model.UserModel
 import com.example.kerjakuapp.data.response.LoginResponse
 import com.example.kerjakuapp.data.response.RegisterResponse
 import com.example.kerjakuapp.data.retrofit.ApiService
