@@ -29,8 +29,9 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
     //koordinat kos (-7.778558, 110.399779)
-    private val centerLat = -7.773271
-    private val centerLng = 110.401591
+    //    -7.792954389250976, 110.40557157116413 (main-main)
+    private val centerLat = -7.778558
+    private val centerLng = 110.399779
     private val geofenceRadius = 50 // meter
 
     private lateinit var geofencingClient: GeofencingClient
@@ -95,6 +96,9 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        checkForPermission(this)
+        addGeofence()
+
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_home)
@@ -107,9 +111,6 @@ class HomeActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        checkForPermission(this)
-        addGeofence()
     }
 
     @SuppressLint("MissingPermission")

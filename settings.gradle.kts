@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "KerjaKuApp"
 include(":app")
- 
+include(":attendance")
+include(":core")

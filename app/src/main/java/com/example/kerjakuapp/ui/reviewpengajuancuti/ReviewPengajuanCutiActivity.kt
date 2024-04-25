@@ -22,8 +22,8 @@ class ReviewPengajuanCutiActivity : AppCompatActivity() {
     private fun setPengajuanCutiList() {
         val rvPengajuanCutiListAdapter = PengajuanCutiListAdapter()
 
-        binding.rvPengajuanCutiList.layoutManager = LinearLayoutManager(this)
-        binding.rvPengajuanCutiList.adapter = rvPengajuanCutiListAdapter
+        binding.rvReviewPengajuanCutiList.layoutManager = LinearLayoutManager(this)
+        binding.rvReviewPengajuanCutiList.adapter = rvPengajuanCutiListAdapter
 
 //        rvBookListAdapter.addBookList(BookList.bookList)
     }

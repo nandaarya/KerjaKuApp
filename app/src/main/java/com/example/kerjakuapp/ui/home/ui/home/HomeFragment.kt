@@ -55,9 +55,9 @@ class HomeFragment : Fragment() {
     private val requestPermissionCode = 999
 
     //koordinat kos (-7.778558, 110.399779)
-    private val centerLat = -7.773271
-    private val centerLng = 110.401591
-    private val geofenceRadius = 50 // meter
+    private val centerLat = -7.778558
+    private val centerLng = 110.399779
+    private val geofenceRadius = 500 // meter
 
     private lateinit var geofencingClient: GeofencingClient
 

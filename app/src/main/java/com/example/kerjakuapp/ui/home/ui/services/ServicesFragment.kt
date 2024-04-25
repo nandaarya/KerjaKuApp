@@ -42,7 +42,7 @@ class ServicesFragment : Fragment() {
         val servicesAdmin = binding.servicesAdmin
 
         // Atur visibilitas berdasarkan kondisi
-        if ("admin" == "admin") {
+        if ("admin" == "tidak admin") {
             servicesAdmin.root.visibility = View.VISIBLE
             servicesPegawai.root.visibility = View.GONE
         } else {
