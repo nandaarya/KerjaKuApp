@@ -80,7 +80,7 @@ class ReimbursementActivity : AppCompatActivity() {
 
     private fun startCamera() {
         currentImageUri = getImageUri(this)
-        launcherIntentCamera.launch(currentImageUri)
+        launcherIntentCamera.launch(currentImageUri!!)
     }
 
     private val launcherIntentCamera = registerForActivityResult(

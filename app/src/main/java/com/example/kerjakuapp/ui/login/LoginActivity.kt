@@ -14,23 +14,23 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.kerjakuapp.R
 import com.example.kerjakuapp.databinding.ActivityLoginBinding
 import com.example.kerjakuapp.ui.signup.SignupActivity
-import com.example.kerjakuapp.utils.ViewModelFactory
+//import com.example.kerjakuapp.utils.ViewModelFactory
 import com.example.kerjakuapp.data.Result
-import com.example.kerjakuapp.ui.home.HomeActivity
 import com.example.kerjakuapp.ui.main.MainActivity
+//import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var loginViewModel: LoginViewModel
+//    private val loginViewModel: LoginViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
-        loginViewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
+//
+//        val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+//        loginViewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
 
 //        loginViewModel.loginResponse.observe(this) {
 //            when (it) {
@@ -85,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
             // Login without Login API
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
             finish()

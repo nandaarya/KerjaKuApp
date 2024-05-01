@@ -1,84 +1,35 @@
 package com.example.kerjakuapp.ui.main
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.app.PendingIntent
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.provider.Settings
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.example.kerjakuapp.GeofenceBroadcastReceiver
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.example.attendance.utils.startLocationUpdates
 import com.example.kerjakuapp.R
 import com.example.kerjakuapp.databinding.ActivityMainBinding
-import com.example.kerjakuapp.ui.clockin.ClockInActivity
-import com.example.kerjakuapp.utils.getCurrentDate
-import com.example.kerjakuapp.utils.getCurrentDayOfWeek
-import com.example.kerjakuapp.utils.getCurrentTime
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.Geofence
-import com.google.android.gms.location.GeofencingClient
-import com.google.android.gms.location.GeofencingRequest
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.LocationSettingsRequest
-import java.util.Timer
-import java.util.TimerTask
+import com.example.kerjakuapp.utils.checkGPSIsEnabled
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
-@Suppress("DEPRECATION")
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-    private var fusedLocationProviderClient: FusedLocationProviderClient? = null
-    private var longitude: Double = 0.0
-    private var latitude: Double = 0.0
-    private val interval: Long = 10000 // 10seconds
-    private val fastestInterval: Long = 5000 // 5 seconds
-    private lateinit var mLastLocation: Location
-    private lateinit var mLocationRequest: LocationRequest
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = _binding
+
     private val requestPermissionCode = 999
 
-    private lateinit var geofencingClient: GeofencingClient
-
-    // Koordinat Leha-leha
-//    -7.792712, 110.405168
-
-    //koordinat bento nologaten
-    //-7.778558, 110.399779
-
-    private val centerLat = -7.778558
-    private val centerLng = 110.399779
-    private val geofenceRadius = 50 //meter
-
-    private lateinit var currentDayOfWeek: String
-    private lateinit var currentDate: String
-    private lateinit var currentTime: String
-
-    private val geofencePendingIntent: PendingIntent by lazy {
-        val intent = Intent(this, GeofenceBroadcastReceiver::class.java)
-        intent.action = GeofenceBroadcastReceiver.ACTION_GEOFENCE_EVENT
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_MUTABLE)
-        } else {
-            PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        }
+    private val navController by lazy {
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+        navHostFragment.navController
     }
 
     private val requestNotificationPermissionLauncher = registerForActivityResult(
@@ -107,128 +58,24 @@ class MainActivity : AppCompatActivity() {
             if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true && permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true) {
                 // All permissions are granted, proceed with location updates.
                 requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-
-                startLocationUpdates()
             } else {
                 Toast.makeText(this, "Izinkan Aplikasi Mengakses Lokasi", Toast.LENGTH_SHORT).show()
             }
         }
 
-    private val geofenceEventReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            if (intent?.action == GeofenceBroadcastReceiver.ACTION_GEOFENCE_EVENT) {
-                // Geofence event received, update the button or perform any action
-                val geofenceTransition =
-                    intent.getStringExtra(GeofenceBroadcastReceiver.EXTRA_GEOFENCE_TRANSITION)
-                Log.i("Geofence Transition", geofenceTransition.toString())
-                binding.btnClockIn.isEnabled =
-                    geofenceTransition == GeofenceBroadcastReceiver.GEOFENCE_TRANSITION_ENTER || geofenceTransition == GeofenceBroadcastReceiver.GEOFENCE_TRANSITION_DWELL
-            }
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.Q)
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        // Register the broadcast receiver
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-            geofenceEventReceiver, IntentFilter(GeofenceBroadcastReceiver.ACTION_GEOFENCE_EVENT)
-        )
-
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        mLocationRequest = LocationRequest.create()
-
-        checkGPSIsEnabled()
-
-        checkForPermission(this)
-        addGeofence()
-        startLocationUpdates()
-
-        currentDayOfWeek = getCurrentDayOfWeek()
-        currentDate = getCurrentDate()
-
-        val currentDayDate = getString(R.string.day_date_format, currentDayOfWeek, currentDate)
-        binding.tvDayDate.text = currentDayDate
-
-        val timer = Timer()
-        timer.scheduleAtFixedRate(object : TimerTask() {
-            override fun run() {
-                currentTime = getCurrentTime()
-
-                runOnUiThread {
-                    // Update UI on the main thread
-                    binding.tvClock.text = currentTime
-                }
-            }
-        }, 0, 60000)
-
-        binding.btnClockIn.setOnClickListener {
-            val intent = Intent(this, ClockInActivity::class.java)
-            intent.putExtra(EXTRA_NAME, "Nanda Arya Putra")
-            intent.putExtra(EXTRA_ID, "21106050048")
-            intent.putExtra(EXTRA_CURRENT_DAY_DATE, currentDayDate)
-            intent.putExtra(EXTRA_CURRENT_TIME, currentTime)
-            startActivity(intent)
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        fusedLocationProviderClient?.removeLocationUpdates(mLocationCallback)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        checkGPSIsEnabled()
-        startLocationUpdates()
-    }
-
-    override fun onDestroy() {
-        // Unregister the broadcast receiver to avoid memory leaks
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(geofenceEventReceiver)
-        super.onDestroy()
-    }
-
-    private val mLocationCallback = object : LocationCallback() {
-        override fun onLocationResult(locationResult: LocationResult) {
-            locationResult.lastLocation
-            Log.d("MainActivity", "callback: $latitude $longitude")
-            locationResult.lastLocation?.let { locationChanged(it) }
-//            latitude = locationResult.lastLocation?.latitude ?: 0.0
-//            longitude = locationResult.lastLocation?.longitude ?: 0.0
-//            binding.longitudeText.text = "Longitude: $longitude"
-//            binding.latitudeText.text = "Latitude: $latitude"
-        }
-    }
-
-    private fun startLocationUpdates() {
-        mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        mLocationRequest.interval = interval
-        mLocationRequest.fastestInterval = fastestInterval
-
-        val builder = LocationSettingsRequest.Builder()
-        builder.addLocationRequest(mLocationRequest)
-        val locationSettingsRequest = builder.build()
-        val settingsClient = LocationServices.getSettingsClient(this)
-        settingsClient.checkLocationSettings(locationSettingsRequest)
-
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-
-        if (ActivityCompat.checkSelfPermission(
-                this, Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this, Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
-        }
-        fusedLocationProviderClient!!.requestLocationUpdates(
-            mLocationRequest, mLocationCallback, Looper.myLooper()!!
-        )
-    }
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        if (requestCode == requestPermissionCode) {
+//            if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+//                // All permissions are granted, proceed with location updates.
+//                startLocationUpdates(this@MainActivity)
+//            } else {
+//                Toast.makeText(this, "Permission Denied 2", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//    }
 
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun checkForPermission(context: Context) {
@@ -241,88 +88,56 @@ class MainActivity : AppCompatActivity() {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            // Permissions are already granted, proceed with location updates.
-            startLocationUpdates()
+//            // Permissions are already granted, proceed with location updates.
+//            startLocationUpdates(this@MainActivity)
         } else {
             // Request permissions.
             requestPermissionLauncher.launch(permissions)
         }
     }
 
-    private fun checkGPSIsEnabled() {
-        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            val builder = AlertDialog.Builder(this)
-            builder.setMessage("The location permission is disabled. Do you want to enable it?")
-                .setCancelable(true)
-                .setPositiveButton("Yes") { _, _ ->
-                    startActivityForResult(
-                        Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 10
-                    )
-                }.setNegativeButton("No") { dialog, _ ->
-                    dialog.cancel()
-                }
-            val alert: AlertDialog = builder.create()
-            alert.show()
-        }
+    @RequiresApi(Build.VERSION_CODES.Q)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
+
+        checkGPSIsEnabled(this@MainActivity)
+        checkForPermission(this@MainActivity)
+//        PermissionUtil.initialize(this@MainActivity)
+        val navView: BottomNavigationView? = binding?.bottomNavigation
+//        navController.addOnDestinationChangedListener { _, destination, _ ->
+//            when (destination.id) {
+//                R.id.detailFragment -> {
+//                    navView?.visibility = View.GONE
+//                    supportActionBar?.apply {
+//                        title = getString(R.string.quote_details)
+//                        setDisplayHomeAsUpEnabled(true)
+//                    }
+//                }
+//                R.id.favoriteFragment -> {
+//                    navView?.visibility = View.VISIBLE
+//                    supportActionBar?.apply {
+//                        title = getString(R.string.favorite_quote)
+//                        setDisplayHomeAsUpEnabled(false)
+//                    }
+//                }
+//                else -> {
+//                    navView?.visibility = View.VISIBLE
+//                    supportActionBar?.apply {
+//                        title = getString(R.string.app_name)
+//                        setDisplayHomeAsUpEnabled(false)
+//                    }
+//                }
+//            }
+//        }
+
+        binding?.bottomNavigation?.setupWithNavController(navController)
     }
 
-    fun locationChanged(location: Location) {
-        mLastLocation = location
-//        longitude = mLastLocation.longitude
-//        latitude = mLastLocation.latitude
-//        binding.longitudeText.text = "Longitude: $longitude"
-//        binding.latitudeText.text = "Latitude: $latitude"
-//        Log.d("MainActivity", "function: $latitude $longitude")
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == requestPermissionCode) {
-            if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                // All permissions are granted, proceed with location updates.
-                startLocationUpdates()
-            } else {
-                Toast.makeText(this, "Permission Denied 2", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    @SuppressLint("MissingPermission")
-    private fun addGeofence() {
-        geofencingClient = LocationServices.getGeofencingClient(this)
-
-        val geofence = Geofence.Builder().setRequestId("kantor").setCircularRegion(
-            centerLat, centerLng, geofenceRadius.toFloat()
-        ).setExpirationDuration(Geofence.NEVER_EXPIRE)
-            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL or Geofence.GEOFENCE_TRANSITION_ENTER)
-            .setLoiteringDelay(5000).build()
-
-        val geofencingRequest =
-            GeofencingRequest.Builder().setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
-                .addGeofence(geofence).build()
-
-        geofencingClient.removeGeofences(geofencePendingIntent).run {
-            addOnCompleteListener {
-                geofencingClient.addGeofences(geofencingRequest, geofencePendingIntent).run {
-                    addOnSuccessListener {
-                        showToast("Area Telah Terpasang")
-                    }
-                    addOnFailureListener {
-                        showToast("Area Belum Terpasang. Tunggu Sebentar.")
-                        Handler().postDelayed({
-                            addGeofence()
-                        }, 10000)
-                    }
-                }
-            }
-        }
-    }
-
-    private fun showToast(text: String) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     companion object {

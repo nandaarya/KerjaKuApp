@@ -17,6 +17,7 @@
         android:maxSdkVersion="32" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -50,10 +51,10 @@
         <activity
             android:name=".ui.reimbursement.ReimbursementActivity"
             android:exported="false" />
-        <activity
-            android:name=".ui.home.HomeActivity"
-            android:exported="false"
-            android:label="@string/title_activity_home" />
+<!--        <activity-->
+<!--            android:name=".ui.home.HomeActivity"-->
+<!--            android:exported="false"-->
+<!--            android:label="@string/title_activity_home" />-->
         <activity
             android:name=".ui.signup.SignupActivity"
             android:exported="false" />
@@ -74,11 +75,6 @@
         <activity
             android:name=".ui.clockin.ClockInActivity"
             android:exported="false" />
-
-        <receiver
-            android:name=".GeofenceBroadcastReceiver"
-            android:enabled="true"
-            android:exported="true" />
 
         <activity
             android:name=".ui.main.MainActivity"

@@ -14,49 +14,50 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.example.kerjakuapp.R
 import com.example.kerjakuapp.databinding.ActivitySignupBinding
-import com.example.kerjakuapp.utils.ViewModelFactory
+//import com.example.kerjakuapp.utils.ViewModelFactory
 import com.example.kerjakuapp.data.Result
 import com.example.kerjakuapp.ui.login.LoginActivity
+//import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignupActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignupBinding
-    private lateinit var signupViewModel: SignupViewModel
+//    private val signupViewModel: SignupViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
-        signupViewModel = ViewModelProvider(this, factory)[SignupViewModel::class.java]
+//        val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+//        signupViewModel = ViewModelProvider(this, factory)[SignupViewModel::class.java]
 
-        signupViewModel.registerResponse.observe(this) {
-            when (it) {
-                is Result.Loading -> {
-                    showLoading(true)
-                }
-                is Result.Success -> {
-                    showLoading(false)
-                    AlertDialog.Builder(this).apply {
-                        setTitle("Yeah!")
-                        setMessage(getString(R.string.register_dialog_message))
-                        setCancelable(false)
-                        setPositiveButton(getString(R.string.dialog_positive_button)) { _, _ ->
-                            val intent = Intent(context, LoginActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        }
-                        create()
-                        show()
-                    }
-                }
-                is Result.Error -> {
-                    registerFailedToast()
-                    showLoading(false)
-                }
-            }
-        }
+//        signupViewModel.registerResponse.observe(this) {
+//            when (it) {
+//                is Result.Loading -> {
+//                    showLoading(true)
+//                }
+//                is Result.Success -> {
+//                    showLoading(false)
+//                    AlertDialog.Builder(this).apply {
+//                        setTitle("Yeah!")
+//                        setMessage(getString(R.string.register_dialog_message))
+//                        setCancelable(false)
+//                        setPositiveButton(getString(R.string.dialog_positive_button)) { _, _ ->
+//                            val intent = Intent(context, LoginActivity::class.java)
+//                            startActivity(intent)
+//                            finish()
+//                        }
+//                        create()
+//                        show()
+//                    }
+//                }
+//                is Result.Error -> {
+//                    registerFailedToast()
+//                    showLoading(false)
+//                }
+//            }
+//        }
 
         setupView()
         setupAction()
@@ -83,7 +84,7 @@ class SignupActivity : AppCompatActivity() {
                     val name = etName.text.toString().trim()
                     val email = etEmail.text.toString().trim()
                     val password = etPassword.text.toString().trim()
-                    signupViewModel.register(name, email, password)
+//                    signupViewModel.register(name, email, password)
                 } else {
                     registerFailedToast()
                 }

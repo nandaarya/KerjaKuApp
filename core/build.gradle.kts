@@ -4,7 +4,11 @@ import java.io.FileInputStream
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("com.google.dagger.hilt.android")
+    id("com.google.devtools.ksp")
 }
+
+apply("../shared_dependencies.gradle")
 
 android {
     namespace = "com.example.core"
@@ -60,8 +64,4 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
-
-    // koin
-    api("io.insert-koin:koin-core:3.3.2")
-    api("io.insert-koin:koin-android:3.3.2")
 }
