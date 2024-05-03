@@ -5,13 +5,13 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.example.attendance.utils.startLocationUpdates
 import com.example.kerjakuapp.R
 import com.example.kerjakuapp.databinding.ActivityMainBinding
 import com.example.kerjakuapp.utils.checkGPSIsEnabled
@@ -24,8 +24,6 @@ class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding
 
-    private val requestPermissionCode = 999
-
     private val navController by lazy {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
@@ -36,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (isGranted) {
-            requestBackgroundLocationPermissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
             Toast.makeText(this, "Notifications permission granted", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(this, "Notifications permission rejected", Toast.LENGTH_SHORT).show()
@@ -51,31 +48,21 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Background Location Permission Denied", Toast.LENGTH_SHORT)
                     .show()
             }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
         }
 
-    private val requestPermissionLauncher =
+    private val requestLocationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true && permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true) {
-                // All permissions are granted, proceed with location updates.
-                requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    requestBackgroundLocationPermissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                }
             } else {
                 Toast.makeText(this, "Izinkan Aplikasi Mengakses Lokasi", Toast.LENGTH_SHORT).show()
             }
         }
-
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
-//    ) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        if (requestCode == requestPermissionCode) {
-//            if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-//                // All permissions are granted, proceed with location updates.
-//                startLocationUpdates(this@MainActivity)
-//            } else {
-//                Toast.makeText(this, "Permission Denied 2", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    }
 
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun checkForPermission(context: Context) {
@@ -88,11 +75,11 @@ class MainActivity : AppCompatActivity() {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-//            // Permissions are already granted, proceed with location updates.
-//            startLocationUpdates(this@MainActivity)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                requestBackgroundLocationPermissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+            }
         } else {
-            // Request permissions.
-            requestPermissionLauncher.launch(permissions)
+            requestLocationPermissionLauncher.launch(permissions)
         }
     }
 

@@ -24,7 +24,7 @@ object PermissionUtil {
 //        }
 //    }
 //
-//    fun checkLocationPermission(onPermissionGranted: () -> Unit) {
+//    private fun checkLocationPermission(onPermissionGranted: () -> Unit) {
 //        Log.d("Permission", "Location Permission")
 //        val permissions = arrayOf(
 //            Manifest.permission.ACCESS_FINE_LOCATION,
@@ -64,7 +64,7 @@ object PermissionUtil {
 //        }
 //    }
 //
-//    fun checkNotificationPermission(onPermissionGranted: () -> Unit) {
+//    private fun checkNotificationPermission(onPermissionGranted: () -> Unit) {
 //        val permission = Manifest.permission.POST_NOTIFICATIONS
 //
 //        if (ContextCompat.checkSelfPermission(
@@ -103,7 +103,7 @@ object PermissionUtil {
 //        }
 //    }
 //
-//    fun checkBackgroundLocationPermission(onPermissionGranted: () -> Unit) {
+//    private fun checkBackgroundLocationPermission(onPermissionGranted: () -> Unit) {
 //        val permission = Manifest.permission.ACCESS_BACKGROUND_LOCATION
 //
 //        if (ContextCompat.checkSelfPermission(
