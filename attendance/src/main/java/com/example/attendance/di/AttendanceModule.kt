@@ -1,6 +1,6 @@
 package com.example.attendance.di
 
-//import com.example.attendance.ui.AttendanceViewModel
+//import com.example.attendance.ui.attendance.AttendanceViewModel
 //import org.koin.androidx.viewmodel.dsl.viewModel
 //import org.koin.dsl.module
 //

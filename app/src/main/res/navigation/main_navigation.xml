@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/attendanceFragment"
-        android:name="com.example.attendance.ui.AttendanceFragment"
+        android:name="com.example.attendance.ui.attendance.AttendanceFragment"
         tools:layout="@layout/fragment_attendance" >
     </fragment>
 </navigation>

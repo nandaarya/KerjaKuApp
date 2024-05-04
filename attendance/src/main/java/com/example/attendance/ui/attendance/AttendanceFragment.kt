@@ -1,4 +1,4 @@
-package com.example.attendance.ui
+package com.example.attendance.ui.attendance
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -16,9 +16,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.attendance.databinding.FragmentAttendanceBinding
 import com.example.attendance.utils.GeofenceBroadcastReceiver
 import com.example.attendance.utils.addGeofence
-import com.example.attendance.utils.startLocationUpdates
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.qualifiers.ActivityContext
 
 @AndroidEntryPoint
 class AttendanceFragment : Fragment() {

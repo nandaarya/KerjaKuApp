@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         navHostFragment.navController
     }
 
+    // Still find a way to separate the permission request
     private val requestNotificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -92,6 +93,8 @@ class MainActivity : AppCompatActivity() {
         checkGPSIsEnabled(this@MainActivity)
         checkForPermission(this@MainActivity)
 //        PermissionUtil.initialize(this@MainActivity)
+
+
         val navView: BottomNavigationView? = binding?.bottomNavigation
 //        navController.addOnDestinationChangedListener { _, destination, _ ->
 //            when (destination.id) {
