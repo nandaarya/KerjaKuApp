@@ -8,6 +8,15 @@
     <fragment
         android:id="@+id/attendanceFragment"
         android:name="com.example.attendance.ui.attendance.AttendanceFragment"
-        tools:layout="@layout/fragment_attendance" >
+        tools:layout="@layout/fragment_attendance">
+        <action
+            android:id="@+id/action_attendanceFragment_to_clockInFragment"
+            app:destination="@id/clockInFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/clockInFragment"
+        android:name="com.example.attendance.ui.clockin.ClockInFragment"
+        android:label="ClockInFragment" />
+
 </navigation>

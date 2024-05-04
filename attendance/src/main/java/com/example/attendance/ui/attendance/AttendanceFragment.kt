@@ -61,6 +61,22 @@ class AttendanceFragment : Fragment() {
         addGeofence(context)
     }
 
+    private fun setupButton() {
+        binding?.btnClockIn?.setOnClickListener {
+//            val bundle = bundleOf(DetailFragment.QUOTE_DATA_KEY to quote)
+//            findNavController().navigate(R.id., bundle)
+
+            //        binding.btnClockIn.setOnClickListener {
+//            val intent = Intent(requireContext(), ClockInActivity::class.java)
+//            intent.putExtra(EXTRA_NAME, "Nanda Arya Putra")
+//            intent.putExtra(EXTRA_ID, "21106050048")
+//            intent.putExtra(EXTRA_CURRENT_DAY_DATE, currentDayDate)
+//            intent.putExtra(EXTRA_CURRENT_TIME, currentTime)
+//            startActivity(intent)
+//        }
+        }
+    }
+
     private fun registerGeofenceReceiver(context: Context) {
         LocalBroadcastManager.getInstance(context)
             .registerReceiver(

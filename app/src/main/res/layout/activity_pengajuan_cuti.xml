@@ -158,7 +158,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_upload_bukti"
-            app:srcCompat="@drawable/ic_place_holder" />
+            app:srcCompat="@drawable/ic_image_placeholder" />
 
         <Button
             android:id="@+id/btn_ajukan_cuti"

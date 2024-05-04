@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -93,7 +92,6 @@ class MainActivity : AppCompatActivity() {
         checkGPSIsEnabled(this@MainActivity)
         checkForPermission(this@MainActivity)
 //        PermissionUtil.initialize(this@MainActivity)
-
 
         val navView: BottomNavigationView? = binding?.bottomNavigation
 //        navController.addOnDestinationChangedListener { _, destination, _ ->

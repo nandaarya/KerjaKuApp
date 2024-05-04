@@ -1,7 +1,16 @@
 <resources>
+    <!--  String for AttendanceFragment  -->
     <string name="default_time">--:--</string>
     <string name="clock_in">Clock In</string>
     <string name="clock_out">Clock Out</string>
     <string name="clock_image">Gambar Jam</string>
     <string name="day_date_format">%1$s, %2$s</string>
+    <!-- String for ClockInFragment -->
+    <string name="selfie_image">Foto Selfie</string>
+    <string name="camera">Kamera</string>
+    <string name="upload">Upload</string>
+    <string name="name_placeholder">Nama: %s</string>
+    <string name="id_placeholder">Nomor ID: %s</string>
+    <string name="day_date_placeholder">Hari, Tanggal: %s</string>
+    <string name="time_placeholder">Waktu: %s</string>
 </resources>
