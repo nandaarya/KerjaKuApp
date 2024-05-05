@@ -5,6 +5,9 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -94,15 +97,21 @@ class MainActivity : AppCompatActivity() {
 //        PermissionUtil.initialize(this@MainActivity)
 
         val navView: BottomNavigationView? = binding?.bottomNavigation
-//        navController.addOnDestinationChangedListener { _, destination, _ ->
-//            when (destination.id) {
-//                R.id.detailFragment -> {
-//                    navView?.visibility = View.GONE
-//                    supportActionBar?.apply {
-//                        title = getString(R.string.quote_details)
-//                        setDisplayHomeAsUpEnabled(true)
-//                    }
-//                }
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.splashscreenFragment, R.id.loginFragment -> {
+                    navView?.visibility = View.GONE
+                    supportActionBar?.hide()
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        window.insetsController?.hide(WindowInsets.Type.statusBars())
+                    } else {
+                        window.setFlags(
+                            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                            WindowManager.LayoutParams.FLAG_FULLSCREEN
+                        )
+                    }
+                }
 //                R.id.favoriteFragment -> {
 //                    navView?.visibility = View.VISIBLE
 //                    supportActionBar?.apply {
@@ -110,15 +119,16 @@ class MainActivity : AppCompatActivity() {
 //                        setDisplayHomeAsUpEnabled(false)
 //                    }
 //                }
-//                else -> {
-//                    navView?.visibility = View.VISIBLE
-//                    supportActionBar?.apply {
-//                        title = getString(R.string.app_name)
-//                        setDisplayHomeAsUpEnabled(false)
-//                    }
-//                }
-//            }
-//        }
+                else -> {
+                    navView?.visibility = View.VISIBLE
+                    supportActionBar?.show()
+                    supportActionBar?.apply {
+                        title = getString(R.string.app_name)
+                        setDisplayHomeAsUpEnabled(false)
+                    }
+                }
+            }
+        }
 
         binding?.bottomNavigation?.setupWithNavController(navController)
     }
