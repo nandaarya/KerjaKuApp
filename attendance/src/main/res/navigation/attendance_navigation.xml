@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/attendance_navigation"
+    app:startDestination="@id/attendanceFragment">
+
+    <fragment
+        android:id="@+id/attendanceFragment"
+        android:name="com.example.attendance.ui.attendance.AttendanceFragment"
+        android:label="fragment_attendance"
+        tools:layout="@layout/fragment_attendance">
+        <action
+            android:id="@+id/action_attendanceFragment_to_clockInFragment"
+            app:destination="@id/clockInFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/clockInFragment"
+        android:name="com.example.attendance.ui.clockin.ClockInFragment"
+        android:label="fragment_clock_in"
+        tools:layout="@layout/fragment_clock_in" />
+
+</navigation>

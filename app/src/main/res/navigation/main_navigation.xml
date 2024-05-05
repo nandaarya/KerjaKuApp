@@ -3,20 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/attendanceFragment">
+    app:startDestination="@id/splashscreenFragment">
+
+    <include app:graph="@navigation/attendance_navigation" />
 
     <fragment
-        android:id="@+id/attendanceFragment"
-        android:name="com.example.attendance.ui.attendance.AttendanceFragment"
-        tools:layout="@layout/fragment_attendance">
+        android:id="@+id/splashscreenFragment"
+        android:name="com.example.kerjakuapp.ui.splashscreen.SplashscreenFragment"
+        android:label="fragment_splashscreen"
+        tools:layout="@layout/fragment_splashscreen" >
         <action
-            android:id="@+id/action_attendanceFragment_to_clockInFragment"
-            app:destination="@id/clockInFragment" />
+            android:id="@+id/action_splashscreenFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/clockInFragment"
-        android:name="com.example.attendance.ui.clockin.ClockInFragment"
-        android:label="ClockInFragment" />
+        android:id="@+id/loginFragment"
+        android:name="com.example.kerjakuapp.ui.login.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_attendance_navigation"
+            app:destination="@id/attendance_navigation" />
+    </fragment>
+
 
 </navigation>

@@ -48,4 +48,6 @@
     <string name="upload_foto">Upload Bukti</string>
     <string name="tanggal_pengeluaran">Tanggal Pengeluaran</string>
     <string name="upload_foto_pegawai">Upload Foto Pegawai</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

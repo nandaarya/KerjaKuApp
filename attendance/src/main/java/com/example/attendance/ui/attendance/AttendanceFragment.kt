@@ -13,6 +13,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.navigation.fragment.findNavController
+import com.example.attendance.R
 import com.example.attendance.databinding.FragmentAttendanceBinding
 import com.example.attendance.utils.GeofenceBroadcastReceiver
 import com.example.attendance.utils.addGeofence
@@ -40,6 +42,7 @@ class AttendanceFragment : Fragment() {
 
         setupLocation(requireContext())
         registerGeofenceReceiver(requireContext())
+        setupButton()
     }
 
     private val geofenceEventReceiver = object : BroadcastReceiver() {
@@ -64,7 +67,7 @@ class AttendanceFragment : Fragment() {
     private fun setupButton() {
         binding?.btnClockIn?.setOnClickListener {
 //            val bundle = bundleOf(DetailFragment.QUOTE_DATA_KEY to quote)
-//            findNavController().navigate(R.id., bundle)
+            findNavController().navigate(R.id.action_attendanceFragment_to_clockInFragment)
 
             //        binding.btnClockIn.setOnClickListener {
 //            val intent = Intent(requireContext(), ClockInActivity::class.java)
