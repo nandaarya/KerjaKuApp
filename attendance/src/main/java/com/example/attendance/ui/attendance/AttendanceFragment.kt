@@ -18,7 +18,12 @@ import com.example.attendance.R
 import com.example.attendance.databinding.FragmentAttendanceBinding
 import com.example.attendance.utils.GeofenceBroadcastReceiver
 import com.example.attendance.utils.addGeofence
+import com.example.attendance.utils.getCurrentDate
+import com.example.attendance.utils.getCurrentDayOfWeek
+import com.example.attendance.utils.getCurrentTime
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Timer
+import java.util.TimerTask
 
 @AndroidEntryPoint
 class AttendanceFragment : Fragment() {
@@ -28,6 +33,10 @@ class AttendanceFragment : Fragment() {
     private var _binding: FragmentAttendanceBinding? = null
 
     private val binding get() = _binding
+
+    private lateinit var currentDayOfWeek: String
+    private lateinit var currentDate: String
+    private lateinit var currentTime: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +52,7 @@ class AttendanceFragment : Fragment() {
         setupLocation(requireContext())
         registerGeofenceReceiver(requireContext())
         setupButton()
+        setupTime()
     }
 
     private val geofenceEventReceiver = object : BroadcastReceiver() {
@@ -62,6 +72,27 @@ class AttendanceFragment : Fragment() {
 
     private fun setupLocation(context: Context) {
         addGeofence(context)
+    }
+
+    private fun setupTime() {
+        currentDayOfWeek = getCurrentDayOfWeek()
+        currentDate = getCurrentDate()
+
+        val currentDayDate = getString(R.string.day_date_format, currentDayOfWeek, currentDate)
+        binding?.tvDayDate?.text = currentDayDate
+
+        val timer = Timer()
+        timer.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                currentTime = getCurrentTime()
+
+                if (_binding != null) {
+                    requireActivity().runOnUiThread {
+                        binding?.tvClock?.text = currentTime
+                    }
+                }
+            }
+        }, 0, 60000)
     }
 
     private fun setupButton() {

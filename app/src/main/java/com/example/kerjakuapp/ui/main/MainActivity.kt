@@ -6,8 +6,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -102,23 +100,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.splashscreenFragment, R.id.loginFragment -> {
                     navView?.visibility = View.GONE
                     supportActionBar?.hide()
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                        window.insetsController?.hide(WindowInsets.Type.statusBars())
-                    } else {
-                        window.setFlags(
-                            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                            WindowManager.LayoutParams.FLAG_FULLSCREEN
-                        )
+                }
+                com.example.attendance.R.id.clockInFragment -> {
+                    navView?.visibility = View.GONE
+                    supportActionBar?.apply {
+                        title = getString(com.example.attendance.R.string.clock_in)
+                        setDisplayHomeAsUpEnabled(true)
                     }
                 }
-//                R.id.favoriteFragment -> {
-//                    navView?.visibility = View.VISIBLE
-//                    supportActionBar?.apply {
-//                        title = getString(R.string.favorite_quote)
-//                        setDisplayHomeAsUpEnabled(false)
-//                    }
-//                }
                 else -> {
                     navView?.visibility = View.VISIBLE
                     supportActionBar?.show()
@@ -131,6 +120,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding?.bottomNavigation?.setupWithNavController(navController)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        supportFragmentManager.popBackStack()
+        return true
     }
 
     override fun onDestroy() {
