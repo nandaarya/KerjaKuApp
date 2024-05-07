@@ -14,16 +14,21 @@
         tools:layout="@layout/fragment_splashscreen" >
         <action
             android:id="@+id/action_splashscreenFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/splashscreenFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.kerjakuapp.ui.login.LoginFragment"
-        android:label="LoginFragment" >
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_attendance_navigation"
-            app:destination="@id/attendance_navigation" />
+            app:destination="@id/attendance_navigation"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
 
