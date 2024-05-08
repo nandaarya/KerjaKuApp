@@ -43,4 +43,7 @@ dependencies {
     ksp "com.google.dagger:hilt-android-compiler:$hilt_version"
     ksp "com.google.dagger:dagger-compiler:$hilt_version" // Dagger compiler
     ksp "com.google.dagger:hilt-compiler:$hilt_version"   // Hilt compiler
+
+    // Lottie
+    implementation ("com.airbnb.android:lottie:4.1.0")
 }

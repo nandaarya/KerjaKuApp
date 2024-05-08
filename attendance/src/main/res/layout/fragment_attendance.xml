@@ -67,50 +67,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cv_identity_layout" />
 
-    <ImageView
-        android:id="@+id/iv_clock"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lt_working_animation"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_margin="8dp"
-        android:contentDescription="@string/clock_image"
-        android:src="@drawable/ic_baseline_access_time_24"
+        android:layout_margin="16dp"
+        android:layout_centerHorizontal="true"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="workingAnimation.json"
+        app:lottie_loop="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_day_date" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_day_date"/>
 
     <TextView
         android:id="@+id/tv_clock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/default_time"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:layout_margin="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_clock" />
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/latitudeText"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="latitude"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        android:textSize="20sp"-->
-    <!--        android:layout_marginBottom="16dp"/>-->
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/longitudeText"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="longitude"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/latitudeText"-->
-    <!--        android:layout_marginTop="16dp"-->
-    <!--        android:textSize="20sp"/>-->
+        app:layout_constraintTop_toBottomOf="@+id/lt_working_animation" />
 
     <TextView
         android:id="@+id/tv_ClockIn"
@@ -119,7 +98,7 @@
         android:gravity="center"
         android:text="Clock In Time: \n --:--"
         android:textSize="20sp"
-        android:layout_margin="24dp"
+        android:layout_marginVertical="18dp"
         app:layout_constraintEnd_toEndOf="@+id/btn_ClockIn"
         app:layout_constraintStart_toStartOf="@+id/btn_ClockIn"
         app:layout_constraintTop_toBottomOf="@+id/tv_clock" />
@@ -131,7 +110,7 @@
         android:gravity="center"
         android:text="Clock out Time: \n --:--"
         android:textSize="20sp"
-        android:layout_margin="24dp"
+        android:layout_marginVertical="18dp"
         app:layout_constraintEnd_toEndOf="@+id/btn_ClockOut"
         app:layout_constraintStart_toStartOf="@+id/btn_ClockOut"
         app:layout_constraintTop_toBottomOf="@+id/tv_clock" />

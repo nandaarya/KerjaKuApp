@@ -1,6 +1,6 @@
 <resources>
     <!--  String for AttendanceFragment  -->
-    <string name="default_time">--:--</string>
+    <string name="default_time">-- : --</string>
     <string name="clock_in">Clock In</string>
     <string name="clock_out">Clock Out</string>
     <string name="clock_image">Gambar Jam</string>
