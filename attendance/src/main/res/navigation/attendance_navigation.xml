@@ -19,6 +19,23 @@
         android:id="@+id/clockInFragment"
         android:name="com.example.attendance.ui.clockin.ClockInFragment"
         android:label="fragment_clock_in"
-        tools:layout="@layout/fragment_clock_in" />
+        tools:layout="@layout/fragment_clock_in" >
+        <argument
+            android:name="name"
+            app:argType="string"
+            android:defaultValue="-" />
+        <argument
+            android:name="id"
+            app:argType="string"
+            android:defaultValue="-" />
+        <argument
+            android:name="currentDayDate"
+            app:argType="string"
+            android:defaultValue="-" />
+        <argument
+            android:name="currentTime"
+            app:argType="string"
+            android:defaultValue="-" />
+    </fragment>
 
 </navigation>

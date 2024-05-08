@@ -37,10 +37,10 @@ class AttendanceFragment : Fragment() {
     private lateinit var currentDayOfWeek: String
     private lateinit var currentDate: String
     private lateinit var currentTime: String
+    private lateinit var currentDayDate: String
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): ConstraintLayout? {
         _binding = FragmentAttendanceBinding.inflate(inflater, container, false)
         return binding?.root
@@ -78,7 +78,7 @@ class AttendanceFragment : Fragment() {
         currentDayOfWeek = getCurrentDayOfWeek()
         currentDate = getCurrentDate()
 
-        val currentDayDate = getString(R.string.day_date_format, currentDayOfWeek, currentDate)
+        currentDayDate = getString(R.string.day_date_format, currentDayOfWeek, currentDate)
         binding?.tvDayDate?.text = currentDayDate
 
         val timer = Timer()
@@ -97,31 +97,23 @@ class AttendanceFragment : Fragment() {
 
     private fun setupButton() {
         binding?.btnClockIn?.setOnClickListener {
-//            val bundle = bundleOf(DetailFragment.QUOTE_DATA_KEY to quote)
-            findNavController().navigate(R.id.action_attendanceFragment_to_clockInFragment)
-
-            //        binding.btnClockIn.setOnClickListener {
-//            val intent = Intent(requireContext(), ClockInActivity::class.java)
-//            intent.putExtra(EXTRA_NAME, "Nanda Arya Putra")
-//            intent.putExtra(EXTRA_ID, "21106050048")
-//            intent.putExtra(EXTRA_CURRENT_DAY_DATE, currentDayDate)
-//            intent.putExtra(EXTRA_CURRENT_TIME, currentTime)
-//            startActivity(intent)
-//        }
+            val action = AttendanceFragmentDirections.actionAttendanceFragmentToClockInFragment()
+                .setName("Nanda Arya Putra")
+                .setId("21106050048")
+                .setCurrentDayDate(currentDayDate)
+                .setCurrentTime(currentTime)
+            findNavController().navigate(action)
         }
     }
 
     private fun registerGeofenceReceiver(context: Context) {
-        LocalBroadcastManager.getInstance(context)
-            .registerReceiver(
-                geofenceEventReceiver,
-                IntentFilter(GeofenceBroadcastReceiver.ACTION_GEOFENCE_EVENT)
-            )
+        LocalBroadcastManager.getInstance(context).registerReceiver(
+            geofenceEventReceiver, IntentFilter(GeofenceBroadcastReceiver.ACTION_GEOFENCE_EVENT)
+        )
     }
 
     private fun unregisterGeofenceReceiver(context: Context) {
-        LocalBroadcastManager.getInstance(context)
-            .unregisterReceiver(geofenceEventReceiver)
+        LocalBroadcastManager.getInstance(context).unregisterReceiver(geofenceEventReceiver)
     }
 
     override fun onDestroyView() {
