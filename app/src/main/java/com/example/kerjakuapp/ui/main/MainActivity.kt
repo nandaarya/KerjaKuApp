@@ -30,59 +30,59 @@ class MainActivity : AppCompatActivity() {
         navHostFragment.navController
     }
 
-    // Still find a way to separate the permission request
-    private val requestNotificationPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            Toast.makeText(this, "Notifications permission granted", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "Notifications permission rejected", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private val requestBackgroundLocationPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-            if (isGranted) {
-                Toast.makeText(this, "Background permission granted", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Background Location Permission Denied", Toast.LENGTH_SHORT)
-                    .show()
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-            }
-        }
-
-    private val requestLocationPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true && permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    requestBackgroundLocationPermissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
-                }
-            } else {
-                Toast.makeText(this, "Izinkan Aplikasi Mengakses Lokasi", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-    @RequiresApi(Build.VERSION_CODES.Q)
-    private fun checkForPermission(context: Context) {
-        val permissions = arrayOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-        )
-
-        if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && context.checkSelfPermission(
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                requestBackgroundLocationPermissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
-            }
-        } else {
-            requestLocationPermissionLauncher.launch(permissions)
-        }
-    }
+//    // Still find a way to separate the permission request
+//    private val requestNotificationPermissionLauncher = registerForActivityResult(
+//        ActivityResultContracts.RequestPermission()
+//    ) { isGranted: Boolean ->
+//        if (isGranted) {
+//            Toast.makeText(this, "Notifications permission granted", Toast.LENGTH_SHORT).show()
+//        } else {
+//            Toast.makeText(this, "Notifications permission rejected", Toast.LENGTH_SHORT).show()
+//        }
+//    }
+//
+//    private val requestBackgroundLocationPermissionLauncher =
+//        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+//            if (isGranted) {
+//                Toast.makeText(this, "Background permission granted", Toast.LENGTH_SHORT).show()
+//            } else {
+//                Toast.makeText(this, "Background Location Permission Denied", Toast.LENGTH_SHORT)
+//                    .show()
+//            }
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//                requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+//            }
+//        }
+//
+//    private val requestLocationPermissionLauncher =
+//        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+//            if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true && permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true) {
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//                    requestBackgroundLocationPermissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+//                }
+//            } else {
+//                Toast.makeText(this, "Izinkan Aplikasi Mengakses Lokasi", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//
+//    @RequiresApi(Build.VERSION_CODES.Q)
+//    private fun checkForPermission(context: Context) {
+//        val permissions = arrayOf(
+//            Manifest.permission.ACCESS_FINE_LOCATION,
+//            Manifest.permission.ACCESS_COARSE_LOCATION,
+//        )
+//
+//        if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && context.checkSelfPermission(
+//                Manifest.permission.ACCESS_COARSE_LOCATION
+//            ) == PackageManager.PERMISSION_GRANTED
+//        ) {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//                requestBackgroundLocationPermissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+//            }
+//        } else {
+//            requestLocationPermissionLauncher.launch(permissions)
+//        }
+//    }
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,8 +90,8 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        checkGPSIsEnabled(this@MainActivity)
-        checkForPermission(this@MainActivity)
+//        checkGPSIsEnabled(this@MainActivity)
+//        checkForPermission(this@MainActivity)
 //        PermissionUtil.initialize(this@MainActivity)
 
         val navView: BottomNavigationView? = binding?.bottomNavigation

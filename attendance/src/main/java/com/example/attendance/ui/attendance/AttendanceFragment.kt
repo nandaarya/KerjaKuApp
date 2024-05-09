@@ -1,14 +1,20 @@
 package com.example.attendance.ui.attendance
 
+import android.Manifest
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,6 +24,7 @@ import com.example.attendance.R
 import com.example.attendance.databinding.FragmentAttendanceBinding
 import com.example.attendance.utils.GeofenceBroadcastReceiver
 import com.example.attendance.utils.addGeofence
+import com.example.attendance.utils.checkGPSIsEnabled
 import com.example.attendance.utils.getCurrentDate
 import com.example.attendance.utils.getCurrentDayOfWeek
 import com.example.attendance.utils.getCurrentTime
@@ -39,10 +46,13 @@ class AttendanceFragment : Fragment() {
     private lateinit var currentTime: String
     private lateinit var currentDayDate: String
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): ConstraintLayout? {
         _binding = FragmentAttendanceBinding.inflate(inflater, container, false)
+        checkGPSIsEnabled(requireActivity())
+        checkForPermission(requireContext())
         return binding?.root
     }
 
@@ -53,6 +63,60 @@ class AttendanceFragment : Fragment() {
         registerGeofenceReceiver(requireContext())
         setupButton()
         setupTime()
+    }
+
+    // Still find a way to separate the permission request
+    private val requestNotificationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            Toast.makeText(requireContext(), "Notifications permission granted", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(requireContext(), "Notifications permission rejected", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private val requestBackgroundLocationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                Toast.makeText(requireContext(), "Background permission granted", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "Background Location Permission Denied", Toast.LENGTH_SHORT)
+                    .show()
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+
+    private val requestLocationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true && permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    requestBackgroundLocationPermissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                }
+            } else {
+                Toast.makeText(requireContext(), "Izinkan Aplikasi Mengakses Lokasi", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun checkForPermission(context: Context) {
+        val permissions = arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+        )
+
+        if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && context.checkSelfPermission(
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                requestBackgroundLocationPermissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+            }
+        } else {
+            requestLocationPermissionLauncher.launch(permissions)
+        }
     }
 
     private val geofenceEventReceiver = object : BroadcastReceiver() {
