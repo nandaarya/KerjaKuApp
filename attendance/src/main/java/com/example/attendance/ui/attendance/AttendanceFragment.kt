@@ -22,6 +22,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.findNavController
 import com.example.attendance.R
 import com.example.attendance.databinding.FragmentAttendanceBinding
+import com.example.attendance.ui.clockout.ClockOutDialogFragment
 import com.example.attendance.utils.GeofenceBroadcastReceiver
 import com.example.attendance.utils.addGeofence
 import com.example.attendance.utils.checkGPSIsEnabled
@@ -33,7 +34,7 @@ import java.util.Timer
 import java.util.TimerTask
 
 @AndroidEntryPoint
-class AttendanceFragment : Fragment() {
+class AttendanceFragment : Fragment(), ClockOutDialogFragment.ClockOutListener {
 
     private val attendanceViewModel: AttendanceViewModel by viewModels()
 
@@ -168,6 +169,13 @@ class AttendanceFragment : Fragment() {
                 .setCurrentTime(currentTime)
             findNavController().navigate(action)
         }
+
+        // for test
+        binding?.btnClockOut?.isEnabled = true
+        binding?.btnClockOut?.setOnClickListener {
+            val dialog = ClockOutDialogFragment(this) // Pass 'this' as the listener
+            dialog.show(childFragmentManager, "clockOutDialog")
+        }
     }
 
     private fun registerGeofenceReceiver(context: Context) {
@@ -184,5 +192,9 @@ class AttendanceFragment : Fragment() {
         unregisterGeofenceReceiver(requireContext())
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onClockOutConfirmed() {
+        Toast.makeText(requireContext(), "Clocked out successfully", Toast.LENGTH_SHORT).show()
     }
 }
