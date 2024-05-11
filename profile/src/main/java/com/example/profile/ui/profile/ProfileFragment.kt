@@ -32,7 +32,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setupView() {
-        TODO("Not yet implemented")
+
     }
 
     private fun setupButton() {
