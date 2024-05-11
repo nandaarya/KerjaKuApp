@@ -9,7 +9,7 @@ plugins {
 apply("../shared_dependencies.gradle")
 
 android {
-    namespace = "com.example.attendance"
+    namespace = "com.example.profile"
     compileSdk = 34
 
     defaultConfig {
@@ -43,10 +43,4 @@ android {
 
 dependencies {
     implementation (project(":core"))
-
-    implementation("com.google.android.gms:play-services-location:21.2.0")
-    implementation ("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.cardview:cardview:1.0.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
 }
