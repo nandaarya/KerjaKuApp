@@ -25,6 +25,7 @@ class LogoutDialogFragment(private val logoutListener: LogoutListener) :
                 val action = NavDeepLinkRequest.Builder
                     .fromUri("app://com.example.kerjakuapp.ui.login.LoginFragment".toUri())
                     .build()
+                findNavController().popBackStack()
                 findNavController().navigate(action)
             }
             .setNegativeButton("No") { _, _ ->
