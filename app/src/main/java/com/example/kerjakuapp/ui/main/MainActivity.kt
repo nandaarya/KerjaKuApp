@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
+import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.kerjakuapp.R
@@ -31,12 +33,40 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
         val navView: BottomNavigationView? = binding?.bottomNavigation
+        navView?.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.attendanceFragment -> {
+                    val action = NavDeepLinkRequest.Builder
+                        .fromUri("app://com.example.attendance.ui.attendance.AttendanceFragment".toUri())
+                        .build()
+                    navController.popBackStack()
+                    navController.navigate(action)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.servicesFragment -> {
+//                    val servicesFragment = ServicesFragment()  // Assuming ServicesFragment exists
+//                    fragmentManager.replace(R.id.fragment_container, servicesFragment).commit()
+                    return@setOnItemSelectedListener true
+                }
+                R.id.profileFragment -> {
+                    val action = NavDeepLinkRequest.Builder
+                        .fromUri("app://com.example.profile.ui.profile.ProfileFragment".toUri())
+                        .build()
+                    navController.popBackStack()
+                    navController.navigate(action)
+                    return@setOnItemSelectedListener true
+                }
+                else -> return@setOnItemSelectedListener false
+            }
+        }
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.splashscreenFragment, R.id.loginFragment -> {
                     navView?.visibility = View.GONE
                     supportActionBar?.hide()
                 }
+
                 com.example.attendance.R.id.attendanceFragment -> {
                     navView?.visibility = View.VISIBLE
                     supportActionBar?.show()
@@ -45,6 +75,7 @@ class MainActivity : AppCompatActivity() {
                         setDisplayHomeAsUpEnabled(false)
                     }
                 }
+
                 com.example.profile.R.id.profileFragment -> {
                     navView?.visibility = View.VISIBLE
                     supportActionBar?.show()
@@ -53,6 +84,7 @@ class MainActivity : AppCompatActivity() {
                         setDisplayHomeAsUpEnabled(false)
                     }
                 }
+
                 com.example.attendance.R.id.clockInFragment -> {
                     navView?.visibility = View.GONE
                     supportActionBar?.apply {
@@ -62,8 +94,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-        binding?.bottomNavigation?.setupWithNavController(navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
