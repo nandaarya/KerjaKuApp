@@ -3,12 +3,12 @@ package com.example.kerjakuapp.ui.main
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import com.example.kerjakuapp.R
 import com.example.kerjakuapp.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -58,6 +58,16 @@ class MainActivity : AppCompatActivity() {
                 }
                 else -> return@setOnItemSelectedListener false
             }
+        }
+
+        navView?.setOnItemReselectedListener {item ->
+            val message = when (item.itemId) {
+                R.id.attendanceFragment -> "You're already on the Home page"
+                R.id.servicesFragment -> "You're already on the Services page"
+                R.id.profileFragment -> "You're already on the Profile page"
+                else -> return@setOnItemReselectedListener
+            }
+            Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
