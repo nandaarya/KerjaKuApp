@@ -19,13 +19,6 @@ class LogoutDialogFragment(private val logoutListener: LogoutListener) :
             .setPositiveButton("Yes") { _, _ ->
                 // delete data login
                 logoutListener.onLogoutConfirmed()
-//                val action = NavDeepLinkRequest.Builder
-//                    .fromUri("app://com.example.kerjakuapp.ui.login.LoginFragment".toUri())
-//                    .build()
-//                val navOptions = NavOptions.Builder()
-//                    .setPopUpTo(R.id.profileFragment, true)
-//                    .build()
-//                findNavController().navigate(action, navOptions)
             }
             .setNegativeButton("No") { _, _ ->
                 // Do nothing if the user cancels

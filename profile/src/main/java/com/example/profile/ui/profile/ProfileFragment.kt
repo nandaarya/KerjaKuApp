@@ -2,7 +2,6 @@ package com.example.profile.ui.profile
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,7 +44,6 @@ class ProfileFragment : Fragment(), LogoutDialogFragment.LogoutListener {
     }
 
     override fun onLogoutConfirmed() {
-        Log.d("logout", "logout di profile frag")
         Toast.makeText(requireContext(), "Logout success!", Toast.LENGTH_SHORT).show()
 
         val intent = Intent(Intent.ACTION_MAIN)
