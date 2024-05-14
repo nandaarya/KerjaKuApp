@@ -43,11 +43,13 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(action)
                     return@setOnItemSelectedListener true
                 }
+
                 R.id.servicesFragment -> {
 //                    val servicesFragment = ServicesFragment()  // Assuming ServicesFragment exists
 //                    fragmentManager.replace(R.id.fragment_container, servicesFragment).commit()
                     return@setOnItemSelectedListener true
                 }
+
                 R.id.profileFragment -> {
                     val action = NavDeepLinkRequest.Builder
                         .fromUri("app://com.example.profile.ui.profile.ProfileFragment".toUri())
@@ -56,11 +58,12 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(action)
                     return@setOnItemSelectedListener true
                 }
+
                 else -> return@setOnItemSelectedListener false
             }
         }
 
-        navView?.setOnItemReselectedListener {item ->
+        navView?.setOnItemReselectedListener { item ->
             val message = when (item.itemId) {
                 R.id.attendanceFragment -> "You're already on the Home page"
                 R.id.servicesFragment -> "You're already on the Services page"
@@ -80,6 +83,7 @@ class MainActivity : AppCompatActivity() {
                 com.example.attendance.R.id.attendanceFragment -> {
                     navView?.visibility = View.VISIBLE
                     supportActionBar?.show()
+
                     supportActionBar?.apply {
                         title = getString(R.string.app_name)
                         setDisplayHomeAsUpEnabled(false)

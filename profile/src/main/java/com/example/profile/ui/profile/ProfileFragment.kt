@@ -1,6 +1,8 @@
 package com.example.profile.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,6 +45,13 @@ class ProfileFragment : Fragment(), LogoutDialogFragment.LogoutListener {
     }
 
     override fun onLogoutConfirmed() {
+        Log.d("logout", "logout di profile frag")
         Toast.makeText(requireContext(), "Logout success!", Toast.LENGTH_SHORT).show()
+
+        val intent = Intent(Intent.ACTION_MAIN)
+        intent.setClassName(requireContext(), "com.example.kerjakuapp.ui.main.MainActivity")
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        requireActivity().startActivity(intent)
+        requireActivity().finish()
     }
 }
