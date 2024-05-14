@@ -16,6 +16,8 @@
             <option value="$PROJECT_DIR$/attendance" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/profile" />
+            <option value="$PROJECT_DIR$/services-admin" />
+            <option value="$PROJECT_DIR$/services-employee" />
           </set>
         </option>
       </GradleProjectSettings>
