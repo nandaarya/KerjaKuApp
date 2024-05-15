@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.servicesFragment -> {
                     // variable role mengobrserve di view model untuk mendapatkan role user
                     val role =
-                        "employee" // Replace with your method to get user role ("admin" or "employee")
+                        "admin" // Replace with your method to get user role ("admin" or "employee")
                     val destinationUri = when (role) {
                         "admin" -> "app://com.example.services_admin.ui.servicesadmin.ServicesAdminFragment".toUri()
                         "employee" -> "app://com.example.services_employee.ui.servicesemployee.ServicesEmployeeFragment".toUri()
