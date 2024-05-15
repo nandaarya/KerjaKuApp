@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.services_admin.databinding.FragmentServicesAdminBinding
 
 class ServicesAdminFragment : Fragment() {
@@ -28,29 +29,34 @@ class ServicesAdminFragment : Fragment() {
 
     private fun setupButton() {
         binding?.apply {
-//            btnTambahPegawai.setOnClickListener {
-//                val intent = Intent(requireContext(), TambahPegawaiActivity::class.java)
-//                startActivity(intent)
-//                Log.d("button", "Tambah Pegawai")
-//            }
-//
-//            btnReviewPengajuanCuti.setOnClickListener {
-//                val intent = Intent(requireContext(), ReviewPengajuanCutiActivity::class.java)
-//                startActivity(intent)
-//                Log.d("button", "Review Pengajuan Cuti")
-//            }
-//
-//            btnIzinSakitPegawai.setOnClickListener {
-//                val intent = Intent(requireContext(), IzinSakitPegawaiActivity::class.java)
-//                startActivity(intent)
-//                Log.d("button", "Izin Sakit Pegawai")
-//            }
-//
-//            btnReviewReimbursement.setOnClickListener {
-//                val intent = Intent(requireContext(), ReviewReimbursementActivity::class.java)
-//                startActivity(intent)
-//                Log.d("button", "Review Reimbursement")
-//            }
+            btnTambahPegawai.setOnClickListener {
+                val action =
+                    ServicesAdminFragmentDirections.actionServicesAdminFragmentToAddEmployeeFragment()
+                findNavController().navigate(action)
+            }
+
+            // Button for Review Pengajuan Cuti with Safe Args
+            btnReviewPengajuanCuti.setOnClickListener {
+//                val action = ServicesAdminFragmentDirections.actionServicesAdminFragmentToReviewPengajuanCutiFragment()
+//                findNavController().navigate(action)
+            }
+
+            // Button for Izin Sakit Pegawai with Safe Args (assuming fragment exists)
+            btnIzinSakitPegawai.setOnClickListener {
+//                val action = ServicesAdminFragmentDirections.actionServicesAdminFragmentToIzinSakitPegawaiFragment()
+//                findNavController().navigate(action)
+            }
+
+            // Button for Review Reimbursement with Safe Args (assuming fragment exists)
+            btnReviewReimbursement.setOnClickListener {
+//                val action = ServicesAdminFragmentDirections.actionServicesAdminFragmentToReviewReimbursementFragment()
+//                findNavController().navigate(action)
+            }
+
+            btnEmployeeSalary.setOnClickListener {
+//                val action = ServicesAdminFragmentDirections.actionServicesAdminFragmentToReviewReimbursementFragment()
+//                findNavController().navigate(action)
+            }
         }
     }
 

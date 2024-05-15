@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="jenis_kelamin">
+        <item>Laki-laki</item>
+        <item>Perempuan</item>
+    </string-array>
+
+    <string-array name="jabatan">
+        <item>Staff</item>
+        <item>Manajer</item>
+        <item>Kepala Departemen</item>
+    </string-array>
+
+    <string-array name="departemen">
+        <item>Keuangan</item>
+        <item>Pemasaran dan Penjualan</item>
+        <item>Sumber Daya Manusia (SDM)</item>
+        <item>Produksi</item>
+        <item>Pengembangan Produk</item>
+        <item>IT</item>
+        <item>Hukum dan Legal</item>
+    </string-array>
+</resources>
