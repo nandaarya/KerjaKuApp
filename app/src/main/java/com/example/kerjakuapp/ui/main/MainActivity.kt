@@ -45,6 +45,8 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.servicesFragment -> {
+                    "app://com.example.services_admin.ui.servicesadmin.ServicesAdminFragment"
+                    "app://com.example.services_employee.ui.servicesemployee.ServicesEmployeeFragment"
 //                    val servicesFragment = ServicesFragment()  // Assuming ServicesFragment exists
 //                    fragmentManager.replace(R.id.fragment_container, servicesFragment).commit()
                     return@setOnItemSelectedListener true
