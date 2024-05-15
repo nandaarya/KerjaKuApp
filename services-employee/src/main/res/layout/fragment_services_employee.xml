@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.servicesemployee.ServicesEmployeeFragment">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btn_pengajuan_cuti"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="24dp"
+        android:clickable="true"
+        app:cardElevation="16dp"
+        app:layout_constraintEnd_toStartOf="@id/btn_izin_sakit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Pengajuan Cuti"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btn_izin_sakit"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="24dp"
+        android:clickable="true"
+        app:cardElevation="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_pengajuan_cuti"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Izin Sakit"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btn_reimbursement"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="24dp"
+        android:clickable="true"
+        app:cardElevation="16dp"
+        app:layout_constraintEnd_toStartOf="@id/btn_izin_sakit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_pengajuan_cuti">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Reimbursement"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btn_riwayat_pengajuan_cuti"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="24dp"
+        android:clickable="true"
+        app:cardElevation="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_reimbursement"
+        app:layout_constraintTop_toBottomOf="@id/btn_izin_sakit">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Riwayat Pengajuan Cuti"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
