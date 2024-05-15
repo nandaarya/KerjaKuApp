@@ -1,5 +1,5 @@
-import java.util.Properties
 import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -56,6 +56,8 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":attendance"))
     implementation(project(":profile"))
+    implementation(project(":services-admin"))
+    implementation(project(":services-employee"))
 
     implementation("com.google.android.gms:play-services-location:21.2.0")
 

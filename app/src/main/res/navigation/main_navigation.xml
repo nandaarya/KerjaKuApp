@@ -7,6 +7,8 @@
 
     <include app:graph="@navigation/attendance_navigation" />
     <include app:graph="@navigation/profile_navigation" />
+    <include app:graph="@navigation/services_admin_navigation" />
+    <include app:graph="@navigation/services_employee_navigation" />
 
     <fragment
         android:id="@+id/splashscreenFragment"

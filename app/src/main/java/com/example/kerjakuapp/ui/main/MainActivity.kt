@@ -45,10 +45,21 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.servicesFragment -> {
-                    "app://com.example.services_admin.ui.servicesadmin.ServicesAdminFragment"
-                    "app://com.example.services_employee.ui.servicesemployee.ServicesEmployeeFragment"
-//                    val servicesFragment = ServicesFragment()  // Assuming ServicesFragment exists
-//                    fragmentManager.replace(R.id.fragment_container, servicesFragment).commit()
+                    // variable role mengobrserve di view model untuk mendapatkan role user
+                    val role = "admin" // Replace with your method to get user role ("admin" or "employee")
+                    val destinationUri = when (role) {
+                        "admin" -> "app://com.example.services_admin.ui.servicesadmin.ServicesAdminFragment".toUri()
+                        "employee" -> "app://com.example.services_employee.ui.servicesemployee.ServicesEmployeeFragment".toUri()
+                        else -> null
+                    }
+
+                    if (destinationUri != null) {
+                        val action = NavDeepLinkRequest.Builder
+                            .fromUri(destinationUri)
+                            .build()
+                        navController.popBackStack()
+                        navController.navigate(action)
+                    }
                     return@setOnItemSelectedListener true
                 }
 
