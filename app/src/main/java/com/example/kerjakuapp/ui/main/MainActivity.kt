@@ -115,6 +115,11 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
+                com.example.services_admin.R.id.addEmployeeFragment -> {
+                    navView?.visibility = View.GONE
+                    // Update support Action in fragment
+                }
+
                 com.example.services_employee.R.id.servicesEmployeeFragment -> {
                     navView?.visibility = View.VISIBLE
                     supportActionBar?.show()
