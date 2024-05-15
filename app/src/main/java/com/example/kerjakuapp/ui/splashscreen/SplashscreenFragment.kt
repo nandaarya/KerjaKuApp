@@ -4,12 +4,15 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.kerjakuapp.R
 import com.example.kerjakuapp.databinding.FragmentSplashscreenBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 @Suppress("DEPRECATION")
 @SuppressLint("CustomSplashScreen")
@@ -28,6 +31,14 @@ class SplashscreenFragment : Fragment() {
     ): LinearLayout? {
         _binding = FragmentSplashscreenBinding.inflate(inflater, container, false)
         return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)?.visibility = View.GONE
+        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
+
     }
 
     override fun onResume() {

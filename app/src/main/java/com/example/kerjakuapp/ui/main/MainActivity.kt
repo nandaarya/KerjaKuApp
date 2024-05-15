@@ -46,7 +46,8 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.servicesFragment -> {
                     // variable role mengobrserve di view model untuk mendapatkan role user
-                    val role = "admin" // Replace with your method to get user role ("admin" or "employee")
+                    val role =
+                        "employee" // Replace with your method to get user role ("admin" or "employee")
                     val destinationUri = when (role) {
                         "admin" -> "app://com.example.services_admin.ui.servicesadmin.ServicesAdminFragment".toUri()
                         "employee" -> "app://com.example.services_employee.ui.servicesemployee.ServicesEmployeeFragment".toUri()
@@ -88,17 +89,38 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.splashscreenFragment, R.id.loginFragment -> {
-                    navView?.visibility = View.GONE
-                    supportActionBar?.hide()
-                }
+//                R.id.splashscreenFragment, R.id.loginFragment -> {
+//                    navView?.visibility = View.GONE
+//                    supportActionBar?.hide()
+//                }
 
+                // later i will remove this ui update to the fragment themself
                 com.example.attendance.R.id.attendanceFragment -> {
                     navView?.visibility = View.VISIBLE
                     supportActionBar?.show()
 
                     supportActionBar?.apply {
                         title = getString(R.string.app_name)
+                        setDisplayHomeAsUpEnabled(false)
+                    }
+                }
+
+                com.example.services_admin.R.id.servicesAdminFragment -> {
+                    navView?.visibility = View.VISIBLE
+                    supportActionBar?.show()
+
+                    supportActionBar?.apply {
+                        title = getString(R.string.title_services_admin)
+                        setDisplayHomeAsUpEnabled(false)
+                    }
+                }
+
+                com.example.services_employee.R.id.servicesEmployeeFragment -> {
+                    navView?.visibility = View.VISIBLE
+                    supportActionBar?.show()
+
+                    supportActionBar?.apply {
+                        title = getString(R.string.title_services_employee)
                         setDisplayHomeAsUpEnabled(false)
                     }
                 }
