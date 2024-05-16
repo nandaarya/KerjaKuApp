@@ -16,10 +16,18 @@
         <action
             android:id="@+id/action_servicesAdminFragment_to_addEmployeeFragment"
             app:destination="@id/addEmployeeFragment" />
+        <action
+            android:id="@+id/action_servicesAdminFragment_to_employeeLeaveReviewFragment"
+            app:destination="@id/employeeLeaveReviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/addEmployeeFragment"
         android:name="com.example.services_admin.ui.addemployee.AddEmployeeFragment"
         android:label="fragment_add_employee"
         tools:layout="@layout/fragment_add_employee" />
+    <fragment
+        android:id="@+id/employeeLeaveReviewFragment"
+        android:name="com.example.services_admin.ui.employeeleavereview.EmployeeLeaveReviewFragment"
+        android:label="fragment_employee_leave_review"
+        tools:layout="@layout/fragment_employee_leave_review" />
 </navigation>
