@@ -49,8 +49,8 @@ class ServicesAdminFragment : Fragment() {
 
             // Button for Review Reimbursement with Safe Args (assuming fragment exists)
             btnReviewReimbursement.setOnClickListener {
-//                val action = ServicesAdminFragmentDirections.actionServicesAdminFragmentToReviewReimbursementFragment()
-//                findNavController().navigate(action)
+                val action = ServicesAdminFragmentDirections.actionServicesAdminFragmentToReimbursementReviewFragment()
+                findNavController().navigate(action)
             }
 
             btnEmployeeSalary.setOnClickListener {
