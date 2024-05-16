@@ -21,8 +21,8 @@ class MainActivity : AppCompatActivity() {
     private val binding get() = _binding
 
     private val navController by lazy {
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         navHostFragment.navController
     }
 
@@ -36,9 +36,9 @@ class MainActivity : AppCompatActivity() {
         navView?.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.attendanceFragment -> {
-                    val action = NavDeepLinkRequest.Builder
-                        .fromUri("app://com.example.attendance.ui.attendance.AttendanceFragment".toUri())
-                        .build()
+                    val action =
+                        NavDeepLinkRequest.Builder.fromUri("app://com.example.attendance.ui.attendance.AttendanceFragment".toUri())
+                            .build()
                     navController.popBackStack()
                     navController.navigate(action)
                     return@setOnItemSelectedListener true
@@ -55,9 +55,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     if (destinationUri != null) {
-                        val action = NavDeepLinkRequest.Builder
-                            .fromUri(destinationUri)
-                            .build()
+                        val action = NavDeepLinkRequest.Builder.fromUri(destinationUri).build()
                         navController.popBackStack()
                         navController.navigate(action)
                     }
@@ -65,9 +63,9 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.profileFragment -> {
-                    val action = NavDeepLinkRequest.Builder
-                        .fromUri("app://com.example.profile.ui.profile.ProfileFragment".toUri())
-                        .build()
+                    val action =
+                        NavDeepLinkRequest.Builder.fromUri("app://com.example.profile.ui.profile.ProfileFragment".toUri())
+                            .build()
                     navController.popBackStack()
                     navController.navigate(action)
                     return@setOnItemSelectedListener true
@@ -115,7 +113,10 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                com.example.services_admin.R.id.addEmployeeFragment, com.example.services_admin.R.id.employeeLeaveReviewFragment -> {
+                // menu services_admin
+                com.example.services_admin.R.id.addEmployeeFragment,
+                com.example.services_admin.R.id.employeeLeaveReviewFragment,
+                com.example.services_admin.R.id.employeeSickLeaveFragment -> {
                     navView?.visibility = View.GONE
                 }
 

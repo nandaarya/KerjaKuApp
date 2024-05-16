@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_servicesAdminFragment_to_employeeLeaveReviewFragment"
             app:destination="@id/employeeLeaveReviewFragment" />
+        <action
+            android:id="@+id/action_servicesAdminFragment_to_employeeSickLeaveFragment"
+            app:destination="@id/employeeSickLeaveFragment" />
     </fragment>
     <fragment
         android:id="@+id/addEmployeeFragment"
@@ -30,4 +33,9 @@
         android:name="com.example.services_admin.ui.employeeleavereview.EmployeeLeaveReviewFragment"
         android:label="fragment_employee_leave_review"
         tools:layout="@layout/fragment_employee_leave_review" />
+    <fragment
+        android:id="@+id/employeeSickLeaveFragment"
+        android:name="com.example.services_admin.ui.employeesickleave.EmployeeSickLeaveFragment"
+        android:label="fragment_employee_sick_leave"
+        tools:layout="@layout/fragment_employee_sick_leave" />
 </navigation>

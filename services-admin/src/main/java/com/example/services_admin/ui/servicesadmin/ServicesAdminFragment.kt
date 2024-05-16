@@ -43,8 +43,8 @@ class ServicesAdminFragment : Fragment() {
 
             // Button for Izin Sakit Pegawai with Safe Args (assuming fragment exists)
             btnIzinSakitPegawai.setOnClickListener {
-//                val action = ServicesAdminFragmentDirections.actionServicesAdminFragmentToIzinSakitPegawaiFragment()
-//                findNavController().navigate(action)
+                val action = ServicesAdminFragmentDirections.actionServicesAdminFragmentToEmployeeSickLeaveFragment()
+                findNavController().navigate(action)
             }
 
             // Button for Review Reimbursement with Safe Args (assuming fragment exists)
