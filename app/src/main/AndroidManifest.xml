@@ -31,9 +31,6 @@
             android:name=".ui.reviewreimbursement.ReviewReimbursementActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.reviewpengajuancuti.ReviewPengajuanCutiActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.tambahpegawai.TambahPegawaiActivity"
             android:exported="false" />
         <activity
