@@ -123,7 +123,8 @@ class MainActivity : AppCompatActivity() {
 
                 // menu services_employee
                 com.example.services_employee.R.id.leaveApplicationFragment,
-                com.example.services_employee.R.id.sickLeaveApplicationFragment -> {
+                com.example.services_employee.R.id.sickLeaveApplicationFragment,
+                com.example.services_employee.R.id.reimbursementApplicationFragment -> {
                     navView?.visibility = View.GONE
                 }
 

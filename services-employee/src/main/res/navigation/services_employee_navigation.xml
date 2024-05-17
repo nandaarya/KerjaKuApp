@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_servicesEmployeeFragment_to_sickLeaveApplicationFragment"
             app:destination="@id/sickLeaveApplicationFragment" />
+        <action
+            android:id="@+id/action_servicesEmployeeFragment_to_reimbursementApplicationFragment"
+            app:destination="@id/reimbursementApplicationFragment" />
     </fragment>
     <fragment
         android:id="@+id/leaveApplicationFragment"
@@ -30,4 +33,9 @@
         android:name="com.example.services_employee.ui.sickleaveapplication.SickLeaveApplicationFragment"
         android:label="fragment_sick_leave_application"
         tools:layout="@layout/fragment_sick_leave_application" />
+    <fragment
+        android:id="@+id/reimbursementApplicationFragment"
+        android:name="com.example.services_employee.ui.reimbursementapplication.ReimbursementApplicationFragment"
+        android:label="fragment_reimbursement_application"
+        tools:layout="@layout/fragment_reimbursement_application" />
 </navigation>
