@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.servicesFragment -> {
                     // variable role mengobrserve di view model untuk mendapatkan role user
                     val role =
-                        "admin" // Replace with your method to get user role ("admin" or "employee")
+                        "employee" // Replace with your method to get user role ("admin" or "employee")
                     val destinationUri = when (role) {
                         "admin" -> "app://com.example.services_admin.ui.servicesadmin.ServicesAdminFragment".toUri()
                         "employee" -> "app://com.example.services_employee.ui.servicesemployee.ServicesEmployeeFragment".toUri()
@@ -118,6 +118,11 @@ class MainActivity : AppCompatActivity() {
                 com.example.services_admin.R.id.employeeLeaveReviewFragment,
                 com.example.services_admin.R.id.employeeSickLeaveFragment,
                 com.example.services_admin.R.id.reimbursementReviewFragment -> {
+                    navView?.visibility = View.GONE
+                }
+
+                // menu services_employee
+                com.example.services_employee.R.id.leaveApplicationFragment -> {
                     navView?.visibility = View.GONE
                 }
 

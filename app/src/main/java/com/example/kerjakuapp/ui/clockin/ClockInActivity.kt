@@ -12,7 +12,7 @@ import com.example.kerjakuapp.ui.main.MainActivity.Companion.EXTRA_CURRENT_DAY_D
 import com.example.kerjakuapp.ui.main.MainActivity.Companion.EXTRA_CURRENT_TIME
 import com.example.kerjakuapp.ui.main.MainActivity.Companion.EXTRA_ID
 import com.example.kerjakuapp.ui.main.MainActivity.Companion.EXTRA_NAME
-import com.example.kerjakuapp.utils.getImageUri
+import com.example.core.utils.getImageUri
 import com.example.kerjakuapp.utils.isTimeInRange
 import com.example.kerjakuapp.utils.parseTimeStringToTime
 

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.services_employee.databinding.FragmentServicesEmployeeBinding
 
 class ServicesEmployeeFragment : Fragment() {
@@ -27,17 +28,18 @@ class ServicesEmployeeFragment : Fragment() {
     }
 
     private fun setupButton() {
-//        binding?.apply {
+        binding?.apply {
+
+            btnPengajuanCuti.setOnClickListener {
+                val action =
+                    ServicesEmployeeFragmentDirections.actionServicesEmployeeFragmentToLeaveApplicationFragment()
+                findNavController().navigate(action)
+            }
+
 //            btnIzinSakit.setOnClickListener {
 //                val intent = Intent(requireContext(), IzinSakitActivity::class.java)
 //                startActivity(intent)
 //                Log.d("button", "Izin Sakit")
-//            }
-//
-//            btnPengajuanCuti.setOnClickListener {
-//                val intent = Intent(requireContext(), PengajuanCutiActivity::class.java)
-//                startActivity(intent)
-//                Log.d("button", "Pengajuan Cuti")
 //            }
 //
 //            btnReimbursement.setOnClickListener {
@@ -51,7 +53,7 @@ class ServicesEmployeeFragment : Fragment() {
 //                startActivity(intent)
 //                Log.d("button", "Riwayat Pengajuan Cuti")
 //            }
-//        }
+        }
     }
 
 }
