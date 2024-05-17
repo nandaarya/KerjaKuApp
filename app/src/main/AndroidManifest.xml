@@ -40,9 +40,6 @@
             android:name=".ui.riwayatpengajuancuti.RiwayatPengajuanCutiActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.reimbursement.ReimbursementActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.signup.SignupActivity"
             android:exported="false" />
         <activity
