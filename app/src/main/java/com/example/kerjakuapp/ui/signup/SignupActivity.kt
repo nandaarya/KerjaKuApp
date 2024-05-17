@@ -2,7 +2,6 @@ package com.example.kerjakuapp.ui.signup
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
-import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,13 +9,10 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.ViewModelProvider
 import com.example.kerjakuapp.R
 import com.example.kerjakuapp.databinding.ActivitySignupBinding
 //import com.example.kerjakuapp.utils.ViewModelFactory
-import com.example.kerjakuapp.data.Result
-import com.example.kerjakuapp.ui.login.LoginActivity
+
 //import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignupActivity : AppCompatActivity() {
