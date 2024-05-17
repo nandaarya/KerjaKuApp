@@ -47,12 +47,12 @@ class ServicesEmployeeFragment : Fragment() {
                     ServicesEmployeeFragmentDirections.actionServicesEmployeeFragmentToReimbursementApplicationFragment()
                 findNavController().navigate(action)
             }
-//
-//            btnRiwayatPengajuanCuti.setOnClickListener {
-//                val intent = Intent(requireContext(), RiwayatPengajuanCutiActivity::class.java)
-//                startActivity(intent)
-//                Log.d("button", "Riwayat Pengajuan Cuti")
-//            }
+
+            btnRiwayatPengajuanCuti.setOnClickListener {
+                val action =
+                    ServicesEmployeeFragmentDirections.actionServicesEmployeeFragmentToLeaveApplicationHistoryFragment()
+                findNavController().navigate(action)
+            }
         }
     }
 

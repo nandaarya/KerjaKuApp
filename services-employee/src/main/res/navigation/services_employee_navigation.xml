@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_servicesEmployeeFragment_to_reimbursementApplicationFragment"
             app:destination="@id/reimbursementApplicationFragment" />
+        <action
+            android:id="@+id/action_servicesEmployeeFragment_to_leaveApplicationHistoryFragment"
+            app:destination="@id/leaveApplicationHistoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/leaveApplicationFragment"
@@ -38,4 +41,9 @@
         android:name="com.example.services_employee.ui.reimbursementapplication.ReimbursementApplicationFragment"
         android:label="fragment_reimbursement_application"
         tools:layout="@layout/fragment_reimbursement_application" />
+    <fragment
+        android:id="@+id/leaveApplicationHistoryFragment"
+        android:name="com.example.services_employee.ui.leaveapplicationhistory.LeaveApplicationHistoryFragment"
+        android:label="fragment_leave_application_history"
+        tools:layout="@layout/fragment_leave_application_history" />
 </navigation>
