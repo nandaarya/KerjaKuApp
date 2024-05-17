@@ -40,15 +40,8 @@
             android:name=".ui.riwayatpengajuancuti.RiwayatPengajuanCutiActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.pengajuancuti.PengajuanCutiActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.reimbursement.ReimbursementActivity"
             android:exported="false" />
-<!--        <activity-->
-<!--            android:name=".ui.home.HomeActivity"-->
-<!--            android:exported="false"-->
-<!--            android:label="@string/title_activity_home" />-->
         <activity
             android:name=".ui.signup.SignupActivity"
             android:exported="false" />
