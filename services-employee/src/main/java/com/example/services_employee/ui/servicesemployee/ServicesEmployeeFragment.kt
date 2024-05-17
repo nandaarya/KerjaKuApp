@@ -36,11 +36,11 @@ class ServicesEmployeeFragment : Fragment() {
                 findNavController().navigate(action)
             }
 
-//            btnIzinSakit.setOnClickListener {
-//                val intent = Intent(requireContext(), IzinSakitActivity::class.java)
-//                startActivity(intent)
-//                Log.d("button", "Izin Sakit")
-//            }
+            btnIzinSakit.setOnClickListener {
+                val action =
+                    ServicesEmployeeFragmentDirections.actionServicesEmployeeFragmentToSickLeaveApplicationFragment()
+                findNavController().navigate(action)
+            }
 //
 //            btnReimbursement.setOnClickListener {
 //                val intent = Intent(requireContext(), ReimbursementActivity::class.java)

@@ -16,10 +16,18 @@
         <action
             android:id="@+id/action_servicesEmployeeFragment_to_leaveApplicationFragment"
             app:destination="@id/leaveApplicationFragment" />
+        <action
+            android:id="@+id/action_servicesEmployeeFragment_to_sickLeaveApplicationFragment"
+            app:destination="@id/sickLeaveApplicationFragment" />
     </fragment>
     <fragment
         android:id="@+id/leaveApplicationFragment"
         android:name="com.example.services_employee.ui.leaveapplication.LeaveApplicationFragment"
         android:label="fragment_leave_application"
         tools:layout="@layout/fragment_leave_application" />
+    <fragment
+        android:id="@+id/sickLeaveApplicationFragment"
+        android:name="com.example.services_employee.ui.sickleaveapplication.SickLeaveApplicationFragment"
+        android:label="fragment_sick_leave_application"
+        tools:layout="@layout/fragment_sick_leave_application" />
 </navigation>
