@@ -1,27 +1,37 @@
 package com.example.kerjakuapp.ui.login
 
+import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import com.example.kerjakuapp.data.Repository
-import com.example.kerjakuapp.data.model.UserModel
-import com.example.kerjakuapp.data.response.LoginResponse
-import com.example.kerjakuapp.data.Result
+import androidx.lifecycle.viewModelScope
+import com.example.core.data.remote.network.ApiResponse
+import com.example.core.domain.model.User
+import com.example.core.domain.usecase.UserUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel(private val repository: Repository) : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(private val userUseCase: UserUseCase) : ViewModel() {
+//
+//    private val _loginResponse = MediatorLiveData<Result<LoginResponse>>()
+//    val loginResponse: LiveData<Result<LoginResponse>> = _loginResponse
 
-    private val _loginResponse = MediatorLiveData<Result<LoginResponse>>()
-    val loginResponse: LiveData<Result<LoginResponse>> = _loginResponse
+    fun login(email: String, password: String): LiveData<ApiResponse<User>> {
+        val userLiveData = MutableLiveData<ApiResponse<User>>()
 
-    fun login(email: String, password: String) {
-        val liveData = repository.login(email, password)
-        _loginResponse.addSource(liveData) { result ->
-            _loginResponse.value = result
+        viewModelScope.launch {
+            Log.d("login in view model", "$email, $password")
+            userUseCase.login(email, password).collect {
+                userLiveData.value = it
+            }
         }
+
+        return userLiveData
     }
 
-    fun getSession(): LiveData<UserModel> {
-        return repository.getSession().asLiveData()
-    }
+//    fun getSession(): LiveData<UserModel> {
+//        return repository.getSession().asLiveData()
+//    }
 }

@@ -1,15 +1,22 @@
 package com.example.kerjakuapp.ui.main
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.kerjakuapp.data.Repository
 import com.example.kerjakuapp.data.model.UserModel
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
+
+    private var _userRole = MediatorLiveData<String>()
+    var userRole: LiveData<String> = _userRole
+
+    fun setUserRole(userRole: String) {
+        _userRole.value = userRole
+    }
 
     private fun getToken(): String {
         var token = ""

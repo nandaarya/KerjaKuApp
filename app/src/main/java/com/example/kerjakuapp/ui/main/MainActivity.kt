@@ -2,8 +2,10 @@ package com.example.kerjakuapp.ui.main
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
@@ -16,6 +18,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    private val mainViewModel: MainViewModel by viewModels()
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding
@@ -46,8 +50,11 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.servicesFragment -> {
                     // variable role mengobrserve di view model untuk mendapatkan role user
-                    val role =
-                        "employee" // Replace with your method to get user role ("admin" or "employee")
+                    var role = "employee"
+                    mainViewModel.userRole.observe(this) { userRole ->
+                        role = userRole // Update the 'role' variable with the observed value
+                    }
+                    Log.d("user role", role)
                     val destinationUri = when (role) {
                         "admin" -> "app://com.example.services_admin.ui.servicesadmin.ServicesAdminFragment".toUri()
                         "employee" -> "app://com.example.services_employee.ui.servicesemployee.ServicesEmployeeFragment".toUri()

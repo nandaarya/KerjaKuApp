@@ -1,7 +1,9 @@
 package com.example.core.data.local.model
 
 data class UserModel(
-    val email: String,
+    val userId: String,
+    val name: String,
+    val role: String,
     val token: String,
-    val isLogin: Boolean = false
+    val isLoggedIn: Boolean = false
 )
