@@ -26,7 +26,5 @@ class LocalDataSource @Inject constructor(private val userPreferences: UserPrefe
         return user
     }
 
-    suspend fun logout() {
-        userPreferences.logout()
-    }
+    suspend fun logout() = userPreferences.logout()
 }

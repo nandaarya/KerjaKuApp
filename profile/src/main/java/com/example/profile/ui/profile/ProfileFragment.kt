@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.profile.databinding.FragmentProfileBinding
 import com.example.profile.ui.logout.LogoutDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment(), LogoutDialogFragment.LogoutListener {
 
     private val profileViewModel: ProfileViewModel by viewModels()
@@ -44,6 +46,7 @@ class ProfileFragment : Fragment(), LogoutDialogFragment.LogoutListener {
     }
 
     override fun onLogoutConfirmed() {
+        profileViewModel.logout()
         Toast.makeText(requireContext(), "Logout success!", Toast.LENGTH_SHORT).show()
 
         val intent = Intent(Intent.ACTION_MAIN)
