@@ -20,7 +20,7 @@ class UserInteractor @Inject constructor(private val userRepository: IUserReposi
 
     override suspend fun saveSession(user: User) = userRepository.saveSession(user)
 
-    override suspend fun getSession(): Flow<User> = userRepository.getSession()
+    override fun getSession(): Flow<User> = userRepository.getSession()
 
     override suspend fun logout() = userRepository.logout()
 

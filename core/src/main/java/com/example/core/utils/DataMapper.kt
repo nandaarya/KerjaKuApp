@@ -20,7 +20,7 @@ object DataMapper {
             name = input.name,
             role = input.role,
             token = input.token,
-            isLoggedIn = false
+            isLoggedIn = input.isLoggedIn
         )
 
     //

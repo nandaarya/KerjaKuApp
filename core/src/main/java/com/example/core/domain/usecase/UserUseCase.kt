@@ -13,6 +13,6 @@ interface UserUseCase {
 
     suspend fun login(email: String, password: String): Flow<ApiResponse<User>>
     suspend fun saveSession(user: User)
-    suspend fun getSession(): Flow<User>
+    fun getSession(): Flow<User>
     suspend fun logout()
 }

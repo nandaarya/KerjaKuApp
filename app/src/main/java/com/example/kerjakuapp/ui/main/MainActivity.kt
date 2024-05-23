@@ -50,21 +50,20 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.servicesFragment -> {
                     // variable role mengobrserve di view model untuk mendapatkan role user
-                    var role = "employee"
-                    mainViewModel.userRole.observe(this) { userRole ->
-                        role = userRole // Update the 'role' variable with the observed value
-                    }
-                    Log.d("user role", role)
-                    val destinationUri = when (role) {
-                        "admin" -> "app://com.example.services_admin.ui.servicesadmin.ServicesAdminFragment".toUri()
-                        "employee" -> "app://com.example.services_employee.ui.servicesemployee.ServicesEmployeeFragment".toUri()
-                        else -> null
-                    }
+//                    var role = "employee"
+                    mainViewModel.getSession().observe(this){
+                        Log.d("user after get session", it.toString())
+                        val destinationUri = when (it.role) {
+                            "admin" -> "app://com.example.services_admin.ui.servicesadmin.ServicesAdminFragment".toUri()
+                            "employee" -> "app://com.example.services_employee.ui.servicesemployee.ServicesEmployeeFragment".toUri()
+                            else -> null
+                        }
 
-                    if (destinationUri != null) {
-                        val action = NavDeepLinkRequest.Builder.fromUri(destinationUri).build()
-                        navController.popBackStack()
-                        navController.navigate(action)
+                        if (destinationUri != null) {
+                            val action = NavDeepLinkRequest.Builder.fromUri(destinationUri).build()
+                            navController.popBackStack()
+                            navController.navigate(action)
+                        }
                     }
                     return@setOnItemSelectedListener true
                 }

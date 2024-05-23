@@ -29,7 +29,7 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding
 
     // Variabel test
-    private var userRole = "employee"
+//    private var userRole = "employee"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,12 +42,22 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        checkIfLoggedIn()
+
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)?.visibility =
             View.GONE
         (requireActivity() as AppCompatActivity).supportActionBar?.hide()
 
         setupAction()
         playAnimation()
+    }
+
+    private fun checkIfLoggedIn() {
+        loginViewModel.getSession().observe(requireActivity()){
+            if (it.isLoggedIn) {
+                findNavController().navigate(R.id.action_loginFragment_to_attendance_navigation)
+            }
+        }
     }
 
     private fun setupAction() {
@@ -83,6 +93,8 @@ class LoginFragment : Fragment() {
                 }
                 is ApiResponse.Success -> {
                     showLoading(false)
+//                    loginViewModel.saveSession(it.data)
+                    Log.d("user after login", it.data.toString())
                     findNavController().navigate(R.id.action_loginFragment_to_attendance_navigation)
                 }
                 is ApiResponse.Error -> {

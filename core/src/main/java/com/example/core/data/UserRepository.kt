@@ -15,6 +15,6 @@ class UserRepository @Inject constructor(
 ) : IUserRepository {
     override suspend fun login(email: String, password: String): Flow<ApiResponse<User>> = remoteDataSource.login(email, password)
     override suspend fun saveSession(user: User) = localDataSource.saveSession(user)
-    override suspend fun getSession(): Flow<User> = localDataSource.getSession()
+    override fun getSession(): Flow<User> = localDataSource.getSession()
     override suspend fun logout() = localDataSource.logout()
 }

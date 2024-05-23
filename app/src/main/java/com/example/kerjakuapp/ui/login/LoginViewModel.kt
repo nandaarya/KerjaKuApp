@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.core.data.remote.network.ApiResponse
 import com.example.core.domain.model.User
@@ -31,7 +32,11 @@ class LoginViewModel @Inject constructor(private val userUseCase: UserUseCase) :
         return userLiveData
     }
 
-//    fun getSession(): LiveData<UserModel> {
-//        return repository.getSession().asLiveData()
-//    }
+    fun saveSession(user: User) {
+        viewModelScope.launch {
+            userUseCase.saveSession(user)
+        }
+    }
+
+    fun getSession(): LiveData<User> = userUseCase.getSession().asLiveData()
 }

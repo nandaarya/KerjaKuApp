@@ -1,6 +1,7 @@
 package com.example.core.data.local
 
-import com.example.core.data.local.datastore.UserPreference
+import android.util.Log
+import com.example.core.data.local.datastore.UserPreferences
 import com.example.core.domain.model.User
 import com.example.core.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
@@ -9,20 +10,23 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LocalDataSource @Inject constructor(private val userPreference: UserPreference) {
+class LocalDataSource @Inject constructor(private val userPreferences: UserPreferences) {
     suspend fun saveSession(user: User) {
         val userModel = DataMapper.mapDomainToDataStoreModel(user)
-        userPreference.saveSession(userModel)
+        Log.d("user in localdatasource", user.toString())
+        userPreferences.saveSession(userModel)
     }
 
     fun getSession(): Flow<User> {
-        val user = userPreference.getSession().map {
+        Log.d("user get session before", userPreferences.getSession().toString())
+        val user = userPreferences.getSession().map {
             DataMapper.mapDataStoreModelToDomain(it)
         }
+        Log.d("user get session after map", user.toString())
         return user
     }
 
     suspend fun logout() {
-        userPreference.logout()
+        userPreferences.logout()
     }
 }

@@ -1,32 +1,40 @@
-package com.example.kerjakuapp.data.datastore
+package com.example.core.data.local.datastore
 
-import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
-import com.example.kerjakuapp.data.model.UserModel
+import com.example.core.data.local.model.UserModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
+import javax.inject.Singleton
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
-
-class UserPreference private constructor(private val dataStore: DataStore<Preferences>) {
+@Singleton
+class UserPreferences  @Inject constructor(private val dataStore: DataStore<Preferences>) {
 
     suspend fun saveSession(user: UserModel) {
+        Log.d("user in userpreference", user.toString())
         dataStore.edit { preferences ->
-            preferences[EMAIL_KEY] = user.email
+            Log.d("save session", user.role ?: "role kosong disimpan")
+            preferences[USER_ID] = user.userId
+            preferences[NAME] = user.name
+            preferences[ROLE] = user.role
             preferences[TOKEN_KEY] = user.token
             preferences[IS_LOGIN_KEY] = true
         }
+        Log.d("user data store", dataStore.data.toString())
     }
 
     fun getSession(): Flow<UserModel> {
         return dataStore.data.map { preferences ->
+            Log.d("get session", preferences[ROLE] ?: "role kosong")
             UserModel(
-                preferences[EMAIL_KEY] ?: "",
+                preferences[USER_ID] ?: "",
+                preferences[NAME] ?: "",
+                preferences[ROLE] ?: "",
                 preferences[TOKEN_KEY] ?: "",
                 preferences[IS_LOGIN_KEY] ?: false
             )
@@ -40,19 +48,10 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
     }
 
     companion object {
-        @Volatile
-        private var INSTANCE: UserPreference? = null
-
-        private val EMAIL_KEY = stringPreferencesKey("email")
+        private val USER_ID = stringPreferencesKey("userId")
+        private val NAME = stringPreferencesKey("name")
+        private val ROLE = stringPreferencesKey("role")
         private val TOKEN_KEY = stringPreferencesKey("token")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
-
-        fun getInstance(dataStore: DataStore<Preferences>): UserPreference {
-            return INSTANCE ?: synchronized(this) {
-                val instance = UserPreference(dataStore)
-                INSTANCE = instance
-                instance
-            }
-        }
     }
 }

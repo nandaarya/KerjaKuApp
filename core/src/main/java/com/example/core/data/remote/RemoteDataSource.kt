@@ -1,6 +1,7 @@
 package com.example.core.data.remote
 
 import android.util.Log
+import com.example.core.data.local.LocalDataSource
 import com.example.core.data.remote.network.ApiResponse
 import com.example.core.data.remote.network.ApiService
 import com.example.core.domain.model.User
@@ -14,7 +15,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
+class RemoteDataSource @Inject constructor(private val apiService: ApiService, private val localDataSource: LocalDataSource) {
     suspend fun login(email: String, password: String): Flow<ApiResponse<User>> {
         return flow {
             emit(ApiResponse.Loading)
@@ -24,6 +25,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
                 Log.d("login in data source", "$email, $password")
                 val dataArray = DataMapper.mapResponseToDomain(response)
                 if (dataArray != null) {
+                    localDataSource.saveSession(dataArray)
                     emit(ApiResponse.Success(dataArray))
                 } else {
                     emit(ApiResponse.Empty)
