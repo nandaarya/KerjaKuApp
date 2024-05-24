@@ -53,5 +53,14 @@
         android:id="@+id/employeeSalaryFragment"
         android:name="com.example.services_admin.ui.employeesalary.EmployeeSalaryFragment"
         android:label="fragment_employee_salary"
-        tools:layout="@layout/fragment_employee_salary" />
+        tools:layout="@layout/fragment_employee_salary" >
+        <action
+            android:id="@+id/action_employeeSalaryFragment_to_employeeSalaryDetailFragment"
+            app:destination="@id/employeeSalaryDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/employeeSalaryDetailFragment"
+        android:name="com.example.services_admin.ui.employeesalary.EmployeeSalaryDetailFragment"
+        android:label="fragment_employee_salary_detail"
+        tools:layout="@layout/fragment_employee_salary_detail" />
 </navigation>

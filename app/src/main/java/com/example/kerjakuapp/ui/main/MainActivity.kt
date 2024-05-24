@@ -122,7 +122,8 @@ class MainActivity : AppCompatActivity() {
                 com.example.services_admin.R.id.employeeLeaveReviewFragment,
                 com.example.services_admin.R.id.employeeSickLeaveFragment,
                 com.example.services_admin.R.id.reimbursementReviewFragment,
-                com.example.services_admin.R.id.employeeSalaryFragment -> {
+                com.example.services_admin.R.id.employeeSalaryFragment,
+                com.example.services_admin.R.id.employeeSalaryDetailFragment -> {
                     navView?.visibility = View.GONE
                 }
 
