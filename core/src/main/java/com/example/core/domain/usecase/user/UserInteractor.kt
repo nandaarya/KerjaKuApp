@@ -1,6 +1,7 @@
 package com.example.core.domain.usecase.user
 
 import com.example.core.data.remote.network.ApiResponse
+import com.example.core.domain.model.DataAttendance
 import com.example.core.domain.model.User
 import com.example.core.domain.repository.IUserRepository
 import kotlinx.coroutines.flow.Flow
@@ -24,5 +25,7 @@ class UserInteractor @Inject constructor(private val userRepository: IUserReposi
     override fun getSession(): Flow<User> = userRepository.getSession()
 
     override suspend fun logout() = userRepository.logout()
+    override suspend fun getDataAttendance(employeeId: String): Flow<ApiResponse<DataAttendance>> =
+        userRepository.getDataAttendance(employeeId)
 
 }

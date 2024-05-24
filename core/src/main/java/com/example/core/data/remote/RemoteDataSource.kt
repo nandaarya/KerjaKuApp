@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.core.data.local.LocalDataSource
 import com.example.core.data.remote.network.ApiResponse
 import com.example.core.data.remote.network.ApiService
+import com.example.core.domain.model.DataAttendance
 import com.example.core.domain.model.User
 import com.example.core.utils.DataMapper
 import kotlinx.coroutines.Dispatchers
@@ -23,13 +24,26 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService, p
                 val response = apiService.login(email, password).loginResult
                 Log.d("login in data source", response.toString())
                 Log.d("login in data source", "$email, $password")
-                val dataArray = DataMapper.mapResponseToDomain(response)
-                if (dataArray != null) {
-                    localDataSource.saveSession(dataArray)
-                    emit(ApiResponse.Success(dataArray))
-                } else {
+                val dataArray = DataMapper.mapLoginResponseToDomain(response)
+                localDataSource.saveSession(dataArray)
+                emit(ApiResponse.Success(dataArray))
+            } catch (e: Exception) {
+                if ((e is HttpException) && (e.code() == 404)) {
                     emit(ApiResponse.Empty)
+                } else {
+                    emit(ApiResponse.Error(e.toString()))
                 }
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getDataAttendance(employeeId: String): Flow<ApiResponse<DataAttendance>> {
+        return flow {
+            emit(ApiResponse.Loading)
+            try {
+                val response = apiService.getDataAttendance(employeeId).dataAttendance
+                val dataArray = DataMapper.mapDataAttendanceResponseToDomain(response)
+                emit(ApiResponse.Success(dataArray))
             } catch (e: Exception) {
                 if ((e is HttpException) && (e.code() == 404)) {
                     emit(ApiResponse.Empty)

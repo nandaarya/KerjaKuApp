@@ -1,6 +1,7 @@
 package com.example.core.domain.repository
 
 import com.example.core.data.remote.network.ApiResponse
+import com.example.core.domain.model.DataAttendance
 import com.example.core.domain.model.User
 import kotlinx.coroutines.flow.Flow
 
@@ -15,4 +16,5 @@ interface IUserRepository {
     suspend fun saveSession(user: User)
     fun getSession(): Flow<User>
     suspend fun logout()
+    suspend fun getDataAttendance(employeeId: String): Flow<ApiResponse<DataAttendance>>
 }

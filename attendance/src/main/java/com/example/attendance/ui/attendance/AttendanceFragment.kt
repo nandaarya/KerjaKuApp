@@ -76,6 +76,12 @@ class AttendanceFragment : Fragment(), ClockOutDialogFragment.ClockOutListener {
                 tvId.text = it.userId
             }
         }
+
+//        attendanceViewModel.getDataAttendance(employeeId = ).observe(requireActivity()){
+//            binding?.apply {
+//
+//            }
+//        }
     }
 
     // Still find a way to separate the permission request
