@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_servicesAdminFragment_to_reimbursementReviewFragment"
             app:destination="@id/reimbursementReviewFragment" />
+        <action
+            android:id="@+id/action_servicesAdminFragment_to_employeeSalaryFragment"
+            app:destination="@id/employeeSalaryFragment" />
     </fragment>
     <fragment
         android:id="@+id/addEmployeeFragment"
@@ -46,4 +49,9 @@
         android:name="com.example.services_admin.ui.reimbursementreview.ReimbursementReviewFragment"
         android:label="fragment_reimbursement_review"
         tools:layout="@layout/fragment_reimbursement_review" />
+    <fragment
+        android:id="@+id/employeeSalaryFragment"
+        android:name="com.example.services_admin.ui.employeesalary.EmployeeSalaryFragment"
+        android:label="fragment_employee_salary"
+        tools:layout="@layout/fragment_employee_salary" />
 </navigation>

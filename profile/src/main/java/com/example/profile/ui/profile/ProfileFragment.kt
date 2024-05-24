@@ -35,7 +35,13 @@ class ProfileFragment : Fragment(), LogoutDialogFragment.LogoutListener {
     }
 
     private fun setupView() {
-
+        profileViewModel.getSession().observe(requireActivity()){
+            binding?.apply {
+//                ivProfilePhoto.id =
+                tvName.text = it.name
+                tvId.text = it.userId
+            }
+        }
     }
 
     private fun setupButton() {

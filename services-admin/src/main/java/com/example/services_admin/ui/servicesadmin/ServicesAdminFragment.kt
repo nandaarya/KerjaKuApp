@@ -54,8 +54,8 @@ class ServicesAdminFragment : Fragment() {
             }
 
             btnEmployeeSalary.setOnClickListener {
-//                val action = ServicesAdminFragmentDirections.actionServicesAdminFragmentToReviewReimbursementFragment()
-//                findNavController().navigate(action)
+                val action = ServicesAdminFragmentDirections.actionServicesAdminFragmentToEmployeeSalaryFragment()
+                findNavController().navigate(action)
             }
         }
     }
