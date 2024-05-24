@@ -1,7 +1,14 @@
 package com.example.attendance.ui.attendance
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import com.example.core.domain.model.User
 import com.example.core.domain.usecase.UserUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class AttendanceViewModel(userUseCase: UserUseCase): ViewModel() {
+@HiltViewModel
+class AttendanceViewModel @Inject constructor(private val userUseCase: UserUseCase) : ViewModel() {
+    fun getSession(): LiveData<User> = userUseCase.getSession().asLiveData()
 }

@@ -62,8 +62,20 @@ class AttendanceFragment : Fragment(), ClockOutDialogFragment.ClockOutListener {
 
         setupLocation(requireContext())
         registerGeofenceReceiver(requireContext())
+
+        setupView()
         setupButton()
         setupTime()
+    }
+
+    private fun setupView() {
+        attendanceViewModel.getSession().observe(requireActivity()){
+            binding?.apply {
+//                ivProfilePhoto.id =
+                tvName.text = it.name
+                tvId.text = it.userId
+            }
+        }
     }
 
     // Still find a way to separate the permission request

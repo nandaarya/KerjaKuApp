@@ -104,16 +104,6 @@
         tools:alpha="100"
         tools:ignore="VisualLintButtonSize" />
 
-    <com.google.android.material.materialswitch.MaterialSwitch
-        android:id="@+id/switch_role"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:text="Test Login Sebagai Admin ?"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
-
     <TextView
         android:id="@+id/tv_copyright"
         android:layout_width="wrap_content"
