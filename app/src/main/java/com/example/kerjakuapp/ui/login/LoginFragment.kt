@@ -28,9 +28,6 @@ class LoginFragment : Fragment() {
 
     private val binding get() = _binding
 
-    // Variabel test
-//    private var userRole = "employee"
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -71,18 +68,6 @@ class LoginFragment : Fragment() {
                 }
             }
         }
-
-//        // TEST LOGIN DENGAN BERBAGAI USER
-//        binding?.switchRole?.setOnCheckedChangeListener { _, isChecked ->
-//            if (isChecked) {
-//                userRole = "admin"
-//                Toast.makeText(requireContext(), "Login sebagai Admin", Toast.LENGTH_SHORT).show()
-//            } else {
-//                userRole = "employee"
-//                Toast.makeText(requireContext(), "Login sebagai User Biasa", Toast.LENGTH_SHORT)
-//                    .show()
-//            }
-//        }
     }
 
     private fun loginResult(email: String, password: String) {
@@ -93,7 +78,6 @@ class LoginFragment : Fragment() {
                 }
                 is ApiResponse.Success -> {
                     showLoading(false)
-//                    loginViewModel.saveSession(it.data)
                     Log.d("user after login", it.data.toString())
                     findNavController().navigate(R.id.action_loginFragment_to_attendance_navigation)
                 }

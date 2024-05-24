@@ -15,9 +15,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(private val userUseCase: UserUseCase) : ViewModel() {
-//
-//    private val _loginResponse = MediatorLiveData<Result<LoginResponse>>()
-//    val loginResponse: LiveData<Result<LoginResponse>> = _loginResponse
 
     fun login(email: String, password: String): LiveData<ApiResponse<User>> {
         val userLiveData = MutableLiveData<ApiResponse<User>>()
@@ -30,12 +27,6 @@ class LoginViewModel @Inject constructor(private val userUseCase: UserUseCase) :
         }
 
         return userLiveData
-    }
-
-    fun saveSession(user: User) {
-        viewModelScope.launch {
-            userUseCase.saveSession(user)
-        }
     }
 
     fun getSession(): LiveData<User> = userUseCase.getSession().asLiveData()

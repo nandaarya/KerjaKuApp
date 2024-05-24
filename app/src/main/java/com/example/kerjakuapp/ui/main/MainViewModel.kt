@@ -11,28 +11,6 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(private val userUseCase: UserUseCase) : ViewModel() {
 
-//    private var _userRole = MediatorLiveData<String>()
-//    var userRole: LiveData<String> = _userRole
-//
-//    fun setUserRole(userRole: String) {
-//        _userRole.value = userRole
-//    }
-//
-//    private fun getToken(): String {
-//        var token = ""
-//        viewModelScope.launch {
-//            repository.getSession().collect{ user ->
-//                token = user.token
-//            }
-//        }
-//        return token
-//    }
-
     fun getSession(): LiveData<User> = userUseCase.getSession().asLiveData()
 
-//    fun logout() {
-//        viewModelScope.launch {
-//            repository.logout()
-//        }
-//    }
 }

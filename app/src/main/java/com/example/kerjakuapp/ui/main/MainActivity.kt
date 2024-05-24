@@ -49,8 +49,6 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.servicesFragment -> {
-                    // variable role mengobrserve di view model untuk mendapatkan role user
-//                    var role = "employee"
                     mainViewModel.getSession().observe(this){
                         Log.d("user after get session", it.toString())
                         val destinationUri = when (it.role) {
