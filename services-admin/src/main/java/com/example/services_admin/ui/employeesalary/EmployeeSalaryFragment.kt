@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.services_admin.databinding.FragmentEmployeeSalaryBinding
 
@@ -39,7 +40,10 @@ class EmployeeSalaryFragment : Fragment() {
     private fun setSearchResultData() {
         val layoutManager = LinearLayoutManager(requireContext())
         binding?.rvSearchResult?.layoutManager = layoutManager
-        val adapter = EmployeeSalaryListAdapter()
+
+        val navController = findNavController()
+
+        val adapter = EmployeeSalaryListAdapter(navController)
         binding?.rvSearchResult?.adapter = adapter
 
         binding?.apply {

@@ -1,4 +1,4 @@
-package com.example.core.domain.usecase
+package com.example.core.domain.usecase.user
 
 import com.example.core.data.remote.network.ApiResponse
 import com.example.core.domain.model.User
@@ -8,7 +8,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserInteractor @Inject constructor(private val userRepository: IUserRepository) : UserUseCase {
+class UserInteractor @Inject constructor(private val userRepository: IUserRepository) :
+    UserUseCase {
 //    override suspend fun register(
 //        name: String,
 //        email: String,

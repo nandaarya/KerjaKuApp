@@ -1,4 +1,4 @@
-package com.example.core.domain.usecase
+package com.example.core.domain.usecase.user
 
 import com.example.core.data.remote.network.ApiResponse
 import com.example.core.domain.model.User

@@ -2,15 +2,19 @@ package com.example.services_admin.ui.employeesalary
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.services_admin.databinding.SearchResultItemLayoutBinding
 
-class EmployeeSalaryListAdapter(): RecyclerView.Adapter<EmployeeSalaryListAdapter.ViewHolder>() {
+class EmployeeSalaryListAdapter(private val navController: NavController) : RecyclerView.Adapter<EmployeeSalaryListAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: SearchResultItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
-
+            binding.cvSearchResultItemLayout.setOnClickListener {
+                val action = EmployeeSalaryFragmentDirections.actionEmployeeSalaryFragmentToEmployeeSalaryDetailFragment()
+                navController.navigate(action)
+            }
         }
     }
 
