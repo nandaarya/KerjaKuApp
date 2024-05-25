@@ -7,6 +7,7 @@ import com.example.core.domain.model.DataAttendance
 import com.example.core.domain.model.User
 import com.example.core.domain.repository.IUserRepository
 import kotlinx.coroutines.flow.Flow
+import okhttp3.MultipartBody
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,4 +23,11 @@ class UserRepository @Inject constructor(
     override suspend fun logout() = localDataSource.logout()
     override suspend fun getDataAttendance(employeeId: String): Flow<ApiResponse<DataAttendance>> =
         remoteDataSource.getDataAttendance(employeeId)
+
+    override suspend fun clockIn(
+        employeeId: String, file: MultipartBody.Part
+    ): Flow<ApiResponse<Boolean>> = remoteDataSource.clockIn(employeeId, file)
+
+    override suspend fun clockOut(employeeId: String, date: String): Flow<ApiResponse<Boolean>> =
+        remoteDataSource.clockOut(employeeId, date)
 }

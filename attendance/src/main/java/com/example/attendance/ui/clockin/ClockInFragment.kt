@@ -11,13 +11,20 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.attendance.R
 import com.example.attendance.databinding.FragmentClockInBinding
 import com.example.attendance.utils.getImageUri
 import com.example.attendance.utils.isTimeInRange
 import com.example.attendance.utils.parseTimeStringToTime
+import com.example.attendance.utils.reduceFileImage
+import com.example.attendance.utils.uriToFile
+import com.example.core.data.remote.network.ApiResponse
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 
 @AndroidEntryPoint
 class ClockInFragment : Fragment() {
@@ -67,11 +74,11 @@ class ClockInFragment : Fragment() {
         binding?.btnCamera?.setOnClickListener { startCamera() }
         binding?.btnUpload?.setOnClickListener {
             Log.d("Clock In", currentTime.toString())
-            // Memeriksa apakah waktu berada dalam rentang
             if (isTimeInRange(currentTime, startTime, endTime)) {
-                val toast =
-                    Toast.makeText(requireContext(), "Anda Telah Clock In", Toast.LENGTH_LONG)
-                toast.show()
+//                val toast =
+//                    Toast.makeText(requireContext(), "Anda Telah Clock In", Toast.LENGTH_LONG)
+//                toast.show()
+                // upload clock in
             } else {
                 val toast =
                     Toast.makeText(requireContext(), "Belum saatnya Clock In", Toast.LENGTH_LONG)
@@ -99,26 +106,43 @@ class ClockInFragment : Fragment() {
         }
     }
 
-    //    private fun uploadImage() {
-//        var token: String
-//        currentImageUri?.let { uri ->
-//            val imageFile = uriToFile(uri, this).reduceFileImage()
-//            val description = binding.edtDescription.text.toString()
-//            showLoading(true)
-//
-//            val requestBody = description.toRequestBody("text/plain".toMediaType())
-//            val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
-//            val multipartBody = MultipartBody.Part.createFormData(
-//                "photo",
-//                imageFile.name,
-//                requestImageFile
-//            )
-//
-//            uploadStoryViewModel.getSession().observe(this) { user ->
-//                token = user.token
-//                uploadStoryViewModel.uploadStory(token, multipartBody, requestBody, currentLocation)
-//            }
-//
-//        } ?: showToast(getString(com.google.android.gms.location.R.string.empty_image_warning))
-//    }
+    private fun clockIn() {
+        var token: String
+        currentImageUri?.let { uri ->
+            val imageFile = uriToFile(uri, requireContext()).reduceFileImage()
+            val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+            val file = MultipartBody.Part.createFormData(
+                "photo clock in",
+                imageFile.name,
+                requestImageFile
+            )
+
+            clockInViewModel.clockIn("employeeId", file).observe(requireActivity()){
+                when (it) {
+                    is ApiResponse.Loading -> {
+                        showLoading(true)
+                    }
+                    is ApiResponse.Success -> {
+                        showLoading(false)
+                        Toast.makeText(requireContext(), "Clock in success!", Toast.LENGTH_SHORT).show()
+                        val action = ClockInFragmentDirections.actionClockInFragmentToAttendanceFragment()
+                        findNavController().navigate(action)
+                    }
+                    is ApiResponse.Error -> {
+                        showLoading(false)
+                        Toast.makeText(requireContext(), "Clock in fail!", Toast.LENGTH_SHORT).show()
+                    }
+                    is ApiResponse.Empty -> {
+                        showLoading(false)
+                        Toast.makeText(requireContext(), "Clock in fail! Empty Result!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding?.progressBar?.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
 }

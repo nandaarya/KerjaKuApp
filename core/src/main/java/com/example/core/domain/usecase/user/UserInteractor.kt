@@ -5,6 +5,7 @@ import com.example.core.domain.model.DataAttendance
 import com.example.core.domain.model.User
 import com.example.core.domain.repository.IUserRepository
 import kotlinx.coroutines.flow.Flow
+import okhttp3.MultipartBody
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -28,4 +29,11 @@ class UserInteractor @Inject constructor(private val userRepository: IUserReposi
     override suspend fun getDataAttendance(employeeId: String): Flow<ApiResponse<DataAttendance>> =
         userRepository.getDataAttendance(employeeId)
 
+    override suspend fun clockIn(
+        employeeId: String, file: MultipartBody.Part
+    ): Flow<ApiResponse<Boolean>> = userRepository.clockIn(employeeId, file)
+
+    override suspend fun clockOut(
+        employeeId: String, date: String
+    ): Flow<ApiResponse<Boolean>> = userRepository.clockOut(employeeId, date)
 }

@@ -39,6 +39,11 @@
             android:name="currentTime"
             app:argType="string"
             android:defaultValue="-" />
+        <action
+            android:id="@+id/action_clockInFragment_to_attendanceFragment"
+            app:destination="@id/attendanceFragment"
+            app:popUpTo="@id/clockInFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
 </navigation>

@@ -4,6 +4,7 @@ import com.example.core.data.remote.network.ApiResponse
 import com.example.core.domain.model.DataAttendance
 import com.example.core.domain.model.User
 import kotlinx.coroutines.flow.Flow
+import okhttp3.MultipartBody
 
 interface UserUseCase {
 //    suspend fun register(
@@ -17,4 +18,6 @@ interface UserUseCase {
     fun getSession(): Flow<User>
     suspend fun logout()
     suspend fun getDataAttendance(employeeId: String): Flow<ApiResponse<DataAttendance>>
+    suspend fun clockIn(employeeId: String, file: MultipartBody.Part): Flow<ApiResponse<Boolean>>
+    suspend fun clockOut(employeeId: String, date: String): Flow<ApiResponse<Boolean>>
 }

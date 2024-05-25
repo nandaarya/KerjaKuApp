@@ -28,4 +28,16 @@ class AttendanceViewModel @Inject constructor(private val userUseCase: UserUseCa
 
         return dataAttendanceLiveData
     }
+
+    fun clockOut(employeeId: String, date: String): LiveData<ApiResponse<Boolean>> {
+        val clockOutResultLiveData = MutableLiveData<ApiResponse<Boolean>>()
+
+        viewModelScope.launch {
+            userUseCase.clockOut(employeeId, date).collect {
+                clockOutResultLiveData.value = it
+            }
+        }
+
+        return clockOutResultLiveData
+    }
 }

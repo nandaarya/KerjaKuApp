@@ -29,6 +29,7 @@ import com.example.attendance.utils.checkGPSIsEnabled
 import com.example.attendance.utils.getCurrentDate
 import com.example.attendance.utils.getCurrentDayOfWeek
 import com.example.attendance.utils.getCurrentTime
+import com.example.core.data.remote.network.ApiResponse
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Timer
 import java.util.TimerTask
@@ -213,6 +214,19 @@ class AttendanceFragment : Fragment(), ClockOutDialogFragment.ClockOutListener {
     }
 
     override fun onClockOutConfirmed() {
-        Toast.makeText(requireContext(), "Clocked out successfully", Toast.LENGTH_SHORT).show()
+        attendanceViewModel.clockOut("employeeId", "date").observe(requireActivity()){
+            when (it) {
+                is ApiResponse.Loading -> {
+                }
+                is ApiResponse.Success -> {
+                    Toast.makeText(requireContext(), "Clock out success!", Toast.LENGTH_SHORT).show()
+                }
+                is ApiResponse.Error -> {
+                    Toast.makeText(requireContext(), "Clock out fail!", Toast.LENGTH_SHORT).show()
+                }
+                is ApiResponse.Empty -> {
+                }
+            }
+        }
     }
 }
