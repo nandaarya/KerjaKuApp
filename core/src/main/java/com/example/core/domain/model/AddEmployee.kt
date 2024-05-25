@@ -1,6 +1,6 @@
-package com.example.kerjakuapp.data.model
+package com.example.core.domain.model
 
-data class addEmployee(
+data class AddEmployee(
     val employeeName: String,
     val gender: String,
     val position: String,

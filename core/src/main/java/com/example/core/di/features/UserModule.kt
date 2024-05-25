@@ -1,6 +1,6 @@
 package com.example.core.di.features
 
-import com.example.core.data.UserRepository
+import com.example.core.data.repository.UserRepository
 import com.example.core.di.DataStoreModule
 import com.example.core.di.NetworkModule
 import com.example.core.domain.repository.IUserRepository

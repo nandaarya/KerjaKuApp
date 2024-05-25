@@ -12,11 +12,6 @@ import javax.inject.Singleton
 @Singleton
 class UserInteractor @Inject constructor(private val userRepository: IUserRepository) :
     UserUseCase {
-//    override suspend fun register(
-//        name: String,
-//        email: String,
-//        password: String
-//    ): Flow<ApiResponse<RegisterResponse>> = userRepository.register(name, email, password)
 
     override suspend fun login(email: String, password: String): Flow<ApiResponse<User>> =
         userRepository.login(email, password)

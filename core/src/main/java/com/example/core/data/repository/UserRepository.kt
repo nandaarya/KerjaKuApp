@@ -1,4 +1,4 @@
-package com.example.core.data
+package com.example.core.data.repository
 
 import com.example.core.data.local.LocalDataSource
 import com.example.core.data.remote.RemoteDataSource

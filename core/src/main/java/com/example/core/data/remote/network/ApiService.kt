@@ -1,9 +1,10 @@
 package com.example.core.data.remote.network
 
-import com.example.core.data.remote.response.ClockInResponse
-import com.example.core.data.remote.response.ClockOutResponse
-import com.example.core.data.remote.response.DataAttendanceResponse
-import com.example.core.data.remote.response.LoginResponse
+import com.example.core.data.remote.response.admin.AddEmployeeResponse
+import com.example.core.data.remote.response.user.ClockInResponse
+import com.example.core.data.remote.response.user.ClockOutResponse
+import com.example.core.data.remote.response.user.DataAttendanceResponse
+import com.example.core.data.remote.response.user.LoginResponse
 import okhttp3.MultipartBody
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -13,14 +14,6 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface ApiService {
-//    @FormUrlEncoded
-//    @POST("register")
-//    suspend fun register(
-//        @Field("name") name: String,
-//        @Field("email") email: String,
-//        @Field("password") password: String
-//    ): RegisterResponse
-
     @FormUrlEncoded
     @POST("login")
     suspend fun login(
@@ -38,7 +31,7 @@ interface ApiService {
     @POST("/absen/clock-in")
     suspend fun clockIn(
         @Field("id_pegawai") employeeId: String,
-        @Part file : MultipartBody.Part
+        @Part file: MultipartBody.Part
     ): ClockInResponse
 
     @FormUrlEncoded
@@ -47,4 +40,19 @@ interface ApiService {
         @Field("id_pegawai") idPegawai: String,
         @Field("tanggal_absen") tanggalAbsen: String
     ): ClockOutResponse
+
+    @FormUrlEncoded
+    @POST("/admin/add-employee")
+    suspend fun addEmployee(
+        @Field("employee_name") employeeName: String,
+        @Field("gender") gender: String,
+        @Field("position") position: String,
+        @Field("department") department: String,
+        @Field("start_date") startDate: String,
+        @Field("phone_number") phoneNumber: Int,
+        @Field("email") email: String,
+        @Field("address") address: String,
+        @Field("employee_photo") employeePhoto: String,
+        @Field("role") role: String
+    ): AddEmployeeResponse
 }

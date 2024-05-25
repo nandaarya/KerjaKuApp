@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.core.data.local.LocalDataSource
 import com.example.core.data.remote.network.ApiResponse
 import com.example.core.data.remote.network.ApiService
+import com.example.core.domain.model.AddEmployee
 import com.example.core.domain.model.DataAttendance
 import com.example.core.domain.model.User
 import com.example.core.utils.DataMapper
@@ -17,7 +18,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RemoteDataSource @Inject constructor(private val apiService: ApiService, private val localDataSource: LocalDataSource) {
+class RemoteDataSource @Inject constructor(
+    private val apiService: ApiService,
+    private val localDataSource: LocalDataSource
+) {
     suspend fun login(email: String, password: String): Flow<ApiResponse<User>> {
         return flow {
             emit(ApiResponse.Loading)
@@ -76,6 +80,33 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService, p
             emit(ApiResponse.Loading)
             try {
                 val response = apiService.clockOut(employeeId, date).success
+                emit(ApiResponse.Success(response))
+            } catch (e: Exception) {
+                if ((e is HttpException) && (e.code() == 404)) {
+                    emit(ApiResponse.Empty)
+                } else {
+                    emit(ApiResponse.Error(e.toString()))
+                }
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun addEmployee(addEmployeeData: AddEmployee): Flow<ApiResponse<Boolean>> {
+        return flow {
+            emit(ApiResponse.Loading)
+            try {
+                val response = apiService.addEmployee(
+                    addEmployeeData.employeeName,
+                    addEmployeeData.gender,
+                    addEmployeeData.position,
+                    addEmployeeData.department,
+                    addEmployeeData.startDate,
+                    addEmployeeData.phoneNumber,
+                    addEmployeeData.email,
+                    addEmployeeData.address,
+                    addEmployeeData.employeePhoto,
+                    addEmployeeData.role
+                ).success
                 emit(ApiResponse.Success(response))
             } catch (e: Exception) {
                 if ((e is HttpException) && (e.code() == 404)) {

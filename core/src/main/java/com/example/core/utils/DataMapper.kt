@@ -1,8 +1,8 @@
 package com.example.core.utils
 
 import com.example.core.data.local.model.UserModel
-import com.example.core.data.remote.response.DataAttendanceResult
-import com.example.core.data.remote.response.LoginResult
+import com.example.core.data.remote.response.user.DataAttendanceResult
+import com.example.core.data.remote.response.user.LoginResult
 import com.example.core.domain.model.DataAttendance
 import com.example.core.domain.model.User
 
