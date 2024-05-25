@@ -10,14 +10,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ScrollView
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.core.data.remote.network.ApiResponse
+import com.example.core.domain.model.AddEmployee
+import com.example.core.utils.reduceFileImage
+import com.example.core.utils.uriToFile
 import com.example.services_admin.databinding.FragmentAddEmployeeBinding
+import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.util.Calendar
 
+@AndroidEntryPoint
 class AddEmployeeFragment : Fragment() {
+
+    private val addEmployeeViewModel: AddEmployeeViewModel by viewModels()
+
     private var _binding: FragmentAddEmployeeBinding? = null
     private val binding get() = _binding
 
@@ -45,7 +60,7 @@ class AddEmployeeFragment : Fragment() {
     private fun setupButton() {
         binding?.btnTanggalMulaiKerjaPicker?.setOnClickListener { openDatePicker() }
         binding?.btnUploadFotoPegawai?.setOnClickListener { startGallery() }
-        binding?.btnTambahPegawai?.setOnClickListener { tambahPegawai() }
+        binding?.btnTambahPegawai?.setOnClickListener { addEmployee() }
     }
 
     private fun openDatePicker() {
@@ -61,7 +76,8 @@ class AddEmployeeFragment : Fragment() {
         val datePickerDialog = DatePickerDialog(
             requireContext(),
             { _, selectedYear, monthOfYear, dayOfMonth ->
-                selectedTanggalMulaiKerja = (dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + selectedYear)
+                selectedTanggalMulaiKerja =
+                    (dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + selectedYear)
                 binding?.tvSelectedStartDate?.text = selectedTanggalMulaiKerja
             },
             year,
@@ -100,7 +116,71 @@ class AddEmployeeFragment : Fragment() {
         }
     }
 
-    private fun tambahPegawai() {
+    private fun addEmployee() {
+        currentImageUri?.let { uri ->
+            val imageFile = uriToFile(uri, requireContext()).reduceFileImage()
+            val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+            val employeePhoto = MultipartBody.Part.createFormData(
+                "employee photo",
+                imageFile.name,
+                requestImageFile
+            )
 
+            binding?.apply {
+                val addEmployeeData = AddEmployee(
+                    employeeName = tvNamaPegawai.text.toString(),
+                    gender = tvJenisKelamin.text.toString(),
+                    position = tvJabatan.text.toString(),
+                    department = tvDepartemen.text.toString(),
+                    startDate = selectedTanggalMulaiKerja,
+                    phoneNumber = tvNomorTelepon.text.toString().toInt(),
+                    email = tvEmail.text.toString(),
+                    address = tvAlamat.text.toString(),
+                    employeePhoto = employeePhoto,
+                    role = tvRole.text.toString()
+                )
+                observer(addEmployeeData)
+            }
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding?.progressBar?.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun observer(addEmployeeData: AddEmployee){
+        addEmployeeViewModel.addEmployee(addEmployeeData).observe(requireActivity()) {
+            when (it) {
+                is ApiResponse.Loading -> {
+                    showLoading(true)
+                }
+
+                is ApiResponse.Success -> {
+                    showLoading(false)
+                    Toast.makeText(
+                        requireContext(),
+                        "Add employee success!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    val action = AddEmployeeFragmentDirections.actionAddEmployeeFragmentToServicesAdminFragment()
+                    findNavController().navigate(action)
+                }
+
+                is ApiResponse.Error -> {
+                    showLoading(false)
+                    Toast.makeText(requireContext(), "Add employee fail!", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                is ApiResponse.Empty -> {
+                    showLoading(false)
+                    Toast.makeText(
+                        requireContext(),
+                        "Add employee fail! Empty Result!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
     }
 }

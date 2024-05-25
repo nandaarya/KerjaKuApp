@@ -33,7 +33,13 @@
         android:id="@+id/addEmployeeFragment"
         android:name="com.example.services_admin.ui.addemployee.AddEmployeeFragment"
         android:label="fragment_add_employee"
-        tools:layout="@layout/fragment_add_employee" />
+        tools:layout="@layout/fragment_add_employee" >
+        <action
+            android:id="@+id/action_addEmployeeFragment_to_servicesAdminFragment"
+            app:destination="@id/servicesAdminFragment"
+            app:popUpTo="@id/addEmployeeFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
     <fragment
         android:id="@+id/employeeLeaveReviewFragment"
         android:name="com.example.services_admin.ui.employeeleavereview.EmployeeLeaveReviewFragment"

@@ -20,4 +20,9 @@
         <item>IT</item>
         <item>Hukum dan Legal</item>
     </string-array>
+
+    <string-array name="role">
+        <item>Pegawai</item>
+        <item>Admin</item>
+    </string-array>
 </resources>

@@ -52,7 +52,7 @@ interface ApiService {
         @Field("phone_number") phoneNumber: Int,
         @Field("email") email: String,
         @Field("address") address: String,
-        @Field("employee_photo") employeePhoto: String,
-        @Field("role") role: String
+        @Field("role") role: String,
+        @Part employeePhoto: MultipartBody.Part
     ): AddEmployeeResponse
 }

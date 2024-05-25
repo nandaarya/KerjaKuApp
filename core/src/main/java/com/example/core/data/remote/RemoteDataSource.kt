@@ -104,8 +104,9 @@ class RemoteDataSource @Inject constructor(
                     addEmployeeData.phoneNumber,
                     addEmployeeData.email,
                     addEmployeeData.address,
+                    addEmployeeData.role,
                     addEmployeeData.employeePhoto,
-                    addEmployeeData.role
+
                 ).success
                 emit(ApiResponse.Success(response))
             } catch (e: Exception) {

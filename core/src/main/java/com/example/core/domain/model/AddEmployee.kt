@@ -1,5 +1,7 @@
 package com.example.core.domain.model
 
+import okhttp3.MultipartBody
+
 data class AddEmployee(
     val employeeName: String,
     val gender: String,
@@ -9,6 +11,6 @@ data class AddEmployee(
     val phoneNumber: Int,
     val email: String,
     val address: String,
-    val employeePhoto: String,
+    val employeePhoto: MultipartBody.Part,
     val role: String
 )
