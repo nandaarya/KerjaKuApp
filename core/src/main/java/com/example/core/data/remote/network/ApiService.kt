@@ -1,6 +1,7 @@
 package com.example.core.data.remote.network
 
 import com.example.core.data.remote.response.admin.AddEmployeeResponse
+import com.example.core.data.remote.response.admin.FindEmployeeByEmployeeNameResponse
 import com.example.core.data.remote.response.admin.GetEmployeeLeaveReviewResponse
 import com.example.core.data.remote.response.admin.GetEmployeeSickLeaveResponse
 import com.example.core.data.remote.response.admin.GetReimbursementReviewResponse
@@ -70,5 +71,12 @@ interface ApiService {
     @FormUrlEncoded
     @GET("/admin/getReimbursementReview")
     suspend fun getReimbursementReview(): GetReimbursementReviewResponse
+
+    @FormUrlEncoded
+    @POST("/admin/findEmployeeByEmployeeName/{employeeName}")
+    suspend fun findEmployeeByEmployeeName(
+        @Path("employeeName") employeeName: String,
+    ): FindEmployeeByEmployeeNameResponse
+
 
 }

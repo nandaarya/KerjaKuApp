@@ -7,6 +7,7 @@ import com.example.core.data.remote.network.ApiService
 import com.example.core.domain.model.admin.AddEmployee
 import com.example.core.domain.model.admin.EmployeeLeaveReview
 import com.example.core.domain.model.admin.EmployeeSickLeave
+import com.example.core.domain.model.admin.FindEmployeeByEmployeeName
 import com.example.core.domain.model.admin.ReimbursementReview
 import com.example.core.domain.model.user.DataAttendance
 import com.example.core.domain.model.user.User
@@ -110,7 +111,7 @@ class RemoteDataSource @Inject constructor(
                     addEmployeeData.role,
                     addEmployeeData.employeePhoto,
 
-                ).success
+                    ).success
                 emit(ApiResponse.Success(response))
             } catch (e: Exception) {
                 if ((e is HttpException) && (e.code() == 404)) {
@@ -167,6 +168,26 @@ class RemoteDataSource @Inject constructor(
                 val response = apiService.getReimbursementReview().reimbursementReview
                 val dataArray = response.map {
                     DataMapper.mapReimbursementReviewResponseToDomain(it)
+                }
+                emit(ApiResponse.Success(dataArray))
+            } catch (e: Exception) {
+                if ((e is HttpException) && (e.code() == 404)) {
+                    emit(ApiResponse.Empty)
+                } else {
+                    emit(ApiResponse.Error(e.toString()))
+                }
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun findEmployeeByEmployeeName(name: String): Flow<ApiResponse<List<FindEmployeeByEmployeeName>>> {
+        return flow {
+            emit(ApiResponse.Loading)
+            try {
+                val response =
+                    apiService.findEmployeeByEmployeeName(name).findEmployeeByEmployeeNameResult
+                val dataArray = response.map {
+                    DataMapper.mapFindEmployeeByEmployeeNameResponseToDomain(it)
                 }
                 emit(ApiResponse.Success(dataArray))
             } catch (e: Exception) {
