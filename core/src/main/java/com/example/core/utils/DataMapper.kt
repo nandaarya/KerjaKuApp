@@ -3,10 +3,12 @@ package com.example.core.utils
 import com.example.core.data.local.model.UserModel
 import com.example.core.data.remote.response.admin.EmployeeLeaveReviewResult
 import com.example.core.data.remote.response.admin.EmployeeSickLeaveResult
+import com.example.core.data.remote.response.admin.ReimbursementReviewResult
 import com.example.core.data.remote.response.user.DataAttendanceResult
 import com.example.core.data.remote.response.user.LoginResult
 import com.example.core.domain.model.admin.EmployeeLeaveReview
 import com.example.core.domain.model.admin.EmployeeSickLeave
+import com.example.core.domain.model.admin.ReimbursementReview
 import com.example.core.domain.model.user.DataAttendance
 import com.example.core.domain.model.user.User
 
@@ -74,5 +76,18 @@ object DataMapper {
             statusPengajuan = input.statusPengajuan,
             tanggalPersetujuan = input.tanggalPersetujuan,
             pesanPersetujuan = input.pesanPersetujuan
+        )
+
+    fun mapReimbursementReviewResponseToDomain(input: ReimbursementReviewResult): ReimbursementReview =
+        ReimbursementReview(
+            idReimbursement = input.idReimbursement,
+            idPegawai = input.idPegawai,
+            tanggalPengajuan = input.tanggalPengajuan,
+            jenisReimbursement = input.jenisReimbursement,
+            deskripsi = input.deskripsi,
+            jumlahPengeluaran = input.jumlahPengeluaran,
+            bukti = input.bukti,
+            statusPengajuan = input.statusPengajuan,
+            tanggalPersetujuan = input.tanggalPersetujuan
         )
 }

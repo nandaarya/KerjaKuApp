@@ -3,6 +3,7 @@ package com.example.core.data.remote.network
 import com.example.core.data.remote.response.admin.AddEmployeeResponse
 import com.example.core.data.remote.response.admin.GetEmployeeLeaveReviewResponse
 import com.example.core.data.remote.response.admin.GetEmployeeSickLeaveResponse
+import com.example.core.data.remote.response.admin.GetReimbursementReviewResponse
 import com.example.core.data.remote.response.user.ClockInResponse
 import com.example.core.data.remote.response.user.ClockOutResponse
 import com.example.core.data.remote.response.user.DataAttendanceResponse
@@ -65,4 +66,9 @@ interface ApiService {
     @FormUrlEncoded
     @GET("/admin/getEmployeeSickLeave")
     suspend fun getEmployeeSickLeave(): GetEmployeeSickLeaveResponse
+
+    @FormUrlEncoded
+    @GET("/admin/getReimbursementReview")
+    suspend fun getReimbursementReview(): GetReimbursementReviewResponse
+
 }
