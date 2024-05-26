@@ -6,6 +6,7 @@ import com.example.core.data.remote.network.ApiResponse
 import com.example.core.data.remote.network.ApiService
 import com.example.core.domain.model.admin.AddEmployee
 import com.example.core.domain.model.admin.EmployeeLeaveReview
+import com.example.core.domain.model.admin.EmployeeSickLeave
 import com.example.core.domain.model.user.DataAttendance
 import com.example.core.domain.model.user.User
 import com.example.core.utils.DataMapper
@@ -127,6 +128,25 @@ class RemoteDataSource @Inject constructor(
                 val response = apiService.getEmployeeLeaveReview().employeeLeaveReview
                 val dataArray = response.map {
                     DataMapper.mapEmployeeLeaveReviewResponseToDomain(it)
+                }
+                emit(ApiResponse.Success(dataArray))
+            } catch (e: Exception) {
+                if ((e is HttpException) && (e.code() == 404)) {
+                    emit(ApiResponse.Empty)
+                } else {
+                    emit(ApiResponse.Error(e.toString()))
+                }
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun getEmployeeSickLeave(): Flow<ApiResponse<List<EmployeeSickLeave>>> {
+        return flow {
+            emit(ApiResponse.Loading)
+            try {
+                val response = apiService.getEmployeeSickLeave().employeeSickLeave
+                val dataArray = response.map {
+                    DataMapper.mapEmployeeSickLeaveResponseToDomain(it)
                 }
                 emit(ApiResponse.Success(dataArray))
             } catch (e: Exception) {

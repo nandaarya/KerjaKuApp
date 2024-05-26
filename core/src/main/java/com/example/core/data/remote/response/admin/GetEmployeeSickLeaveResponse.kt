@@ -4,20 +4,20 @@ import com.google.gson.annotations.SerializedName
 import okhttp3.MultipartBody
 import java.util.Date
 
-class GetEmployeeLeaveReviewResponse(
+data class GetEmployeeSickLeaveResponse (
     @field:SerializedName("error")
     val error: Boolean,
 
     @field:SerializedName("message")
     val message: String,
 
-    @field:SerializedName("employeeLeaveReview")
-    val employeeLeaveReview: List<EmployeeLeaveReviewResult>
+    @field:SerializedName("employeeSickLeave")
+    val employeeSickLeave: List<EmployeeSickLeaveResult>
 )
 
-data class EmployeeLeaveReviewResult(
-    @field:SerializedName("idPengajuanCuti")
-    val idPengajuanCuti: String,
+data class EmployeeSickLeaveResult (
+    @field:SerializedName("idIzinSakit")
+    val idIzinSakit: Int,
 
     @field:SerializedName("idPegawai")
     val idPegawai: Int,
@@ -25,20 +25,17 @@ data class EmployeeLeaveReviewResult(
     @field:SerializedName("tanggalPengajuan")
     val tanggalPengajuan: Date,
 
-    @field:SerializedName("tanggalMulaiCuti")
-    val tanggalMulaiCuti: Date,
+    @field:SerializedName("tanggalMulai")
+    val tanggalMulai: Date,
 
-    @field:SerializedName("tanggalSelesaiCuti")
-    val tanggalSelesaiCuti: String,
+    @field:SerializedName("tanggalSelesai")
+    val tanggalSelesai: Date,
 
-    @field:SerializedName("jenisCuti")
-    val jenisCuti: String,
-
-    @field:SerializedName("keteranganCuti")
-    val keteranganCuti: String,
+    @field:SerializedName("keteranganSakit")
+    val keteranganSakit: String,
 
     @field:SerializedName("bukti")
-    val bukti: MultipartBody.Part?,
+    val bukti: MultipartBody.Part,
 
     @field:SerializedName("statusPengajuan")
     val statusPengajuan: String,

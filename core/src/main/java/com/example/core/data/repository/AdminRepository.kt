@@ -5,6 +5,7 @@ import com.example.core.data.remote.RemoteDataSource
 import com.example.core.data.remote.network.ApiResponse
 import com.example.core.domain.model.admin.AddEmployee
 import com.example.core.domain.model.admin.EmployeeLeaveReview
+import com.example.core.domain.model.admin.EmployeeSickLeave
 import com.example.core.domain.repository.IAdminRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -19,5 +20,8 @@ class AdminRepository @Inject constructor(
 
     override suspend fun getEmployeeLeaveReview(): Flow<ApiResponse<List<EmployeeLeaveReview>>> =
         remoteDataSource.getEmployeeLeaveReview()
+
+    override suspend fun getEmployeeSickLeave(): Flow<ApiResponse<List<EmployeeSickLeave>>> =
+        remoteDataSource.getEmployeeSickLeave()
 
 }
