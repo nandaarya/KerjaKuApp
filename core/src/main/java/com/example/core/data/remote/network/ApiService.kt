@@ -1,6 +1,7 @@
 package com.example.core.data.remote.network
 
 import com.example.core.data.remote.response.admin.AddEmployeeResponse
+import com.example.core.data.remote.response.admin.GetEmployeeLeaveReviewResponse
 import com.example.core.data.remote.response.user.ClockInResponse
 import com.example.core.data.remote.response.user.ClockOutResponse
 import com.example.core.data.remote.response.user.DataAttendanceResponse
@@ -55,4 +56,8 @@ interface ApiService {
         @Field("role") role: String,
         @Part employeePhoto: MultipartBody.Part
     ): AddEmployeeResponse
+
+    @FormUrlEncoded
+    @GET("/admin/getEmployeeLeaveReview")
+    suspend fun getEmployeeLeaveReview(): GetEmployeeLeaveReviewResponse
 }

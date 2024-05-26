@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.core.data.remote.network.ApiResponse
-import com.example.core.domain.model.AddEmployee
+import com.example.core.domain.model.admin.AddEmployee
 import com.example.core.utils.reduceFileImage
 import com.example.core.utils.uriToFile
 import com.example.services_admin.databinding.FragmentAddEmployeeBinding

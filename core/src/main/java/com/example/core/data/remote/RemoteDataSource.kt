@@ -4,9 +4,10 @@ import android.util.Log
 import com.example.core.data.local.LocalDataSource
 import com.example.core.data.remote.network.ApiResponse
 import com.example.core.data.remote.network.ApiService
-import com.example.core.domain.model.AddEmployee
-import com.example.core.domain.model.DataAttendance
-import com.example.core.domain.model.User
+import com.example.core.domain.model.admin.AddEmployee
+import com.example.core.domain.model.admin.EmployeeLeaveReview
+import com.example.core.domain.model.user.DataAttendance
+import com.example.core.domain.model.user.User
 import com.example.core.utils.DataMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -109,6 +110,25 @@ class RemoteDataSource @Inject constructor(
 
                 ).success
                 emit(ApiResponse.Success(response))
+            } catch (e: Exception) {
+                if ((e is HttpException) && (e.code() == 404)) {
+                    emit(ApiResponse.Empty)
+                } else {
+                    emit(ApiResponse.Error(e.toString()))
+                }
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun getEmployeeLeaveReview(): Flow<ApiResponse<List<EmployeeLeaveReview>>> {
+        return flow {
+            emit(ApiResponse.Loading)
+            try {
+                val response = apiService.getEmployeeLeaveReview().employeeLeaveReview
+                val dataArray = response.map {
+                    DataMapper.mapEmployeeLeaveReviewResponseToDomain(it)
+                }
+                emit(ApiResponse.Success(dataArray))
             } catch (e: Exception) {
                 if ((e is HttpException) && (e.code() == 404)) {
                     emit(ApiResponse.Empty)

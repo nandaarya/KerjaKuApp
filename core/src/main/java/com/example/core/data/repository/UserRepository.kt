@@ -3,8 +3,8 @@ package com.example.core.data.repository
 import com.example.core.data.local.LocalDataSource
 import com.example.core.data.remote.RemoteDataSource
 import com.example.core.data.remote.network.ApiResponse
-import com.example.core.domain.model.DataAttendance
-import com.example.core.domain.model.User
+import com.example.core.domain.model.user.DataAttendance
+import com.example.core.domain.model.user.User
 import com.example.core.domain.repository.IUserRepository
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody

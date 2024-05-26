@@ -1,8 +1,8 @@
 package com.example.core.domain.usecase.user
 
 import com.example.core.data.remote.network.ApiResponse
-import com.example.core.domain.model.DataAttendance
-import com.example.core.domain.model.User
+import com.example.core.domain.model.user.DataAttendance
+import com.example.core.domain.model.user.User
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 

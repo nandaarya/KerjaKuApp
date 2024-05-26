@@ -2,7 +2,7 @@ package com.example.core.data.local
 
 import android.util.Log
 import com.example.core.data.local.datastore.UserPreferences
-import com.example.core.domain.model.User
+import com.example.core.domain.model.user.User
 import com.example.core.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

@@ -1,4 +1,4 @@
-package com.example.core.domain.model
+package com.example.core.domain.model.admin
 
 import okhttp3.MultipartBody
 

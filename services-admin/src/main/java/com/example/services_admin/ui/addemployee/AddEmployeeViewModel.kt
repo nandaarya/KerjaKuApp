@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.data.remote.network.ApiResponse
-import com.example.core.domain.model.AddEmployee
+import com.example.core.domain.model.admin.AddEmployee
 import com.example.core.domain.usecase.admin.AdminUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

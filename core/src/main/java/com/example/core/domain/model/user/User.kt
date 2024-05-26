@@ -1,4 +1,4 @@
-package com.example.core.domain.model
+package com.example.core.domain.model.user
 
 data class User (
     val userId: String,
